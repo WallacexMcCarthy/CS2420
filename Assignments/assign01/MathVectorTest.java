@@ -111,12 +111,26 @@ public class MathVectorTest {
 		MathVector expected = new MathVector(new double[][]{{3}, {1}, {2}});
 		assertTrue(expected.equals(rowVec.transpose()));
 	}
+
+	@Test
+	public void transposeSmallRowColumn() {
+		MathVector expected = new MathVector(new double[][]{{-11, 2.5, 36, -3.4, 7.1}});
+
+		assertTrue(expected.equals(colVec.transpose()));
+	}
+
 	// Test add Method
 	@Test
 	public void addRowAndColVectors() {
 	  assertThrows(IllegalArgumentException.class, () -> { rowVec.add(colVec); });
 	  // NOTE: The code above is an example of a lambda expression. See Lab 1 for more info.
 	}
+	@Test
+	public void addTowsOfDifferentLength(){
+		MathVector row2 = new MathVector(new double[][]{{-11, 2.5, 36, -3.4, 7.1}});
+		assertThrows(IllegalArgumentException.class, () -> { rowVec.add(row2); });
+	}
+
 	
 	@Test
 	public void addSmallRowVectors() {
@@ -125,6 +139,16 @@ public class MathVectorTest {
 	}
 
 	// Test Dot Product method
+
+	@Test
+	public void dotProductBadRowVectors() {
+		MathVector row2 = new MathVector(new double[][]{{-11, 2.5, 36, -3.4, 7.1}});
+		assertThrows(IllegalArgumentException.class, () -> { rowVec.dotProduct(row2); });
+	}
+	@Test
+	public void dotProductDifferingTypeVectors() {
+		assertThrows(IllegalArgumentException.class, () -> { rowVec.dotProduct(colVec); });
+	}
 	@Test
 	public void dotProductSmallRowVectors() {
 		assertEquals(3.0 * 1.0 + 1.0 * 1.0 + 2.0 * 1.0, rowVec.dotProduct(unitVec));		
@@ -134,6 +158,18 @@ public class MathVectorTest {
 	@Test
 	public void smallRowVectorMagnitude() {
 		assertEquals(Math.sqrt(3.0 * 3.0 + 1.0 * 1.0 + 2.0 * 2.0), rowVec.magnitude());		
+	}
+	@Test
+	public void zeroRowVectorMagnitude() {
+		MathVector zeroRow = new MathVector(new double[][]{{0, 0, 1, 0, 0}});
+
+		assertEquals(1, zeroRow.magnitude());
+	}
+	@Test
+	public void negetiveRowVectorMagnitude() {
+		MathVector zeroRow = new MathVector(new double[][]{{-3, 0, -1, 1, 0}});
+
+		assertEquals(Math.sqrt(11), zeroRow.magnitude());
 	}
 	// Test Normalize Method
 	@Test

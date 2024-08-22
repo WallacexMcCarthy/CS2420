@@ -302,12 +302,12 @@ public class MathVector {
 		if(isRowVector){
 			// Adds the square of each entry together.
 			for (int i = 0; i < vectorSize; i++) {
-				product += this.data[0][i] * this.data[0][i];
+				product += (this.data[0][i] * this.data[0][i]);
 			}
 		}else{
 			// Adds the square of each entry together.
 			for (int i = 0; i < vectorSize; i++) {
-				product += this.data[i][0] * this.data[i][0];
+				product += (this.data[i][0] * this.data[i][0]);
 			}
 		}
 		// Square roots the combined sum.
