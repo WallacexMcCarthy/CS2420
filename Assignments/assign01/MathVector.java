@@ -74,8 +74,11 @@ public class MathVector {
 	 */
 	public String toString() {
 		String out = "";
+		// Checks if it is a row vector or a column vector
 		if(isRowVector){
+			//iterates through the vector
 			for (int i = 0; i < this.data[0].length; i++) {
+				// Concatenates the strings with a space
 				if(i == 0)
 				{
 					out = out + this.data[0][i];
@@ -84,7 +87,9 @@ public class MathVector {
 				}
 			}
 		}else{
+			//iterates through the vector
 			for (int i = 0; i < this.data.length; i++) {
+				// Concatenates the strings with a new line
 				if(i == 0)
 				{
 					out = out + this.data[i][0];
@@ -105,12 +110,15 @@ public class MathVector {
 	 * @return true if this vector is equivalent to other, false otherwise
 	 */
 	public boolean equals(Object other) {
+		// Ensures this object is indeed a MathVector
 		if(!(other instanceof MathVector))
 			return false;
 
 		MathVector otherVec = (MathVector) other;
 
+		// Checks if it is a Row vector or a column vector
 		if(this.isRowVector){
+			// Checks to ensure the sizing is also correct and that the other vector is also a row vector
 			if(otherVec.isRowVector){
 				if(otherVec.vectorSize == this.vectorSize){
 					for (int i = 0; i < this.vectorSize; i++) {
@@ -128,6 +136,7 @@ public class MathVector {
 				return false;
 			}
 		}else{
+			// Checks to ensure the sizing is also correct and that the other vector is also a column vector
 			if(!otherVec.isRowVector){
 				if(otherVec.vectorSize == this.vectorSize){
 					for (int i = 0; i < this.vectorSize; i++) {
@@ -153,11 +162,14 @@ public class MathVector {
 	 * @param factor - the scaling factor
 	 */
 	public void scale(double factor) {
+		// Identifies if it is a row or column vector
 		if(isRowVector){
+			// Iterates through the vector and applies the scale.
 			for (int i = 0; i < vectorSize; i++) {
 				data[0][i] = data[0][i] * factor;
 			}
 		}else{
+			// Iterates through the vector and applies the scale.
 			for (int i = 0; i < vectorSize; i++) {
 				data[i][0] = data[i][0] * factor;
 			}
@@ -171,12 +183,15 @@ public class MathVector {
 	 */
 	public MathVector transpose() {
 		double[][] transposed;
+		// Identifies if it is a row or column vector
 		if(isRowVector){
+			// makes a new double 2d array and then copies the data into a different format - column.
 			transposed = new double[vectorSize][1];
 			for (int i = 0; i < vectorSize; i++) {
 				transposed[i][0] = this.data[0][i];
 			}
 		}else{
+			// makes a new double 2d array and then copies the data into a different format - row.
 			transposed = new double[1][vectorSize];
 			for (int i = 0; i < vectorSize; i++) {
 				transposed[0][i] = this.data[i][0];
@@ -197,7 +212,7 @@ public class MathVector {
 	 */
 	public MathVector add(MathVector other) {
 		double[][] sum;
-		// Throws Exceptions if they are incompatible types.
+		// Throws Exceptions if they are incompatible types, AKA same types and sizes.
 		if(isRowVector){
 			if(!other.isRowVector){
 				throw new IllegalArgumentException("Both vectors bust be of the same type!");
@@ -205,6 +220,7 @@ public class MathVector {
 				if(vectorSize != other.vectorSize){
 					throw new IllegalArgumentException("Both vectors bust be of the same length!");
 				}else{
+					// Adds the two vectors and stores the data in a double 2d array
 					sum = new double[1][vectorSize];
 					for (int i = 0; i < vectorSize; i++) {
 						sum[0][i] = this.data[0][i] + other.data[0][i];
@@ -218,6 +234,7 @@ public class MathVector {
 				if(vectorSize != other.vectorSize){
 					throw new IllegalArgumentException("Both vectors bust be of the same length!");
 				}else{
+					// Adds the two vectors and stores the data in a double 2d array
 					sum = new double[vectorSize][1];
 					for (int i = 0; i < vectorSize; i++) {
 						sum[i][0] = this.data[i][0] + other.data[i][0];
@@ -225,6 +242,7 @@ public class MathVector {
 				}
 			}
 		}
+		// Returns the newly created MathVector as the other created double 2d array.
 		return new MathVector(sum);
 	}
 
@@ -240,6 +258,7 @@ public class MathVector {
 	 */
 	public double dotProduct(MathVector other) {
 		double dotProduct = 0.0;
+		// Identifies if this vector and the other vector are of the same type nad size.
 		if(isRowVector){
 			if(!other.isRowVector){
 				throw new IllegalArgumentException("Both vectors bust be of the same type!");
@@ -247,6 +266,8 @@ public class MathVector {
 				if(vectorSize != other.vectorSize){
 					throw new IllegalArgumentException("Both vectors bust be of the same length!");
 				}else{
+					// Multiplies each entry from each vector in the correct way and adds that number to the
+					// stored variable.
 					for (int i = 0; i < vectorSize; i++) {
 						dotProduct += (this.data[0][i] * other.data[0][i]);
 					}
@@ -259,6 +280,8 @@ public class MathVector {
 				if(vectorSize != other.vectorSize){
 					throw new IllegalArgumentException("Both vectors bust be of the same length!");
 				}else{
+					// Multiplies each entry from each vector in the correct way and adds that number to the
+					// stored variable.
 					for (int i = 0; i < vectorSize; i++) {
 						dotProduct += (this.data[i][0] * other.data[i][0]);
 					}
@@ -275,15 +298,19 @@ public class MathVector {
 	 */
 	public double magnitude() {
 		double product = 0.0;
+		// Identifies which type this vector is
 		if(isRowVector){
+			// Adds the square of each entry together.
 			for (int i = 0; i < vectorSize; i++) {
 				product += this.data[0][i] * this.data[0][i];
 			}
 		}else{
+			// Adds the square of each entry together.
 			for (int i = 0; i < vectorSize; i++) {
 				product += this.data[i][0] * this.data[i][0];
 			}
 		}
+		// Square roots the combined sum.
 		return Math.sqrt(product);
 	}
 	
@@ -292,6 +319,8 @@ public class MathVector {
 	 */
 	public void normalize() {
 		double scale = this.magnitude();
+		// Identifies if this vector is a row or column vector and then it divides each entry by some scale
+		// in order to normalize this vector.
 		if(isRowVector){
 			for (int i = 0; i < vectorSize; i++) {
 				this.data[0][i] = this.data[0][i] / scale;
