@@ -1,4 +1,4 @@
-package Assignments.assign01;
+package assign01;
 
 /**
  * This class represents a simple row or column vector of numbers. In a row

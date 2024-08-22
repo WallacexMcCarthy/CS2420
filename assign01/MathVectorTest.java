@@ -1,4 +1,4 @@
-package Assignments.assign01;
+package assign01;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
