@@ -19,7 +19,7 @@ import java.awt.*;
  */
 public class MathVectorTest {
 	
-	private MathVector rowVec, unitVec, colVec, smallColVec, zeroRowVector, maxRowVector, maxColVector;
+	private MathVector rowVec, unitVec, colVec, smallColVec, zeroRowVector, zeroColVector, maxRowVector, maxColVector;
 
 	@BeforeEach
 	public void setUp() throws Exception {
@@ -35,6 +35,7 @@ public class MathVectorTest {
 		smallColVec = new MathVector(new double[][]{{-11}, {2.5}});
 
 		zeroRowVector = new MathVector(new double[][]{{0, 0, 0}});
+		zeroColVector = new MathVector(new double[][]{{0}, {0}, {0}});
 
 		maxRowVector = new MathVector(new double[][]{{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}});
 
@@ -95,6 +96,16 @@ public class MathVectorTest {
 	@Test
 	public void smallRowVectorInequality() {
 		assertFalse(rowVec.equals(unitVec));
+	}
+
+	@Test
+	public void maxVectorEquality(){
+		assertFalse(maxColVector.equals(maxRowVector));
+	}
+
+	@Test
+	public void maxColVectorEqualitySameVector(){
+		assertTrue(maxColVector.equals(maxColVector));
 	}
 
 	// Test the scale method
@@ -210,9 +221,16 @@ public class MathVectorTest {
 		zeroRowVector.normalize();
 		assertTrue(expected.equals(zeroRowVector));
 	}
+	@Test
+	public void zeroColVectorNormalize(){
+		double length = 0;
+		MathVector expected = new MathVector(new double[][]{{0}, {0}, {0}});
+		zeroColVector.normalize();
+		assertTrue(expected.equals(zeroColVector));
+	}
 
 	@Test
-	public void maxColumnVectorNormalize(){
+	public void maxRowVectorNormalize(){
 		// The Length will be INFINITY and anything divided by infinity is Zero.
 		double length = Math.sqrt(Double.MAX_VALUE * Double.MAX_VALUE + Double.MAX_VALUE * Double.MAX_VALUE + Double.MAX_VALUE * Double.MAX_VALUE);
 		MathVector expected = new MathVector(new double[][]{{Double.MAX_VALUE / length,Double.MAX_VALUE / length, Double.MAX_VALUE / length}});
@@ -222,4 +240,14 @@ public class MathVectorTest {
 		assertTrue(expectedTrue.equals(maxRowVector));
 	}
 
+	@Test
+	public void maxColVectorNormalize(){
+		// The Length will be INFINITY and anything divided by infinity is Zero.
+		double length = Math.sqrt(Double.MAX_VALUE * Double.MAX_VALUE + Double.MAX_VALUE * Double.MAX_VALUE + Double.MAX_VALUE * Double.MAX_VALUE);
+		MathVector expected = new MathVector(new double[][]{{Double.MAX_VALUE / length},{Double.MAX_VALUE / length}, {Double.MAX_VALUE / length}});
+		MathVector expectedTrue = new MathVector(new double[][]{{0}, {0}, {0}});
+		assertTrue(expected.equals(expectedTrue));
+		maxColVector.normalize();
+		assertTrue(expectedTrue.equals(maxColVector));
+	}
 }
