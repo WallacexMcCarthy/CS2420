@@ -122,6 +122,20 @@ public class MathVectorTest {
 		assertTrue(expected.equals(colVec));
 	}
 
+	@Test
+	public void scaleMaxColVector(){
+		MathVector expected = new MathVector(new double[][]{{Double.MAX_VALUE / 2}, {Double.MAX_VALUE / 2}, {Double.MAX_VALUE / 2}});
+		maxColVector.scale(0.5);
+		assertTrue(expected.equals(maxColVector));
+	}
+	@Test
+	public void scaleMaxRowVector(){
+		MathVector expected = new MathVector(new double[][]{{Double.MAX_VALUE / 2, Double.MAX_VALUE / 2, Double.MAX_VALUE / 2}});
+		maxRowVector.scale(0.5);
+		assertTrue(expected.equals(maxRowVector));
+	}
+
+
 	// Test transpose method
 	@Test
 	public void transposeSmallRowVector() {
@@ -135,7 +149,15 @@ public class MathVectorTest {
 
 		assertTrue(expected.equals(colVec.transpose()));
 	}
+	@Test
+	public void transposeMaxRowVector(){
+		assertTrue(maxRowVector.equals(maxColVector.transpose()));
+	}
 
+	@Test
+	public void transposeMaxColVector(){
+		assertTrue(maxColVector.equals(maxRowVector.transpose()));
+	}
 	// Test add Method
 	@Test
 	public void addRowAndColVectors() {
