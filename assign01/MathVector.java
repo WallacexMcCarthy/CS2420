@@ -319,6 +319,10 @@ public class MathVector {
 		double scale = this.magnitude();
 		// Identifies if this vector is a row or column vector and then it divides each entry by some scale
 		// in order to normalize this vector.
+		// A Vector with length 0 must have all 0s in its entries and thus cannot be normalized.
+		if(scale == 0){
+			return;
+		}
 		if (isRowVector) {
 			for (int i = 0; i < vectorSize; i++) {
 				this.data[0][i] = this.data[0][i] / scale;
