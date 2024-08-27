@@ -1,7 +1,4 @@
 package assign01;
-
-import java.awt.*;
-
 /**
  * This class represents a simple row or column vector of numbers. In a row
  * vector, the numbers are written horizontally (i.e., along the columns). In a

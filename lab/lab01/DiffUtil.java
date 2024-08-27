@@ -19,7 +19,6 @@ public class DiffUtil {
 			throw new IllegalArgumentException("Array must be > 1 element");
 
 		int diff = Math.abs(a[0] - a[1]);
-
 		for (int i = 0; i < a.length; i++)
 			for (int j = i + 1; j < a.length; j++) {
 				int tmp_diff = Math.abs(a[i] - a[j]);

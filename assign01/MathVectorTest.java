@@ -8,7 +8,7 @@ import java.awt.*;
 
 /**
  * This tester class assesses the correctness of the MathVector class.
- * 
+ *
  * IMPORTANT NOTE: The tests provided to get you started rely heavily on a 
  *                 correctly implemented equals method.  Be careful of false
  *                 positives (i.e., tests that pass because your equals method
