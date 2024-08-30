@@ -156,10 +156,9 @@ public class Library {
 		for (int i = 0; i < library.size(); i++) {
 			if(library.get(i).getIsbn() == isbn){
 				if(library.get(i).getPatron() == -1) {
-					return false;
+					library.get(i).checkOut(patron, year, month, day);
+					return true;
 				}
-				library.get(i).checkOut(patron, year, month, day);
-				return true;
 			}
 		}
 		return false;

@@ -29,7 +29,7 @@ public class LibraryTest {
 		tinyLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
 
 		smallLibrary = new Library();
-		smallLibrary.addAll("src/assign02/Mushroom_Publishing.txt");
+		smallLibrary.addAll("assign02/Mushroom_Publishing.txt");
 	}
 
 	@Test

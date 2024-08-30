@@ -132,7 +132,7 @@ public class LibraryGeneric<Type> {
     public ArrayList<LibraryBookGeneric<Type>> lookup(Type patron) {
         ArrayList<LibraryBookGeneric<Type>> arr = new ArrayList<>();
         for (int i = 0; i < library.size(); i++) {
-            if(library.get(i).getPatron().equals(patron)){
+            if(library.get(i).getPatron() != null &&library.get(i).getPatron().equals(patron)){
                 arr.add(library.get(i));
             }
         }
@@ -156,10 +156,9 @@ public class LibraryGeneric<Type> {
         for (int i = 0; i < library.size(); i++) {
             if(library.get(i).getIsbn() == isbn){
                 if(library.get(i).getPatron() == null) {
-                    return false;
+                    library.get(i).checkOut(patron, year, month, day);
+                    return true;
                 }
-                library.get(i).checkOut(patron, year, month, day);
-                return true;
             }
         }
         return false;
@@ -199,7 +198,7 @@ public class LibraryGeneric<Type> {
     public boolean checkIn(Type patron) {
         boolean flag = false;
         for (int i = 0; i < library.size(); i++) {
-            if(library.get(i).getPatron() == patron){
+            if(library.get(i).getPatron() != null && library.get(i).getPatron().equals(patron)){
                 library.get(i).checkIn();
                 flag = true;
             }
