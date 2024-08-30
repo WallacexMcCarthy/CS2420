@@ -93,8 +93,10 @@ public class Book {
 			return false;
 
 		Book otherBook = (Book) other;
-		
-		// TODO: Replace return statement with code to accomplish the method contract above.
+		if(this.getIsbn() == otherBook.getIsbn() && this.getTitle().equals(otherBook.getTitle()) &&
+				this.getAuthorSurname().equals(otherBook.getAuthorSurname()) && this.getAuthorOtherName().equals(otherBook.getAuthorOtherName())){
+			return true;
+		}
 		return false;
 	}
 }

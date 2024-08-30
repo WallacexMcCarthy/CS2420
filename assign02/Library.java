@@ -113,8 +113,12 @@ public class Library {
 	 * @param isbn - ISBN of the book to be looked up
 	 */
 	public int lookup(long isbn) {
-		// TODO: Replace return statement with code to accomplish the method contract above.
-		return 0;
+		for (int i = 0; i < library.size(); i++) {
+			if(library.get(i).getIsbn() == isbn){
+				return library.get(i).getPatron();
+			}
+		}
+		return -1;
 	}
 
 	/**
@@ -126,8 +130,13 @@ public class Library {
 	 *               accessed
 	 */
 	public ArrayList<LibraryBook> lookup(int patron) {
-		// TODO: Replace return statement with code to accomplish the method contract above.
-		return null;
+		ArrayList<LibraryBook> arr = new ArrayList<>();
+		for (int i = 0; i < library.size(); i++) {
+			if(library.get(i).getPatron() == patron){
+				arr.add(library.get(i));
+			}
+		}
+		return arr;
 	}
 
 	/**
