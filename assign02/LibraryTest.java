@@ -90,6 +90,5 @@ public class LibraryTest {
 	public void testTinyLibraryCheckInPatron() {
 		assertFalse(tinyLibrary.checkIn(123));
 	}
-	
-	// TODO: Add tests for smallLibrary.
+
 }
