@@ -1,5 +1,6 @@
 package assign02;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LibraryBook extends Book{
@@ -10,16 +11,16 @@ public class LibraryBook extends Book{
         this.patron = -1;
     }
     public int getPatron(){
-        return 0;
+        return this.patron;
     }
 
     public GregorianCalendar getDueDate(){
         return dueDate;
     }
 
-    public void checkOut(){
-        this.patron = 1;
-        dueDate = new GregorianCalendar();
+    public void checkOut(int patron, int year, int month, int day){
+        this.patron = patron;
+        dueDate = new GregorianCalendar(year, month, day);
     }
     public void checkIn(){
         this.patron = -1;

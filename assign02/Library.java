@@ -153,7 +153,15 @@ public class Library {
 	 * @param year - year when this book is due to be returned to the library
 	 */
 	public boolean checkOut(long isbn, int patron, int month, int day, int year) {
-		// TODO: Replace return statement with code to accomplish the method contract above.
+		for (int i = 0; i < library.size(); i++) {
+			if(library.get(i).getIsbn() == isbn){
+				if(library.get(i).getPatron() == -1) {
+					return false;
+				}
+				library.get(i).checkOut(patron, year, month, day);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -169,7 +177,12 @@ public class Library {
 	 * @param isbn - ISBN of the book to be given back to the library
 	 */
 	public boolean checkIn(long isbn) {
-		// TODO: Replace return statement with code to accomplish the method contract above.
+		for (int i = 0; i < library.size(); i++) {
+			if(library.get(i).getIsbn() == isbn){
+				library.get(i).checkIn();
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -184,7 +197,13 @@ public class Library {
 	 * @param patron - id of the patron returning all books to the library
 	 */
 	public boolean checkIn(int patron) {
-		// TODO: Replace return statement with code to accomplish the method contract above.
-		return false;
+		boolean flag = false;
+		for (int i = 0; i < library.size(); i++) {
+			if(library.get(i).getPatron() == patron){
+				library.get(i).checkIn();
+				flag = true;
+			}
+		}
+		return flag;
 	}
 }
