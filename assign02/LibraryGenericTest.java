@@ -34,6 +34,35 @@ public class LibraryGenericTest {
 		patronByPhoneLibrary.add(9780330351690L, "Krakauer", "Jon", "Into the Wild");
 		patronByPhoneLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
 	}
+
+	@Test
+	public void testLookUpByISBN(){
+		String patron = "patron";
+		assertTrue(patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024));
+		assertTrue(patronByNameLibrary.checkOut(9780374292799L, patron + "2", 10, 2, 2024));
+		assertEquals("patron", patronByNameLibrary.lookup(9780330351690L));
+		assertEquals("patron2", patronByNameLibrary.lookup(9780374292799L));
+		assertEquals(null, patronByNameLibrary.lookup(111));
+		assertEquals(null, patronByNameLibrary.lookup(9780446580342L));
+	}
+
+	@Test
+	public void testLookUpByPatrion(){
+		String patron = "patron";
+		assertTrue(patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024));
+		assertTrue(patronByNameLibrary.checkOut(9780374292799L, patron + "2", 10, 2, 2024));
+		assertTrue(patronByNameLibrary.checkOut(9780446580342L, patron + "3", 10, 2, 2024));
+		ArrayList<LibraryBookGeneric<String>> arr = new ArrayList<>();
+		arr.add(new LibraryBookGeneric<String>(9780330351690L, "Krakauer", "Jon", "Into the Wild"));
+		arr.add(new LibraryBookGeneric<String>(9780374292799L, "Friedman", "Thomas L.", "The World is Flat"));
+		arr.add(new LibraryBookGeneric<String>(9780446580342L, "Baldacci", "David", "Simple Genius"));
+		assertEquals(arr.get(0), patronByNameLibrary.lookup(patron).get(0));
+		assertEquals(arr.get(1), patronByNameLibrary.lookup(patron + "2").get(0));
+		assertEquals(arr.get(2), patronByNameLibrary.lookup(patron + "3").get(0));
+		patronByNameLibrary.checkIn(9780446580342L);
+		assertEquals(new ArrayList<LibraryBookGeneric<String>>(), patronByNameLibrary.lookup(patron + "3"));
+	}
+
 	
 	@Test
 	public void testNameCheckOut() {
