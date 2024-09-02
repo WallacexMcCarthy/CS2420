@@ -47,7 +47,7 @@ public class LibraryGenericTest {
 	}
 
 	@Test
-	public void testLookUpByPatrion(){
+	public void testLookUpByPatron(){
 		String patron = "patron";
 		assertTrue(patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024));
 		assertTrue(patronByNameLibrary.checkOut(9780374292799L, patron + "2", 10, 2, 2024));
@@ -123,6 +123,25 @@ public class LibraryGenericTest {
 		patronByPhoneLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
 		assertTrue(patronByPhoneLibrary.checkIn(new PhoneNumber("801.555.1234")));
 	}
-	
-	// TODO: Add tests.
+
+	@Test
+	public void getSortedBooksByAuthorName() {
+
+	}
+
+	@Test
+	public void getSortedBooksByISBN() {
+
+	}
+
+	@Test
+	public void getSortedBooksByDueDate() {
+
+	}
+
+	@Test
+	public void testOverDueList() {
+
+	}
+
 }

@@ -29,7 +29,7 @@ public class LibraryTest {
 		tinyLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
 
 		smallLibrary = new Library();
-		smallLibrary.addAll("assign02/Mushroom_Publishing.txt");
+		smallLibrary.addAll("Mushroom_Publishing.txt");
 	}
 
 	@Test
@@ -91,4 +91,46 @@ public class LibraryTest {
 		assertFalse(tinyLibrary.checkIn(123));
 	}
 
+	@Test
+	public void addAllByArrayList() {
+		ArrayList<LibraryBook> books = new ArrayList<>();
+		books.add(new LibraryBook(9780330351690L, "clark", "kent", "superman"));
+		books.add(new LibraryBook(9780330327690L, "bruce", "wayne", "batman"));
+
+		Library library = new Library();
+		library.addAll(books);
+		assertEquals(-1, library.lookup(9780330351690L));
+	}
+
+	@Test
+	public void testSmallLibraryLookupISBN() {
+		assertEquals(-1, tinyLibrary.lookup(9781843190004L));
+	}
+
+	@Test
+	public void testSmallLibraryLookupPatron() {
+		smallLibrary.checkOut(9781843190004L, 123, 10, 1, 2024);
+		ArrayList<LibraryBook> booksCheckedOut = smallLibrary.lookup(123);
+
+		assertNotNull(booksCheckedOut);
+		assertEquals(1, booksCheckedOut.size());
+		assertEquals(new Book(9781843190004L, "Caldecott", "Moyra", "Weapons of the Wolfhound"), booksCheckedOut.get(0));
+		assertEquals(123, booksCheckedOut.get(0).getPatron());
+	}
+
+	@Test
+	public void testSmallLibraryCheckOut() {
+		assertTrue(smallLibrary.checkOut(9781843190004L, 123, 10, 1, 2024));
+	}
+
+	@Test
+	public void testSmallLibraryCheckInISBN() {
+		smallLibrary.checkOut(9781843190004L, 123, 10, 1, 2024);
+		assertTrue(smallLibrary.checkIn(9781843190004L));
+	}
+
+	@Test
+	public void testSmallLibraryCheckInPatron() {
+		assertFalse(smallLibrary.checkIn(123));
+	}
 }

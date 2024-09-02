@@ -4,7 +4,7 @@ package assign02;
  * This class represents a book, in which the ISBN (unique), author, 
  * and title information cannot change once the book is created.
  * 
- * @author CS 2420 course staff and ?? 
+ * @author CS 2420 course staff and Isaac Buehner and Wallce McCarthy
  * @version August 29, 2024
  */
 public class Book {
