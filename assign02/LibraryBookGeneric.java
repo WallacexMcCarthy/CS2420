@@ -41,6 +41,9 @@ public class LibraryBookGeneric<Type> extends Book{
      * @return GregorianCalender object representing the books due date
      */
     public GregorianCalendar getDueDate(){
+        if(this.dueDate == null){
+            this.dueDate = new GregorianCalendar();
+        }
         return dueDate;
     }
 
@@ -56,11 +59,11 @@ public class LibraryBookGeneric<Type> extends Book{
         dueDate = new GregorianCalendar(year, month, day);
     }
     /**
-     * Reassigns the patron value and removes the due date
+     * Reassigns the patron value and clears the due date
      * to indicate that the book is no longer checked in
      */
     public void checkIn(){
         this.patron = null;
-        dueDate = null;
+        dueDate.clear();
     }
 }

@@ -268,7 +268,7 @@ public class LibraryGeneric<Type> {
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         ArrayList<LibraryBookGeneric<Type>> overdueList = new ArrayList<>();
         this.library.sort(new OrderByDueDate<Type>());
-        for (int i = library.size(); i > 0; i--) {
+        for (int i = library.size() - 1; i > 0; i--) {
             if(library.get(i).getDueDate().compareTo(calendar) > 0) {
                 overdueList.add(library.get(i));
             }

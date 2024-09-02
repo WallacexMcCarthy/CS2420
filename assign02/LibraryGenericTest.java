@@ -28,11 +28,15 @@ public class LibraryGenericTest {
 		patronByNameLibrary.add(9780374292799L, "Friedman", "Thomas L.", "The World is Flat");
 		patronByNameLibrary.add(9780330351690L, "Krakauer", "Jon", "Into the Wild");
 		patronByNameLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
+		patronByNameLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
+		patronByNameLibrary.add(9780446580342L, "Baldacci", "David", "Complex Genius");
+		patronByNameLibrary.add(9780446580342L, "Baldacci", "Dave", "Complex Genius");
 
 		patronByPhoneLibrary = new LibraryGeneric<PhoneNumber>();
 		patronByPhoneLibrary.add(9780374292799L, "Friedman", "Thomas L.", "The World is Flat");
 		patronByPhoneLibrary.add(9780330351690L, "Krakauer", "Jon", "Into the Wild");
 		patronByPhoneLibrary.add(9780446580342L, "Baldacci", "David", "Simple Genius");
+		patronByPhoneLibrary.add(9780330351690L, "Krakauer", "James", "Into the Normal");
 	}
 
 	@Test
@@ -126,21 +130,49 @@ public class LibraryGenericTest {
 
 	@Test
 	public void getSortedBooksByAuthorName() {
+		ArrayList<LibraryBookGeneric<String>> comparing = new ArrayList<>();
 
+		// this set of books checks for edge cases of sorting including:
+		// same surname different other name
+		// same surname and same other name but different title
+		// same surname, other name, and title
+		comparing.add(new LibraryBookGeneric<>(9780446580342L, "Baldacci", "Dave", "Complex Genius"));
+		comparing.add(new LibraryBookGeneric<>(9780446580342L, "Baldacci", "David", "Complex Genius"));
+		comparing.add(new LibraryBookGeneric<>(9780446580342L, "Baldacci", "David", "Simple Genius"));
+		comparing.add(new LibraryBookGeneric<>(9780446580342L, "Baldacci", "David", "Simple Genius"));
+		comparing.add(new LibraryBookGeneric<>(9780374292799L, "Friedman", "Thomas L.", "The World is Flat"));
+		comparing.add(new LibraryBookGeneric<>(9780330351690L, "Krakauer", "Jon", "Into the Wild"));
+
+		for (int i = 0; i < comparing.size(); i++) {
+			assertTrue(patronByNameLibrary.getListSortedByAuthor().get(i).equals(comparing.get(i)));
+		}
 	}
 
 	@Test
 	public void getSortedBooksByISBN() {
+		ArrayList<LibraryBookGeneric<String>> comparing = new ArrayList<>();
 
-	}
+		comparing.add(new LibraryBookGeneric<>(9780330351690L, "Krakauer", "Jon", "Into the Wild"));
+		comparing.add(new LibraryBookGeneric<>(9780330351690L, "Krakauer", "James", "Into the Normal"));
+		comparing.add(new LibraryBookGeneric<>(9780374292799L, "Friedman", "Thomas L.", "The World is Flat"));
+		comparing.add(new LibraryBookGeneric<>(9780446580342L, "Baldacci", "David", "Simple Genius"));
 
-	@Test
-	public void getSortedBooksByDueDate() {
-
+		for (int i = 0; i < comparing.size(); i++) {
+			assertTrue(patronByPhoneLibrary.getListSortedByIsbn().get(i).equals(comparing.get(i)));
+		}
 	}
 
 	@Test
 	public void testOverDueList() {
+		String patron = "Calbert";
+
+		patronByNameLibrary.checkOut(9780330351690L, patron, 10, 10, 2024);
+		patronByNameLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
+		patronByNameLibrary.checkOut(9780446580342L, patron, 10, 20, 2024);
+
+		assertEquals(2, patronByNameLibrary.getOverdueList(10, 5, 2024).size());
+		assertEquals(0, patronByNameLibrary.getOverdueList(10, 25, 2024).size());
+
 
 	}
 
