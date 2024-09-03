@@ -26,6 +26,7 @@ public class LibraryBook extends Book{
         super(isbn, authorSurname, authorOtherName, title);
         // patron is -1 since the book has not been checked out
         this.patron = -1;
+        this.dueDate = new GregorianCalendar();
     }
 
     /**
@@ -62,6 +63,6 @@ public class LibraryBook extends Book{
      */
     public void checkIn(){
         this.patron = -1;
-        dueDate = null;
+        dueDate.clear();
     }
 }

@@ -96,7 +96,7 @@ public class LibraryGenericTest {
 		String patron = "Unique Patron Name";
 		patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024);
 		patronByNameLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
-		assertTrue(patronByNameLibrary.checkIn(new String("Unique Patron Name")));
+		assertTrue(patronByNameLibrary.checkIn("Unique Patron Name"));
 	}
 
 	@Test
@@ -133,8 +133,8 @@ public class LibraryGenericTest {
 		String patron = "Unique Patron Name";
 		patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024);
 		patronByNameLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
-		assertTrue(patronByNameLibrary.checkIn(new String("Unique Patron Name")));
-		assertFalse(patronByNameLibrary.checkIn(new String("Unique Patron Name")));
+		assertTrue(patronByNameLibrary.checkIn("Unique Patron Name"));
+		assertFalse(patronByNameLibrary.checkIn("Unique Patron Name"));
 	}
 	@Test
 	public void testPhoneCheckOutMultipleOfSameID() {
@@ -171,7 +171,7 @@ public class LibraryGenericTest {
 
 	@Test
 	public void getSortedBooksByISBN() {
-		ArrayList<LibraryBookGeneric<String>> comparing = new ArrayList<>();
+		ArrayList<LibraryBookGeneric<PhoneNumber>> comparing = new ArrayList<>();
 
 		comparing.add(new LibraryBookGeneric<>(9780330351690L, "Krakauer", "Jon", "Into the Wild"));
 		comparing.add(new LibraryBookGeneric<>(9780330351690L, "Krakauer", "James", "Into the Normal"));
@@ -194,8 +194,6 @@ public class LibraryGenericTest {
 		assertEquals(2, patronByNameLibrary.getOverdueList(10, 5, 2024).size());
 		assertEquals(0, patronByNameLibrary.getOverdueList(10, 25, 2024).size());
 		assertEquals(9780330351690L, patronByNameLibrary.getOverdueList(9, 30, 2024).get(1).getIsbn());
-
-
 	}
 
 }

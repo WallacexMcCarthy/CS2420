@@ -26,6 +26,7 @@ public class LibraryBookGeneric<Type> extends Book{
     public LibraryBookGeneric(long isbn, String authorSurname, String authorOtherName, String title){
         super(isbn, authorSurname, authorOtherName, title);
         this.patron = null;
+        this.dueDate = new GregorianCalendar();
     }
 
     /**
@@ -41,9 +42,6 @@ public class LibraryBookGeneric<Type> extends Book{
      * @return GregorianCalender object representing the books due date
      */
     public GregorianCalendar getDueDate(){
-        if(this.dueDate == null){
-            this.dueDate = new GregorianCalendar();
-        }
         return dueDate;
     }
 
