@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class LibraryTest {
 
 	private Library emptyLibrary, tinyLibrary, smallLibrary;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 		emptyLibrary = new Library();
-		
+
 		tinyLibrary = new Library();
 		tinyLibrary.add(9780374292799L, "Friedman", "Thomas L.", "The World is Flat");
 		tinyLibrary.add(9780330351690L, "Krakauer", "Jon", "Into the Wild");
@@ -36,14 +36,14 @@ public class LibraryTest {
 	public void testEmptyLookupISBN() {
 		assertEquals(-1, emptyLibrary.lookup(978037429279L));
 	}
-	
+
 	@Test
 	public void testEmptyLookupPatron() {
 		ArrayList<LibraryBook> booksCheckedOut = emptyLibrary.lookup(123);
 		assertNotNull(booksCheckedOut);
 		assertEquals(0, booksCheckedOut.size());
 	}
-	
+
 	@Test
 	public void testEmptyCheckOut() {
 		assertFalse(emptyLibrary.checkOut(978037429279L, 123, 10, 1, 2024));
@@ -53,7 +53,7 @@ public class LibraryTest {
 	public void testEmptyCheckInISBN() {
 		assertFalse(emptyLibrary.checkIn(978037429279L));
 	}
-	
+
 	@Test
 	public void testEmptyCheckInPatron() {
 		assertFalse(emptyLibrary.checkIn(123));
@@ -63,12 +63,12 @@ public class LibraryTest {
 	public void testTinyLibraryLookupISBN() {
 		assertEquals(-1, tinyLibrary.lookup(9780330351690L));
 	}
-	
+
 	@Test
 	public void testTinyLibraryLookupPatron() {
 		tinyLibrary.checkOut(9780330351690L, 123, 10, 1, 2024);
 		ArrayList<LibraryBook> booksCheckedOut = tinyLibrary.lookup(123);
-		
+
 		assertNotNull(booksCheckedOut);
 		assertEquals(1, booksCheckedOut.size());
 		assertEquals(new Book(9780330351690L, "Krakauer", "Jon", "Into the Wild"), booksCheckedOut.get(0));
@@ -133,4 +133,11 @@ public class LibraryTest {
 	public void testSmallLibraryCheckInPatron() {
 		assertFalse(smallLibrary.checkIn(123));
 	}
+
+	@Test
+	public void testGetNullDueDate() {
+		LibraryBook book = new LibraryBook(9781843190004L, "Kahn", "Gengis", "How to have a stable homelife");
+		assertEquals(null, book.getDueDate());
+	}
+
 }
