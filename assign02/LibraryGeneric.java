@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * This class represents a library, which is a collection of library books.
  *
- * @author CS 2420 course staff and ??
+ * @author CS 2420 course staff and Isaac Buehner and Wallace McCarthy
  * @version August 29, 2024
  */
 public class LibraryGeneric<Type> {

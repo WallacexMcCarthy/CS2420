@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Students are expected to add additional tests to this class to thoroughly 
  * check the correctness of Library.
  * 
- * @author Erin Parker
+ * @author Erin Parker and Isaac Buehner and Wallace McCarthy
  * @version August 20, 2024
  */
 public class LibraryTest {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Students are expected to add additional tests to this class to thoroughly 
  * check the correctness of LibraryGeneric.
  * 
- * @author Erin Parker
+ * @author Erin Parker and Isaac Buehner and Wallace McCarthy
  * @version August 20, 2024
  */
 public class LibraryGenericTest {
@@ -172,6 +172,7 @@ public class LibraryGenericTest {
 
 		assertEquals(2, patronByNameLibrary.getOverdueList(10, 5, 2024).size());
 		assertEquals(0, patronByNameLibrary.getOverdueList(10, 25, 2024).size());
+		assertEquals(9780330351690L, patronByNameLibrary.getOverdueList(9, 30, 2024).get(1).getIsbn());
 
 
 	}
