@@ -88,6 +88,7 @@ public class LibraryGenericTest {
 		assertTrue(booksCheckedOut.contains(new Book(9780374292799L, "Friedman", "Thomas L.", "The World is Flat")));
 		assertEquals(patron, booksCheckedOut.get(0).getPatron());
 		assertEquals(patron, booksCheckedOut.get(1).getPatron());
+
 	}
 	
 	@Test
@@ -127,7 +128,27 @@ public class LibraryGenericTest {
 		patronByPhoneLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
 		assertTrue(patronByPhoneLibrary.checkIn(new PhoneNumber("801.555.1234")));
 	}
-
+	@Test
+	public void testPhoneCheckInMultipleOfSameID() {
+		String patron = "Unique Patron Name";
+		patronByNameLibrary.checkOut(9780330351690L, patron, 10, 1, 2024);
+		patronByNameLibrary.checkOut(9780374292799L, patron, 10, 1, 2024);
+		assertTrue(patronByNameLibrary.checkIn(new String("Unique Patron Name")));
+		assertFalse(patronByNameLibrary.checkIn(new String("Unique Patron Name")));
+	}
+	@Test
+	public void testPhoneCheckOutMultipleOfSameID() {
+		PhoneNumber patron = new PhoneNumber("801.555.1234");
+		assertTrue(patronByPhoneLibrary.checkOut(9780330351690L, patron, 10, 1, 2024));
+		assertTrue(patronByPhoneLibrary.checkOut(9780374292799L, patron, 10, 1, 2024));
+		assertFalse(patronByPhoneLibrary.checkOut(9780374292799L, patron, 10, 1, 2024));
+		assertFalse(patronByPhoneLibrary.checkOut(9780374292799L, new PhoneNumber("801.222.2222"), 10, 1, 2024));
+		String patron2 = "patron";
+		assertTrue(patronByNameLibrary.checkOut(9780330351690L, patron2, 10, 1, 2024));
+		assertTrue(patronByNameLibrary.checkOut(9780374292799L, patron2, 10, 1, 2024));
+		assertFalse(patronByNameLibrary.checkOut(9780374292799L, patron2, 10, 1, 2024));
+		assertFalse(patronByNameLibrary.checkOut(9780374292799L, "patron", 10, 1, 2024));
+	}
 	@Test
 	public void getSortedBooksByAuthorName() {
 		ArrayList<LibraryBookGeneric<String>> comparing = new ArrayList<>();
