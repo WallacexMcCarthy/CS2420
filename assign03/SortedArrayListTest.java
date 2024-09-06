@@ -6,24 +6,26 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 public class SortedArrayListTest {
-    private SortedArrayList<Integer> arrayList = new SortedArrayList<>();
+    private SortedArrayList<Integer> integerSortedArrayList = new SortedArrayList<>();
+    private SortedArrayList<String> stringSortedArrayList = new SortedArrayList<>();
+
 
 
     @BeforeEach
     public void setUp(){
         for (int i = 0; i < 6; i++) {
-            arrayList.insert(i);
+            integerSortedArrayList.insert(i);
         }
     }
 
     @Test
     public void testing(){
 
-        System.out.println(Arrays.toString(arrayList.toArray()));
-        System.out.println(arrayList.max());
-        System.out.println(arrayList.contains(4));
-        System.out.println(arrayList.countEntries(3));
-        System.out.println(arrayList.countEntries(6));
+        System.out.println(Arrays.toString(integerSortedArrayList.toArray()));
+        System.out.println(integerSortedArrayList.max());
+        System.out.println(integerSortedArrayList.contains(4));
+        System.out.println(integerSortedArrayList.countEntries(3));
+        System.out.println(integerSortedArrayList.countEntries(6));
     }
 
 }

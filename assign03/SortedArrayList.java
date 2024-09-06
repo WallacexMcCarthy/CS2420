@@ -39,7 +39,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public boolean contains(T element) {
-        return this.arr[binarySearch(this.arr, element)].equals(element);
+        return this.arr[binarySearch(this.arr, element, cmp)].equals(element);
     }
 
     /**
@@ -53,7 +53,7 @@ public class SortedArrayList <T> implements SortedList<T> {
     @Override
     public int countEntries(T target) {
         int count = 0;
-        int idx = binarySearch(this.arr, target);
+        int idx = binarySearch(this.arr, target, cmp);
         if(!arr[idx].equals(target)){
             return count;
         }
@@ -82,7 +82,7 @@ public class SortedArrayList <T> implements SortedList<T> {
             arr[0] = element;
             return;
         }
-        int idx = binarySearch(this.arr, element);
+        int idx = binarySearch(this.arr, element, cmp);
 
         if (this.size > arr.length) {
             T[] temp = (T[]) new Object[arr.length * 2];
@@ -167,23 +167,41 @@ public class SortedArrayList <T> implements SortedList<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private int binarySearch(T[] arr, T target) {
-        int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
+    private int binarySearch(T[] arr, T target, Comparator<? super T> cmp) {
+        if (cmp == null) {
+            int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
 
-        while(l < r) {
-            if (arr[mid].equals(target)) {
-                break;
-            }
-            if (((Comparable<? super T>)arr[mid]).compareTo(target) > 0) {
-                r = mid - 1;
-            }
-            else {
-                l = mid + 1;
-            }
-            mid = (r - l) / 2 + l;
+            while(l < r) {
+                if (arr[mid].equals(target)) {
+                    break;
+                }
+                if (((Comparable<? super T>)arr[mid]).compareTo(target) > 0) {
+                    r = mid - 1;
+                }
+                else {
+                    l = mid + 1;
+                }
+                mid = (r - l) / 2 + l;
 
+            }
+            return mid;
+        } else {
+            int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
+
+            while (l < r) {
+                if (arr[mid].equals(target)) {
+                    break;
+                }
+                if (cmp.compare(this.arr[mid], target) > 0) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+                mid = (r - l) / 2 + l;
+
+            }
+            return mid;
         }
-        return mid;
     }
 
 
