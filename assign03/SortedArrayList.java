@@ -5,16 +5,26 @@ import java.util.NoSuchElementException;
 
 
 public class SortedArrayList <T> implements SortedList<T> {
-    public SortedArrayList(Comparator<? super T> cmp){
 
+    private Comparator<? super T> cmp;
+    private T[] arr;
+    private int size;
+    public SortedArrayList(){
+
+    }
+    @SuppressWarnings("unchecked")
+    public SortedArrayList(Comparator<? super T> cmp){
+        this.cmp = cmp;
+        this.arr =  (T[]) new Object[5];
     }
 
     /**
      * Removes all of the elements from this sorted list.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void clear() {
-        
+        this.arr =  (T[]) new Object[5];
     }
 
     /**
@@ -58,7 +68,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     /**
@@ -69,7 +79,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T max() throws NoSuchElementException {
-        return null;
+        return arr[size - 1];
     }
 
     /**
@@ -81,7 +91,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T median() throws NoSuchElementException {
-        return null;
+        return arr[size / 2 + 1];
     }
 
     /**
@@ -92,7 +102,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T min() throws NoSuchElementException {
-        return null;
+        return arr[0];
     }
 
     /**
@@ -102,7 +112,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     /**
@@ -114,4 +124,6 @@ public class SortedArrayList <T> implements SortedList<T> {
     public Object[] toArray() {
         return new Object[0];
     }
+
+
 }
