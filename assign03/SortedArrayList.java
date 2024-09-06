@@ -61,7 +61,7 @@ public class SortedArrayList <T> implements SortedList<T> {
             count++;
             idx --;
         }
-        idx += count;
+        idx += count + 1;
         while(arr[idx].equals(target)){
             count++;
             idx ++;
@@ -95,8 +95,6 @@ public class SortedArrayList <T> implements SortedList<T> {
             this.arr[i] = this.arr[i - 1];
         }
         arr[idx] = element;
-        System.out.println(Arrays.toString(arr));
-        System.out.println(element.toString());
     }
 
     /**
@@ -158,9 +156,14 @@ public class SortedArrayList <T> implements SortedList<T> {
      *
      * @return an array containing all of elements in this sorted list
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        T[] output = (T[]) new Object[this.size];
+        for (int i = 0; i < size; i++) {
+            output[i] = this.arr[i];
+        }
+        return output;
     }
 
     @SuppressWarnings("unchecked")

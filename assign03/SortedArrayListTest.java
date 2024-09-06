@@ -14,7 +14,6 @@ public class SortedArrayListTest {
         for (int i = 0; i < 6; i++) {
             arrayList.insert(i);
         }
-        arrayList.insert(3);
     }
 
     @Test
@@ -23,6 +22,8 @@ public class SortedArrayListTest {
         System.out.println(Arrays.toString(arrayList.toArray()));
         System.out.println(arrayList.max());
         System.out.println(arrayList.contains(4));
+        System.out.println(arrayList.countEntries(3));
+        System.out.println(arrayList.countEntries(6));
     }
 
 }
