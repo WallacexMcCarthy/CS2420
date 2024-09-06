@@ -37,10 +37,7 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public boolean contains(T element) {
-        if (this.arr[binarySearch(this.arr, element)].equals(element)) {
-            return true;
-        }
-        return false;
+        return this.arr[binarySearch(this.arr, element)].equals(element);
     }
 
     /**
