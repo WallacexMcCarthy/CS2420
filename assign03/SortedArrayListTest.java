@@ -13,19 +13,22 @@ public class SortedArrayListTest {
 
     @BeforeEach
     public void setUp(){
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             integerSortedArrayList.insert(i);
         }
     }
 
-    @Test
-    public void testing(){
+    // comparator constructors
+    // clear
+    // contains for correct and incorrect elements
+    // count entries for small, big, not in array
+    // insert for good size and resize and duplicates at bottom at top of array
+    // isEmpty
+    // max
+    // median for odd and even array sizes
+    // min
+    // size and after resizing
+    // toString
 
-        System.out.println(Arrays.toString(integerSortedArrayList.toArray()));
-        System.out.println(integerSortedArrayList.max());
-        System.out.println(integerSortedArrayList.contains(4));
-        System.out.println(integerSortedArrayList.countEntries(3));
-        System.out.println(integerSortedArrayList.countEntries(6));
-    }
 
 }
