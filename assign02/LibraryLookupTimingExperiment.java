@@ -14,7 +14,7 @@ public class LibraryLookupTimingExperiment extends TimingExperiment {
 	private static int problemSizeMin = 10000;  //
 	private static int problemSizeCount = 10;  //
 	private static int problemSizeStep = 10000;  //
-	private static int experimentIterationCount = 50;
+	private static int experimentIterationCount = 100;
 
 	private Library randomLibrary;
 	private long randomIsbn;

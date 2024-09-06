@@ -9,8 +9,10 @@ public class SortedArrayList <T> implements SortedList<T> {
     private Comparator<? super T> cmp;
     private T[] arr;
     private int size;
-    public SortedArrayList(){
 
+    @SuppressWarnings("unchecked")
+    public SortedArrayList(){
+        this.arr =  (T[]) new Object[5];
     }
     @SuppressWarnings("unchecked")
     public SortedArrayList(Comparator<? super T> cmp){
@@ -35,6 +37,9 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public boolean contains(T element) {
+        if (this.arr[binarySearch(this.arr, element)].equals(element)) {
+            return true;
+        }
         return false;
     }
 
@@ -56,9 +61,24 @@ public class SortedArrayList <T> implements SortedList<T> {
      *
      * @param element - the element to insert
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void insert(T element) {
+        this.size++;
+        int idx = binarySearch(this.arr, element);
 
+        if (this.size >= arr.length) {
+            T[] temp = (T[]) new Object[arr.length * 2];
+            for (int i = this.size; i > idx + 1; i--) {
+                temp[i] = this.arr[i - 1];
+            }
+            this.arr = temp;
+        } else {
+            for (int i = this.size; i > idx + 1; i--) {
+                this.arr[i] = this.arr[i - 1];
+            }
+        }
+        this.arr[idx] = element;
     }
 
     /**
@@ -123,6 +143,25 @@ public class SortedArrayList <T> implements SortedList<T> {
     @Override
     public Object[] toArray() {
         return new Object[0];
+    }
+
+    @SuppressWarnings("unchecked")
+    private int binarySearch(T[] arr, T target) {
+        int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
+
+        while(l <= r) {
+            if (arr[mid].equals(target)) {
+                break;
+            }
+            if (((Comparable<? super T>)arr[mid]).compareTo(target) > 0) {
+                r = mid - 1;
+            }
+            else {
+                l = mid + 1;
+            }
+
+        }
+        return mid;
     }
 
 
