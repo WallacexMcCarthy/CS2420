@@ -1,5 +1,6 @@
 package assign03;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -27,6 +28,7 @@ public class SortedArrayList <T> implements SortedList<T> {
     @Override
     public void clear() {
         this.arr =  (T[]) new Object[5];
+        this.size = 0;
     }
 
     /**
@@ -50,7 +52,21 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public int countEntries(T target) {
-        return 0;
+        int count = 0;
+        int idx = binarySearch(this.arr, target);
+        if(!arr[idx].equals(target)){
+            return count;
+        }
+        while(arr[idx].equals(target)){
+            count++;
+            idx --;
+        }
+        idx += count;
+        while(arr[idx].equals(target)){
+            count++;
+            idx ++;
+        }
+        return count;
     }
 
     /**
@@ -62,20 +78,25 @@ public class SortedArrayList <T> implements SortedList<T> {
     @Override
     public void insert(T element) {
         this.size++;
+        if(size == 1){
+            arr[0] = element;
+            return;
+        }
         int idx = binarySearch(this.arr, element);
 
-        if (this.size >= arr.length) {
+        if (this.size > arr.length) {
             T[] temp = (T[]) new Object[arr.length * 2];
-            for (int i = this.size; i > idx + 1; i--) {
-                temp[i] = this.arr[i - 1];
+            for (int i = 0; i < size - 1; i++) {
+                temp[i] = arr[i];
             }
             this.arr = temp;
-        } else {
-            for (int i = this.size; i > idx + 1; i--) {
-                this.arr[i] = this.arr[i - 1];
-            }
         }
-        this.arr[idx] = element;
+        for (int i = this.size - 1; i > idx; i--) {
+            this.arr[i] = this.arr[i - 1];
+        }
+        arr[idx] = element;
+        System.out.println(Arrays.toString(arr));
+        System.out.println(element.toString());
     }
 
     /**
@@ -146,7 +167,7 @@ public class SortedArrayList <T> implements SortedList<T> {
     private int binarySearch(T[] arr, T target) {
         int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
 
-        while(l <= r) {
+        while(l < r) {
             if (arr[mid].equals(target)) {
                 break;
             }
@@ -156,6 +177,7 @@ public class SortedArrayList <T> implements SortedList<T> {
             else {
                 l = mid + 1;
             }
+            mid = (r - l) / 2 + l;
 
         }
         return mid;
