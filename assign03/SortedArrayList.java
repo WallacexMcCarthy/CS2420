@@ -4,7 +4,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
-
+/**
+ * the SortedArrayList class allows the construction of empty arrays where added elements are inserted in
+ * the correct place either by the default sorting method, or by a sorting method defined by the user
+ * all searching and inserting is done with the help of binary search
+ * @version 9/7/2024
+ * @author Wallace McCarthy and Isaac Buehner
+ */
 public class SortedArrayList <T> implements SortedList<T> {
 
     private Comparator<? super T> cmp;
@@ -39,6 +45,9 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public boolean contains(T element) {
+        if (this.size == 0){
+            return false;
+        }
         return this.arr[binarySearch(this.arr, element, cmp)].equals(element);
     }
 
@@ -54,9 +63,11 @@ public class SortedArrayList <T> implements SortedList<T> {
     public int countEntries(T target) {
         int count = 0;
         int idx = binarySearch(this.arr, target, cmp);
-        if(!arr[idx].equals(target)){
+
+        if((this.size == 0) || !arr[idx].equals(target)){
             return count;
         }
+
         while(arr[idx].equals(target)){
             count++;
             idx --;
@@ -115,6 +126,9 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T max() throws NoSuchElementException {
+        if (size == 0){
+            throw new NoSuchElementException();
+        }
         return arr[size - 1];
     }
 
@@ -127,7 +141,10 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T median() throws NoSuchElementException {
-        return arr[size / 2 + 1];
+        if (size == 0){
+            throw new NoSuchElementException();
+        }
+        return arr[size / 2];
     }
 
     /**
@@ -138,6 +155,9 @@ public class SortedArrayList <T> implements SortedList<T> {
      */
     @Override
     public T min() throws NoSuchElementException {
+        if (size == 0){
+            throw new NoSuchElementException();
+        }
         return arr[0];
     }
 
