@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -13,8 +14,16 @@ import java.util.NoSuchElementException;
  * @author Wallace McCarthy and Isaac Buehner
  */
 public class SortedArrayListTest {
+    Comparator<Integer> intCMP = new Comparator<Integer>() {
+        @Override
+        public int compare(Integer integer1, Integer integer2) {
+            return integer2.compareTo(integer1);
+        }
+    };
 
     private SortedArrayList<Integer> integerSortedArrayList = new SortedArrayList<>();
+    private SortedArrayList<Integer> comparatorIntegerSortedArrayList = new SortedArrayList<>(intCMP);
+
     private SortedArrayList<String> stringSortedArrayList = new SortedArrayList<>();
     private SortedArrayList<Double> emptySortedArrayList = new SortedArrayList<>();
 
@@ -22,6 +31,7 @@ public class SortedArrayListTest {
     public void setUp(){
         for (int i = 0; i < 5; i++) {
             integerSortedArrayList.insert(i);
+            comparatorIntegerSortedArrayList.insert(i);
             stringSortedArrayList.insert("0" + i);
         }
 
@@ -162,6 +172,90 @@ public class SortedArrayListTest {
 
         assertEquals(0, integerSortedArrayList.median());
     }
+
+    @Test
+    public void insertIntegerToEndTest(){
+        integerSortedArrayList.insert(5);
+        assertEquals(Arrays.toString(new int[]{0,1,2,3,4,5}), Arrays.toString(integerSortedArrayList.toArray()));
+    }
+    @Test
+    public void insertIntegerToBeginningTest(){
+        integerSortedArrayList.insert(-1);
+        assertEquals(Arrays.toString(new int[]{-1,0,1,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+    }
+    @Test
+    public void insertIntegerToMiddleTest(){
+        integerSortedArrayList.insert(2);
+        assertEquals(Arrays.toString(new int[]{0,1,2,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+    }
+    @Test
+    public void insertMultipleIntegerToMiddleTest(){
+        integerSortedArrayList.insert(2);
+        integerSortedArrayList.insert(2);
+        assertEquals(Arrays.toString(new int[]{0,1,2,2,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+    }
+    @Test
+    public void insertIntegerInReverseOrderTest(){
+        integerSortedArrayList.clear();
+        assertTrue(integerSortedArrayList.isEmpty());
+        for (int i = 5; i > 0; i--) {
+            integerSortedArrayList.insert(i);
+        }
+        assertEquals(Arrays.toString(new int[]{1,2,3,4,5}), Arrays.toString(integerSortedArrayList.toArray()));
+    }
+
+    @Test
+    public void comparatorInsertIntegerToEndTest(){
+        comparatorIntegerSortedArrayList.insert(5);
+        assertEquals(Arrays.toString(new int[]{5,4,3,2,1,0}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
+    }
+    @Test
+    public void comparatorInsertIntegerToBeginningTest(){
+        comparatorIntegerSortedArrayList.insert(-1);
+        assertEquals(Arrays.toString(new int[]{4,3,2,1,0,-1}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
+    }
+    @Test
+    public void comparatorInsertIntegerToMiddleTest(){
+        comparatorIntegerSortedArrayList.insert(2);
+        assertEquals(Arrays.toString(new int[]{4,3,2,2,1,0}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
+    }
+    @Test
+    public void comparatorInsertMultipleIntegerToMiddleTest(){
+        comparatorIntegerSortedArrayList.insert(2);
+        comparatorIntegerSortedArrayList.insert(2);
+        assertEquals(Arrays.toString(new int[]{4,3,2,2,2,1,0}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
+    }
+    @Test
+    public void comparatorInsertIntegerInReverseOrderTest(){
+        comparatorIntegerSortedArrayList.clear();
+        assertTrue(comparatorIntegerSortedArrayList.isEmpty());
+        for (int i = 0; i < 5; i++) {
+            comparatorIntegerSortedArrayList.insert(i);
+        }
+        assertEquals(Arrays.toString(new int[]{4,3,2,1,0}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
+    }
+
+    @Test
+    public void testSizeWhenInserting(){
+        assertTrue(integerSortedArrayList.size() == 5);
+        int size = integerSortedArrayList.size();
+        // Backing array doubles, should not affect size
+        integerSortedArrayList.insert(5);
+        assertTrue(integerSortedArrayList.size() == 6);
+    }
+
+    @Test
+    public void testStringInsertions(){
+        assertEquals(0, stringSortedArrayList.countEntries("07"));
+        stringSortedArrayList.insert("07");
+        assertTrue(stringSortedArrayList.size() == 6);
+        assertEquals(1, stringSortedArrayList.countEntries("07"));
+    }
+
+
+
+
+
 
 
     // clear | 3 methods done
