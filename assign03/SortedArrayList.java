@@ -1,6 +1,5 @@
 package assign03;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -186,8 +185,18 @@ public class SortedArrayList <T> implements SortedList<T> {
         return output;
     }
 
+    /**
+     * uses binary to return the index of an element if it is in the array.
+     * if the element is not in the list, returns the closest index to the element
+     *
+     * @param arr array to be searched
+     * @param target element to be searched for
+     * @param cmp custom comparator for searching with
+     * @return an index for the array
+     */
     @SuppressWarnings("unchecked")
     private int binarySearch(T[] arr, T target, Comparator<? super T> cmp) {
+        // comparator search
         if (cmp == null) {
             int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
 
@@ -205,6 +214,7 @@ public class SortedArrayList <T> implements SortedList<T> {
 
             }
             return mid;
+        // standard search
         } else {
             int l = 0, r = this.size - 1, mid = (r - l) / 2 + l;
 

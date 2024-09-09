@@ -252,12 +252,6 @@ public class SortedArrayListTest {
         assertEquals(1, stringSortedArrayList.countEntries("07"));
     }
 
-
-
-
-
-
-
     // clear | 3 methods done
     // contains for correct and incorrect elements | 3 methods done
     // count entries for small, big, not in array | 3 methods done
