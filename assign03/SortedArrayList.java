@@ -73,7 +73,7 @@ public class SortedArrayList <T> implements SortedList<T> {
             idx --;
         }
         idx += count + 1;
-        while(arr[idx].equals(target)){
+        while(arr[idx] != null && arr[idx].equals(target)){
             count++;
             idx ++;
         }
