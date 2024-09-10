@@ -20,6 +20,7 @@ public class SortedArrayListTest {
             return integer2.compareTo(integer1);
         }
     };
+    private SortedArrayList<LibraryBookGeneric<Integer>> bookSortedArrayList = new SortedArrayList<>(new AuthorOrdering<Integer>());
 
     private SortedArrayList<Integer> integerSortedArrayList = new SortedArrayList<>();
     private SortedArrayList<Integer> comparatorIntegerSortedArrayList = new SortedArrayList<>(intCMP);
@@ -33,6 +34,7 @@ public class SortedArrayListTest {
             integerSortedArrayList.insert(i);
             comparatorIntegerSortedArrayList.insert(i);
             stringSortedArrayList.insert("0" + i);
+            
         }
 
     }
