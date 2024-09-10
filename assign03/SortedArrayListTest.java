@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -316,7 +315,4 @@ public class SortedArrayListTest {
 
     }
 
-    // comparator constructors
-    // i bet we can use library books for the comparator list cause the test cases are gonna
-    // be looked over by a person and not the auto grader
 }
