@@ -14,16 +14,11 @@ import java.util.NoSuchElementException;
  * @author Wallace McCarthy and Isaac Buehner
  */
 public class SortedArrayListTest {
-    Comparator<Integer> intCMP = new Comparator<Integer>() {
-        @Override
-        public int compare(Integer integer1, Integer integer2) {
-            return integer2.compareTo(integer1);
-        }
-    };
+
     private SortedArrayList<LibraryBookGeneric<Integer>> bookSortedArrayList = new SortedArrayList<>(new AuthorOrdering<Integer>());
 
     private SortedArrayList<Integer> integerSortedArrayList = new SortedArrayList<>();
-    private SortedArrayList<Integer> comparatorIntegerSortedArrayList = new SortedArrayList<>(intCMP);
+    private SortedArrayList<Integer> comparatorIntegerSortedArrayList = new SortedArrayList<>((x, y) -> (y - x));
 
     private SortedArrayList<String> stringSortedArrayList = new SortedArrayList<>();
     private SortedArrayList<Double> emptySortedArrayList = new SortedArrayList<>();
@@ -34,9 +29,7 @@ public class SortedArrayListTest {
             integerSortedArrayList.insert(i);
             comparatorIntegerSortedArrayList.insert(i);
             stringSortedArrayList.insert("0" + i);
-            
         }
-
     }
 
     @Test
@@ -264,18 +257,18 @@ public class SortedArrayListTest {
 
     @Test
     public void testSizeWhenInserting(){
-        assertTrue(integerSortedArrayList.size() == 5);
+        assertEquals(5, integerSortedArrayList.size());
         int size = integerSortedArrayList.size();
         // Backing array doubles, should not affect size
         integerSortedArrayList.insert(5);
-        assertTrue(integerSortedArrayList.size() == 6);
+        assertEquals(6, integerSortedArrayList.size());
     }
 
     @Test
     public void testStringInsertions(){
         assertEquals(0, stringSortedArrayList.countEntries("07"));
         stringSortedArrayList.insert("07");
-        assertTrue(stringSortedArrayList.size() == 6);
+        assertEquals(6, stringSortedArrayList.size());
         assertEquals(1, stringSortedArrayList.countEntries("07"));
     }
 
@@ -304,6 +297,7 @@ public class SortedArrayListTest {
     public void testComparatorToArrayGoodArray(){
         assertEquals(Arrays.toString(new Integer[]{4,3,2,1,0}), Arrays.toString( comparatorIntegerSortedArrayList.toArray()));
     }
+
     // comparator constructors
     // i bet we can use library books for the comparator list cause the test cases are gonna
     // be looked over by a person and not the auto grader
