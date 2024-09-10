@@ -298,6 +298,24 @@ public class SortedArrayListTest {
         assertEquals(Arrays.toString(new Integer[]{4,3,2,1,0}), Arrays.toString( comparatorIntegerSortedArrayList.toArray()));
     }
 
+    @Test
+    public void testComparatorWithNonPrimitiveTypes(){
+        assertTrue(bookSortedArrayList.isEmpty());
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780374292799L, "Friedman", "Thomas L.", "The World is Flat"));
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780330351690L, "Krakauer", "Jon", "Into the Wild"));
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "David", "Simple Genius"));
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "David", "Complex Genius"));
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "Dave", "Complex Genius"));
+        assertFalse(bookSortedArrayList.isEmpty());
+        assertTrue(bookSortedArrayList.contains(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "David", "Complex Genius")));
+        assertEquals(1, bookSortedArrayList.countEntries(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "David", "Complex Genius")));
+        assertEquals(5, bookSortedArrayList.size());
+        assertTrue(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "Dave", "Complex Genius").equals(bookSortedArrayList.min()));
+        assertTrue(new LibraryBookGeneric<Integer>(9780330351690L, "Krakauer", "Jon", "Into the Wild").equals(bookSortedArrayList.max()));
+        bookSortedArrayList.insert(new LibraryBookGeneric<Integer>(9780446580342L, "Baldacci", "Dave", "Complex Genius"));
+
+    }
+
     // comparator constructors
     // i bet we can use library books for the comparator list cause the test cases are gonna
     // be looked over by a person and not the auto grader
