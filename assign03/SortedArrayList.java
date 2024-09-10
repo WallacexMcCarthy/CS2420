@@ -94,14 +94,7 @@ public class SortedArrayList <T> implements SortedList<T> {
             return;
         }
         int idx = binarySearch(this.arr, element, cmp);
-
-        if (this.size > arr.length) {
-            T[] temp = (T[]) new Object[arr.length * 2];
-            for (int i = 0; i < size - 1; i++) {
-                temp[i] = arr[i];
-            }
-            this.arr = temp;
-        }
+        this.expandArrayCheck();
         for (int i = this.size - 1; i > idx; i--) {
             this.arr[i] = this.arr[i - 1];
         }
@@ -232,6 +225,20 @@ public class SortedArrayList <T> implements SortedList<T> {
 
             }
             return mid;
+        }
+    }
+
+    /**
+     * checks for the array to be full and double the backing arrays size if it is
+     */
+    @SuppressWarnings("unchecked")
+    private void expandArrayCheck() {
+        if (this.size > arr.length) {
+            T[] temp = (T[]) new Object[arr.length * 2];
+            for (int i = 0; i < size - 1; i++) {
+                temp[i] = arr[i];
+            }
+            this.arr = temp;
         }
     }
 }
