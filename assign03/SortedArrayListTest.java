@@ -205,6 +205,31 @@ public class SortedArrayListTest {
     }
 
     @Test
+    public void testInsertingDuplicatesToTop(){
+        assertEquals(Arrays.toString(new int[]{0,1,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+        for (int i = 0; i < 5; i++) {
+            integerSortedArrayList.insert(5);
+        }
+        assertEquals(10, integerSortedArrayList.size());
+        assertEquals(Arrays.toString(new int[]{0,1,2,3,4,5,5,5,5,5}), Arrays.toString(integerSortedArrayList.toArray()));
+        assertEquals(5, integerSortedArrayList.median());
+        assertEquals(5, integerSortedArrayList.max());
+    }
+    @Test
+    public void testInsertingDuplicatesToBottom(){
+        assertEquals(Arrays.toString(new int[]{0,1,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+        for (int i = 0; i < 5; i++) {
+            integerSortedArrayList.insert(-1);
+        }
+        assertEquals(10, integerSortedArrayList.size());
+        assertEquals(Arrays.toString(new int[]{-1,-1,-1,-1,-1,0,1,2,3,4}), Arrays.toString(integerSortedArrayList.toArray()));
+        assertEquals(0, integerSortedArrayList.median());
+        assertEquals(4, integerSortedArrayList.max());
+        assertEquals(-1, integerSortedArrayList.min());
+    }
+
+
+    @Test
     public void comparatorInsertIntegerToEndTest(){
         comparatorIntegerSortedArrayList.insert(5);
         assertEquals(Arrays.toString(new int[]{5,4,3,2,1,0}), Arrays.toString(comparatorIntegerSortedArrayList.toArray()));
@@ -252,21 +277,32 @@ public class SortedArrayListTest {
         assertEquals(1, stringSortedArrayList.countEntries("07"));
     }
 
-    // clear | 3 methods done
-    // contains for correct and incorrect elements | 3 methods done
-    // count entries for small, big, not in array | 3 methods done
-    // isEmpty | 2 methods done
-    // max | 3 methods done
-    // median for odd and even array sizes | 4 methods done
-    // min | 3 methods done
+    @Test
+    public void testSize(){
+        assertEquals(5, integerSortedArrayList.size());
+        integerSortedArrayList.insert(8);
+        assertEquals(6, integerSortedArrayList.size());
+        integerSortedArrayList.clear();
+        assertEquals(0, integerSortedArrayList.size());
 
+    }
+
+    @Test
+    public void testToArrayGoodArray(){
+        assertEquals(Arrays.toString(new Integer[]{0,1,2,3,4}), Arrays.toString( integerSortedArrayList.toArray()));
+    }
+
+    @Test
+    public void testToArrayEmptyArray(){
+        integerSortedArrayList.clear();
+        assertEquals(Arrays.toString(new Integer[]{}), Arrays.toString( integerSortedArrayList.toArray()));
+    }
+
+    @Test
+    public void testComparatorToArrayGoodArray(){
+        assertEquals(Arrays.toString(new Integer[]{4,3,2,1,0}), Arrays.toString( comparatorIntegerSortedArrayList.toArray()));
+    }
     // comparator constructors
     // i bet we can use library books for the comparator list cause the test cases are gonna
     // be looked over by a person and not the auto grader
-
-    // size and after resizing
-    // toArray
-    // insert for good size and resize and duplicates at bottom at top of array
-
-
 }

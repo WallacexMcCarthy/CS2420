@@ -5,9 +5,9 @@ import java.util.Random;
 public class SortedArrayListInsertTimingExperimentIsaac extends TimingExperiment{
     private static String problemSizeDescription = "listSize";
     private static int problemSizeMin = 1000;
-    private static int problemSizeCount = 20;
+    private static int problemSizeCount = 30;
     private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 1000;
+    private static int experimentIterationCount = 500;
 
     private SortedArrayList<Integer> sortedArrayList;
     private Random rng = new Random();

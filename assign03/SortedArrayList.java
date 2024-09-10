@@ -27,7 +27,7 @@ public class SortedArrayList <T> implements SortedList<T> {
     }
 
     /**
-     * Removes all of the elements from this sorted list.
+     * Removes all of the elements from this sorted list and resizes the backing array to be a size of 5.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -80,7 +80,8 @@ public class SortedArrayList <T> implements SortedList<T> {
     }
 
     /**
-     * Inserts the specified element into this sorted list.
+     * Inserts the specified element into this sorted list in a sorted manner. If this list already has this element,
+     * the new element will be placed in front of any entries that are the same as itself.
      *
      * @param element - the element to insert
      */
@@ -187,7 +188,7 @@ public class SortedArrayList <T> implements SortedList<T> {
 
     /**
      * uses binary to return the index of an element if it is in the array.
-     * if the element is not in the list, returns the closest index to the element
+     * if the element is not in the list, returns the closest index to the element.
      *
      * @param arr array to be searched
      * @param target element to be searched for
@@ -233,6 +234,4 @@ public class SortedArrayList <T> implements SortedList<T> {
             return mid;
         }
     }
-
-
 }
