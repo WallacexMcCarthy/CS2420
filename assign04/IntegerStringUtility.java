@@ -17,6 +17,9 @@ public class IntegerStringUtility {
         }
     }
     public static <T> T findMax(T[] arr, Comparator<? super T> cmp) throws NoSuchElementException {
+        if(arr.length ==0){
+            return null;
+        }
         T[] clone = arr.clone();
         insertionSort(clone, cmp);
         return clone[clone.length-1];
@@ -81,15 +84,49 @@ public class IntegerStringUtility {
     public static class StringSimilarityComparator implements Comparator<String>{
 
         @Override
-        public int compare(String s, String t1) {
+        public int compare(String s1, String s2) {
+            if(s1.length() < s2.length()){
+                return -1;
+            }else if(s1.length() > s2.length()){
+                return 1;
+            }else{
+                char[] arr1 = s1.toCharArray();
+                char[] arr2 = s2.toCharArray();
+                Character[] charArray1 = new Character[arr1.length];
+                Character[] charArray2 = new Character[arr2.length];
+                for (int i = 0; i < arr1.length; i++) {
+                    charArray1[i] = arr1[i];
+                    charArray2[i] = arr2[i];
+                }
+                insertionSort(charArray1, (x , y) -> x.compareTo(y));
+                insertionSort(charArray2, (x , y) -> x.compareTo(y));
+
+                for (int i = 0; i < charArray1.length; i++) {
+                    if(charArray1[i].compareTo(charArray2[i]) != 0){
+                        return charArray1[i].compareTo(charArray2[i]);
+                    }
+                }
+            }
             return 0;
         }
     }
     public static class StringSimilarityGroupComparator implements Comparator<String[]>{
 
         @Override
-        public int compare(String[] strings, String[] t1) {
-            return 0;
+        public int compare(String[] s1, String[] s2) {
+            if(s1.length < s2.length){
+                return -1;
+            }else if(s1.length > s2.length){
+                return 1;
+            }else{
+                String a = findMax(s1, new StringNumericalValueComparator());
+                String b = findMax(s2, new StringNumericalValueComparator());
+                if(a == null || b == null){
+                    return 0;
+                }else{
+                    return a.compareTo(b);
+                }
+            }
         }
     }
 
