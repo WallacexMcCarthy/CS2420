@@ -1,5 +1,6 @@
 package assign04;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -25,6 +26,17 @@ public class IntegerStringUtility {
         return clone[clone.length-1];
     }
     public static String[][] getSimilarityGroups(String[] arr){
+        String[] cloneArr = arr.clone();
+        insertionSort(cloneArr, new StringSimilarityComparator());
+        String temp = cloneArr[0];
+        ArrayList<String> tempList = new ArrayList<>();
+        int similarities = 1;
+        for (int i = 0; i < cloneArr.length; i++) {
+            if(new StringSimilarityComparator().compare(temp, cloneArr[i]) != 0) {
+                similarities++;
+            }
+        }
+        String[][] result = new String[similarities][];
 
     }
     public static String[] findMaximumSimilarityGroup(int[] arr) throws NoSuchElementException{
