@@ -171,7 +171,7 @@ public class MathVector {
 		}
 	}
 
-	/**
+	/** badingii
 	 * Generates a new vector that is the transposed version of this vector.
 	 *
 	 * @return transposed version of this vector
