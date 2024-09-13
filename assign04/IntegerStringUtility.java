@@ -1,6 +1,7 @@
 package assign04;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
@@ -29,18 +30,48 @@ public class IntegerStringUtility {
         String[] cloneArr = arr.clone();
         insertionSort(cloneArr, new StringSimilarityComparator());
         String temp = cloneArr[0];
-        ArrayList<String> tempList = new ArrayList<>();
         int similarities = 1;
         for (int i = 0; i < cloneArr.length; i++) {
             if(new StringSimilarityComparator().compare(temp, cloneArr[i]) != 0) {
                 similarities++;
+                temp = cloneArr[i];
             }
         }
         String[][] result = new String[similarities][];
-
+        ArrayList<String> tempList = new ArrayList<>();
+        temp = cloneArr[0];
+        int resultCount = 0;
+        for (int i = 0; i <= cloneArr.length; i++) {
+            if(i == cloneArr.length){
+                result[resultCount] = new String[tempList.size()];
+                for (int j = 0; j < tempList.size(); j++) {
+                    result[resultCount][j] = tempList.get(j);
+                }
+            }else{
+                if(new StringSimilarityComparator().compare(temp, cloneArr[i]) != 0){
+                    result[resultCount] = new String[tempList.size()];
+                    for (int j = 0; j < tempList.size(); j++) {
+                        result[resultCount][j] = tempList.get(j);
+                    }
+                    tempList = new ArrayList<>();
+                    tempList.add(cloneArr[i]);
+                    temp = cloneArr[i];
+                    resultCount++;
+                }else{
+                    tempList.add(cloneArr[i]);
+                }
+            }
+        }
+        return result;
     }
     public static String[] findMaximumSimilarityGroup(int[] arr) throws NoSuchElementException{
-
+        String[] array = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            array[i] = arr[i] + "";
+        }
+        String[][] similarityGroups = getSimilarityGroups(array);
+        System.out.println(Arrays.deepToString(similarityGroups));
+        return findMax(similarityGroups, new StringSimilarityGroupComparator());
     }
 
     public static class StringNumericalValueComparator implements Comparator<String>{
