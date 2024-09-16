@@ -70,7 +70,7 @@ public class IntegerStringUtility {
             array[i] = arr[i] + "";
         }
         String[][] similarityGroups = getSimilarityGroups(array);
-        System.out.println(Arrays.deepToString(similarityGroups));
+//        System.out.println(Arrays.deepToString(similarityGroups));
         return findMax(similarityGroups, new StringSimilarityGroupComparator());
     }
 
