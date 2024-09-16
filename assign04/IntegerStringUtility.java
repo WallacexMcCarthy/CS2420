@@ -1,5 +1,6 @@
 package assign04;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -77,14 +78,14 @@ public class IntegerStringUtility {
     public static class StringNumericalValueComparator implements Comparator<String>{
 
         @Override
-        public int compare(String s, String t1) {
-            char[] arr1 = s.toCharArray();
+        public int compare(String t0, String t1) {
+            char[] arr1 = t0.toCharArray();
             char[] arr2 = t1.toCharArray();
             char[]arr1NoZero = new char[0];
             char[]arr2NoZero = new char[0];
 
             for (int i = 0; i < arr1.length; i++) {
-                if(arr1[i] == 0) {
+                if(arr1[i] == '0') {
                     continue;
                 }
                 arr1NoZero = new char[arr1.length - i];
@@ -95,7 +96,7 @@ public class IntegerStringUtility {
             }
 
             for (int i = 0; i < arr2.length; i++) {
-                if(arr2[i] == 0) {
+                if(arr2[i] == '0') {
                     continue;
                 }
                 arr2NoZero = new char[arr2.length - i];
