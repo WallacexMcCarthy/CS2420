@@ -4,6 +4,23 @@ import java.util.ArrayList;
 
 public class Test {
 
+    public static int power (int x , int y){
+        if(y < 0){
+            throw new IllegalArgumentException();
+        }
+        return mathPower(x, y);
+    }
+
+    private static int mathPower(int x, int y){
+        int z = 1;
+        if(y == 0){
+            return 1;
+        }
+        return mathPower(x, y - 1) * x;
+    }
+
+
+
     public Test(){
 
     }
@@ -28,6 +45,8 @@ public class Test {
     }
 
     public static void main(String[] args) {
+
+        System.out.println(power(3, 3));;
         Integer[] arr = new Integer[6];
         for (int i = 0; i < 6; i++) {
             arr[i] = i;
