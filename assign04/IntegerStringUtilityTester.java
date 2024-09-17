@@ -7,6 +7,9 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * this class contains tests for the IntegerStringUtility class
+ */
 public class IntegerStringUtilityTester {
     Comparator<String> stringNumericalCmp = new IntegerStringUtility.StringNumericalValueComparator();
     Comparator<String> stringSimilarityCmp = new IntegerStringUtility.StringSimilarityComparator();

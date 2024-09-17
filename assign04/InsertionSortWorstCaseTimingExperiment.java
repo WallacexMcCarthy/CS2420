@@ -1,35 +1,47 @@
 package assign04;
 
+import java.util.Comparator;
+
+/**
+ * this class is a timing experiment for testing the runtime efficiency of InsertionSort
+ * from the assignment 4 IntegerStringUtility in the worst case scenario
+ * @author Isaac Buehner
+ * @version 09/17/24
+ */
 public class InsertionSortWorstCaseTimingExperiment extends ArraySortTimingExperiment{
+    private static String problemSizeDescription = "Insertion Sort Worst Case";
+    private static int problemSizeMin = 500;
+    private static int problemSizeCount = 20;
+    private static int problemSizeStep = 100;
+    private static int experimentIterationCount = 50;
+
+
+    public static void main(String[] args) {
+        InsertionSortWorstCaseTimingExperiment experiment = new InsertionSortWorstCaseTimingExperiment();
+        experiment.printResults();
+    }
     /**
      * Constructor to build a sort timing experiment.
-     *
-     * @param problemSizeDescription   - description of the problem size for the experiment
-     * @param problemSizeMin           - minimum array size
-     * @param problemSizeCount         - number of array sizes to use in the experiment
-     * @param problemSizeStep          - Step size between consecutive array sizes
-     * @param experimentIterationCount - Number of times to run computation for a given array size
      */
-    public InsertionSortWorstCaseTimingExperiment(String problemSizeDescription, int problemSizeMin, int problemSizeCount, int problemSizeStep, int experimentIterationCount) {
+    public InsertionSortWorstCaseTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
     }
 
     /**
-     * Abstract method for setting up the infrastructure for the experiment
-     * for a given problem size.
-     *
+     * setup for running the experiment with a descending array
      * @param problemSize - the problem size for one experiment
      */
     @Override
     protected void setupExperiment(int problemSize) {
+        populateDescendingArray(problemSize);
 
     }
 
     /**
-     * Abstract method to run the computation to be timed.
+     * run the insertion sort method from the IntegerStringUtility class using natural ordering
      */
     @Override
     protected void runComputation() {
-
+        IntegerStringUtility.insertionSort(array, Comparator.naturalOrder());
     }
 }

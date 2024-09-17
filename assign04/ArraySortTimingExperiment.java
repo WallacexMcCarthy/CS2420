@@ -53,7 +53,10 @@ public abstract class ArraySortTimingExperiment extends TimingExperiment {
      * @param problemSize - size of the array
      */
     protected void populateRandomArray(int problemSize) {
-        // TODO: Implement this method
+        this.populateAscendingArray(problemSize);
+        List<Integer> list = Arrays.asList(this.array);
+        Collections.shuffle(list);
+        list.toArray(this.array);
     }
 
     /**
@@ -63,7 +66,12 @@ public abstract class ArraySortTimingExperiment extends TimingExperiment {
      * @param problemSize - size of the array
      */
     protected void populateDescendingArray(int problemSize) {
-        // TODO: Implement this method
+        this.populateAscendingArray(problemSize);
+        Integer[] tempArr = new Integer[problemSize];
+        for (int i = problemSize - 1; i >= 0; i--) {
+            tempArr[problemSize - i - 1] = this.array[i];
+        }
+        this.array = tempArr;
     }
 
     /**

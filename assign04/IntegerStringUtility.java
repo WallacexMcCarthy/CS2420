@@ -1,12 +1,22 @@
 package assign04;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
+/**
+ * this class uses an insertion sort method to perform several operations on string arrays
+ * @author Isaac Buehner and Wallace McCarthy
+ * @version 09/13/24
+ */
 public class IntegerStringUtility {
+
+    /**
+     * this method sorts an array according to the sorting pattern defined by an input comparator
+     * @param arr the array to be sorted
+     * @param cmp the comparator to sort with
+     * @param <T> the generic type of the array
+     */
     public static <T> void insertionSort(T[] arr, Comparator<? super T> cmp){
         for (int i = 1; i < arr.length; i++) {
             int counter = 1;
@@ -19,6 +29,15 @@ public class IntegerStringUtility {
             }
         }
     }
+
+    /**
+     * this method uses insertion sort to return the max value of an array
+     * @param arr the array to search
+     * @param cmp the comparator to sort with
+     * @return the maximum value according to the input comparator
+     * @param <T> the generic type of the array
+     * @throws NoSuchElementException if the element checked does not exist
+     */
     public static <T> T findMax(T[] arr, Comparator<? super T> cmp) throws NoSuchElementException {
         if(arr.length ==0){
             return null;
@@ -27,6 +46,12 @@ public class IntegerStringUtility {
         insertionSort(clone, cmp);
         return clone[clone.length-1];
     }
+
+    /**
+     * this method uses the string similarity comparator to return a 2D array of similar string groups
+     * @param arr a string array to be processed
+     * @return a 2D array of strings
+     */
     public static String[][] getSimilarityGroups(String[] arr){
         String[] cloneArr = arr.clone();
         insertionSort(cloneArr, new StringSimilarityComparator());
@@ -65,16 +90,30 @@ public class IntegerStringUtility {
         }
         return result;
     }
+
+    /**
+     * this method translates an input array of ints to an array of strings that is processed by
+     * the getSimilarityGroups method. The resulting similarity groups are then processed by the findMax method
+     * to determine the maximum similarity group.
+     * @param arr an int array to be processed
+     * @return a string array containing the maximum similarity group
+     * @throws NoSuchElementException if the element checked does not exist
+     */
     public static String[] findMaximumSimilarityGroup(int[] arr) throws NoSuchElementException{
         String[] array = new String[arr.length];
         for (int i = 0; i < arr.length; i++) {
             array[i] = arr[i] + "";
         }
         String[][] similarityGroups = getSimilarityGroups(array);
-//        System.out.println(Arrays.deepToString(similarityGroups));
         return findMax(similarityGroups, new StringSimilarityGroupComparator());
     }
 
+    /**
+     * this comparator translates strings of integers to char arrays so that they may be compared
+     * lexicographically without worry of leading 0s
+     * a string is considered greater than another if
+     * its integer interpretation is greater than the other string's
+     */
     public static class StringNumericalValueComparator implements Comparator<String>{
 
         @Override
@@ -125,6 +164,14 @@ public class IntegerStringUtility {
             return 0;
         }
     }
+
+    /**
+     * this comparator translates strings of integers to char arrays so that they may be compared
+     * lexicographically without worry of leading 0s
+     * strings are considered similar if they contain the same digits in any order and are the same length
+     * a string is considered greater than another if its length is greater or
+     * if its sorted integer interpretation is greater than the other's
+     */
     public static class StringSimilarityComparator implements Comparator<String>{
 
         @Override
@@ -142,8 +189,8 @@ public class IntegerStringUtility {
                     charArray1[i] = arr1[i];
                     charArray2[i] = arr2[i];
                 }
-                insertionSort(charArray1, (x , y) -> x.compareTo(y));
-                insertionSort(charArray2, (x , y) -> x.compareTo(y));
+                insertionSort(charArray1, Comparator.naturalOrder());
+                insertionSort(charArray2, Comparator.naturalOrder());
 
                 for (int i = 0; i < charArray1.length; i++) {
                     if(charArray1[i].compareTo(charArray2[i]) != 0){
@@ -154,6 +201,12 @@ public class IntegerStringUtility {
             return 0;
         }
     }
+
+    /**
+     * this comparator compares similar string groups together
+     * a string group is considered greater than another if its length is greater or
+     * if the maximum interpreted integer value in the string is greater than the other's
+     */
     public static class StringSimilarityGroupComparator implements Comparator<String[]>{
 
         @Override
