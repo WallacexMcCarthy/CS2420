@@ -19,15 +19,14 @@ public class IntegerStringUtilityTester {
 
     @Test
     public void test() {
-        String[] arr = IntegerStringUtility.findMaximumSimilarityGroup(new int[]{123, 789, 321, 987});
+        String[] arr = IntegerStringUtility.findMaximumSimilarityGroup(new int[]{001, 100, 007, 700});
+
         System.out.println(Arrays.toString(arr));
     }
 
     @Test
     public void testIntArray() {
-        System.out.println(Arrays.toString(intArray));
         String[] array = IntegerStringUtility.findMaximumSimilarityGroup(intArray);
-        System.out.println(Arrays.toString(array));
     }
 
     @Test
