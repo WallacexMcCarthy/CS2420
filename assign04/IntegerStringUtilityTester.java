@@ -1,5 +1,6 @@
 package assign04;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -13,13 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version 09/17/24
  */
 public class IntegerStringUtilityTester {
-    Comparator<String> stringNumericalCmp = new IntegerStringUtility.StringNumericalValueComparator();
-    Comparator<String> stringSimilarityCmp = new IntegerStringUtility.StringSimilarityComparator();
-    Comparator<String[]> stringSimilarityGroupCmp = new IntegerStringUtility.StringSimilarityGroupComparator();
-    private int[] intArray = new int[]{123, 456, 789, 321, 654, 987, 00011, 0011, 1100, 0110, 1010, 213, 123, 321, 312};
+    Comparator<String> stringNumericalCmp;
+    Comparator<String> stringSimilarityCmp;
+    Comparator<String[]> stringSimilarityGroupCmp;
+    private int[] intArray;
 
-    public void setup() {
-
+    @BeforeEach
+    void setUp() {
+        stringNumericalCmp = new IntegerStringUtility.StringNumericalValueComparator();
+        stringSimilarityCmp = new IntegerStringUtility.StringSimilarityComparator();
+        stringSimilarityGroupCmp = new IntegerStringUtility.StringSimilarityGroupComparator();
+        intArray = new int[]{123, 456, 789, 321, 654, 987, 00011, 0011, 1100, 0110, 1010, 213, 123, 321, 312};
     }
 
     @Test
@@ -56,9 +61,21 @@ public class IntegerStringUtilityTester {
 
     @Test
     public void testInsertionSort(){
+        String[] stringArray = new String[]{"123", "321", "223", "987", "998", "333"};
+        Integer[] arr = new Integer[]{8, 6, 1, 0, 4};
         Character[] digits = {'8', '6', '1', '0', '4'};
         IntegerStringUtility.insertionSort(digits, (char1, char2) -> char1.compareTo(char2));
         assertEquals(Arrays.toString(new Character[]{'0', '1', '4', '6', '8'}), Arrays.toString(digits));
+        IntegerStringUtility.insertionSort(digits, (char1, char2) -> char2.compareTo(char1));
+        assertEquals(Arrays.toString(new Character[]{'8', '6', '4', '1', '0'}), Arrays.toString(digits));
+        IntegerStringUtility.insertionSort(arr, Comparator.naturalOrder());
+        assertEquals(Arrays.toString(new int[]{0, 1, 4, 6, 8}), Arrays.toString(arr));
+        IntegerStringUtility.insertionSort(stringArray, (string1, string2) -> string1.compareTo(string2));
+        assertEquals(Arrays.toString(new String[]{"123", "223", "321", "333", "987", "998"}), Arrays.toString(stringArray));
+        stringArray = new String[]{"123", "321", "223", "987", "978", "333"};
+        IntegerStringUtility.insertionSort(stringArray, new IntegerStringUtility.StringSimilarityComparator());
+        assertEquals(Arrays.toString(new String[]{"123", "321", "223", "333", "987", "978"}), Arrays.toString(stringArray));
+        System.out.println(Arrays.toString(stringArray));
     }
 
     @Test
