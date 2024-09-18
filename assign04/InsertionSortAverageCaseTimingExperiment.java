@@ -3,22 +3,21 @@ package assign04;
 import java.util.Comparator;
 
 /**
- * this class is a timing experiment for testing the runtime efficiency of InsertionSort
- * from the assignment 4 IntegerStringUtility in the average case scenario
- * @author Isaac Buehner
+ * This class times Insertion Sort on the average array of which is randomly filled with values
+ * @author Wallace McCarthy
  * @version 09/17/24
  */
 public class InsertionSortAverageCaseTimingExperiment extends ArraySortTimingExperiment{
     private static String problemSizeDescription = "Insertion Sort Average Case";
-    private static int problemSizeMin = 500;
-    private static int problemSizeCount = 50;
-    private static int problemSizeStep = 100;
+    private static int problemSizeMin = 1000;
+    private static int problemSizeCount = 20;
+    private static int problemSizeStep = 1000;
     private static int experimentIterationCount = 50;
 
 
     public static void main(String[] args) {
-        InsertionSortAverageCaseTimingExperiment experiment = new InsertionSortAverageCaseTimingExperiment();
-        experiment.printResults();
+        InsertionSortAverageCaseTimingExperiment insertionSort = new InsertionSortAverageCaseTimingExperiment();
+        insertionSort.printResults();
     }
 
     /**

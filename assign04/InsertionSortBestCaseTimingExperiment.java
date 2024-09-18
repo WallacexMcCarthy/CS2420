@@ -3,22 +3,21 @@ package assign04;
 import java.util.Comparator;
 
 /**
- * this class is a timing experiment for testing the runtime efficiency of InsertionSort
- * from the assignment 4 IntegerStringUtility in the best case scenario
- * @author Isaac Buehner
+ * This class tests Insertion Sort for its best runtime which is a insertion sort on an ascending sorted array or a already sorted array.
+ * @author Wallace McCarthy
  * @version 09/17/24
  */
 public class InsertionSortBestCaseTimingExperiment extends ArraySortTimingExperiment{
     private static String problemSizeDescription = "Insertion Sort Best Case";
-    private static int problemSizeMin = 5000;
+    private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;
     private static int experimentIterationCount = 50;
 
 
     public static void main(String[] args) {
-        InsertionSortBestCaseTimingExperiment experiment = new InsertionSortBestCaseTimingExperiment();
-        experiment.printResults();
+        InsertionSortBestCaseTimingExperiment insertionSort = new InsertionSortBestCaseTimingExperiment();
+        insertionSort.printResults();
     }
     /**
      * Constructor to build a sort timing experiment.
