@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * this class contains tests for the IntegerStringUtility class
+ * @author Isaac Buehner and Wallace McCarthy
+ * @version 09/17/24
  */
 public class IntegerStringUtilityTester {
     Comparator<String> stringNumericalCmp = new IntegerStringUtility.StringNumericalValueComparator();
