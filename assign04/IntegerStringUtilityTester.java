@@ -32,6 +32,8 @@ public class IntegerStringUtilityTester {
         assertTrue(stringNumericalCmp.compare("1234", "1233") > 0);
         assertTrue(stringNumericalCmp.compare("13", "012") > 0);
         assertTrue(stringNumericalCmp.compare("987", "1231") < 0);
+        assertTrue(stringNumericalCmp.compare("11", "11") == 0);
+        assertTrue(stringNumericalCmp.compare("", "11") < 0);
         assertTrue(stringNumericalCmp.compare("9223372036854775808", "9223372036854775809") < 0);
     }
     @Test
