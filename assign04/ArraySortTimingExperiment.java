@@ -67,11 +67,12 @@ public abstract class ArraySortTimingExperiment extends TimingExperiment {
      */
     protected void populateDescendingArray(int problemSize) {
         this.populateAscendingArray(problemSize);
-        Integer[] tempArr = new Integer[problemSize];
-        for (int i = problemSize - 1; i >= 0; i--) {
-            tempArr[problemSize - i - 1] = this.array[i];
+        int temp;
+        for (int i = array.length - 1; i >= array.length/2; i--) {
+            temp = this.array[i];
+            this.array[i] = array[this.array.length - i - 1];
+            array[this.array.length - i - 1] = temp;
         }
-        this.array = tempArr;
     }
 
     /**

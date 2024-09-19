@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * this class contains tests for the IntegerStringUtility class
  * @author Isaac Buehner and Wallace McCarthy
- * @version 09/17/24
+ * @version 09/19/24
  */
 public class IntegerStringUtilityTester {
     Comparator<String> stringNumericalCmp;
@@ -27,15 +27,6 @@ public class IntegerStringUtilityTester {
         stringSimilarityGroupCmp = new IntegerStringUtility.StringSimilarityGroupComparator();
         array = new int[]{123, 321, 666, 456, 989, 213};
     }
-
-    /**
-     * Insertion sort tested
-     * Comparators all tested
-     * Find Max for all of the comparators
-     * Get Simiklarity Groups done?
-     * Find Max Similarity Group
-     */
-
     @Test
     public void testStringNumericalComparator(){
         assertTrue(stringNumericalCmp.compare("1234", "1233") > 0);
