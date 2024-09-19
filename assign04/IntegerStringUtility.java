@@ -112,7 +112,7 @@ public class IntegerStringUtility {
      * this comparator translates strings of integers to char arrays so that they may be compared
      * lexicographically without worry of leading 0s
      * a string is considered greater than another if
-     * its integer interpretation is greater than the other string's
+     * its integer interpretation is greater than the other's
      */
     public static class StringNumericalValueComparator implements Comparator<String>{
 
@@ -133,7 +133,6 @@ public class IntegerStringUtility {
                 }
                 break;
             }
-
             for (int i = 0; i < arr2.length; i++) {
                 if(arr2[i] == '0') {
                     continue;
@@ -144,15 +143,12 @@ public class IntegerStringUtility {
                 }
                 break;
             }
-
             if(arr1NoZero.length > arr2NoZero.length) {
                 return 1;
             }
-
             if(arr1NoZero.length < arr2NoZero.length) {
                 return -1;
             }
-
             for (int i = 0; i < arr1NoZero.length; i++) {
                 if (arr1NoZero[i] > arr2NoZero[i]) {
                     return 1;
@@ -221,7 +217,7 @@ public class IntegerStringUtility {
                 if(a == null || b == null){
                     return 0;
                 }else{
-                    return a.compareTo(b);
+                    return new StringNumericalValueComparator().compare(a, b);
                 }
             }
         }
