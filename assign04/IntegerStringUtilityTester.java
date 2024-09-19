@@ -17,6 +17,7 @@ public class IntegerStringUtilityTester {
     Comparator<String> stringNumericalCmp;
     Comparator<String> stringSimilarityCmp;
     Comparator<String[]> stringSimilarityGroupCmp;
+    int[] array;
 
 
     @BeforeEach
@@ -24,8 +25,16 @@ public class IntegerStringUtilityTester {
         stringNumericalCmp = new IntegerStringUtility.StringNumericalValueComparator();
         stringSimilarityCmp = new IntegerStringUtility.StringSimilarityComparator();
         stringSimilarityGroupCmp = new IntegerStringUtility.StringSimilarityGroupComparator();
-
+        array = new int[]{123, 321, 666, 456, 989, 213};
     }
+
+    /**
+     * Insertion sort tested
+     * Comparators all tested
+     * Find Max for all of the comparators
+     * Get Simiklarity Groups done?
+     * Find Max Similarity Group
+     */
 
     @Test
     public void testStringNumericalComparator(){
@@ -41,12 +50,16 @@ public class IntegerStringUtilityTester {
         assertTrue(stringSimilarityCmp.compare("1235", "3421") > 0);
         assertTrue(stringSimilarityCmp.compare("1234", "3421") == 0);
         assertTrue(stringSimilarityCmp.compare("3421", "11111") < 0);
+        assertTrue(stringSimilarityCmp.compare("", "11111") < 0);
+        assertTrue(stringSimilarityCmp.compare("3421", "") > 0);
+        assertTrue(stringSimilarityCmp.compare("", "") == 0);
     }
 
     @Test
     public void testStringSimilarityGroupComparator(){
         assertTrue(stringSimilarityGroupCmp.compare(new String[]{"3421", "1234", "4321"}, new String[]{"987", "789"}) > 0);
         assertTrue(stringSimilarityGroupCmp.compare(new String[]{"3421", "1234", "4321"}, new String[]{"1235", "5321", "2153"}) < 0);
+        assertTrue(stringSimilarityGroupCmp.compare(new String[]{"3421", "1234", "4321"}, new String[]{"3421", "1234", "4321"}) == 0);
     }
 
     @Test
@@ -85,6 +98,32 @@ public class IntegerStringUtilityTester {
     public void findMaxInLengthOne() {
         assertEquals("2341", IntegerStringUtility.findMax(new String[]{"2341"}, Comparator.naturalOrder()));
     }
+    @Test
+    public void findMaxSimilarityGroupSameIntSizeAndLengthGroups() {
+        int[] intArr = new int[]{123, 456, 789, 321, 654, 987};
+        assertTrue(Arrays.equals(new String[]{"789", "987"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    }
+
+    @Test
+    public void findMaxSimilarityGroupDifferentIntSizeGroups() {
+        int[] intArr = new int[]{43, 3, 9, 100};
+        assertTrue(Arrays.equals(new String[]{"100"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    }
+
+    @Test
+    public void findMaxSimilarityGroupDifferentLengthGroups() {
+        int[] intArr = new int[]{988, 889, 765, 567, 657, 234};
+        assertTrue(Arrays.equals(new String[]{"765", "567", "657"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    }
+
+    @Test
+    public void findMaxStringNumericalCmp(){
+        assertEquals("321", IntegerStringUtility.findMax(new String[]{"123", "321", "231"}, stringNumericalCmp));
+        assertEquals("999", IntegerStringUtility.findMax(new String[]{"123", "321", "999"}, stringNumericalCmp));
+        assertEquals("999", IntegerStringUtility.findMax(new String[]{"999", "321", "231"}, stringNumericalCmp));
+        assertEquals("231", IntegerStringUtility.findMax(new String[]{"123", "321", "231"}, stringSimilarityCmp));
+        assertEquals("123", IntegerStringUtility.findMax(new String[]{"123", "121", "112"}, stringSimilarityCmp));
+    }
 
     @Test
     public void getSimilarityGroupsShort() {
@@ -109,20 +148,20 @@ public class IntegerStringUtilityTester {
     }
 
     @Test
-    public void findMaxSimilarityGroupSameIntSizeAndLengthGroups() {
-        int[] intArr = new int[]{123, 456, 789, 321, 654, 987};
-        assertTrue(Arrays.equals(new String[]{"789", "987"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    public void findMaxSimilarityGroupTest(){
+        String[] compareArr = new String[]{"123", "321", "213"};
+        assertEquals(Arrays.toString(compareArr), Arrays.toString(IntegerStringUtility.findMaximumSimilarityGroup(array)));
     }
-
     @Test
-    public void findMaxSimilarityGroupDifferentIntSizeGroups() {
-        int[] intArr = new int[]{43, 3, 9, 100};
-        assertTrue(Arrays.equals(new String[]{"100"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    public void findMaxSimilarityGroupAllSameSizeTest(){
+        int[] arr = new int[]{101, 101, 101};
+        String[] compareArr = new String[]{"101", "101", "101"};
+        assertEquals(Arrays.toString(compareArr), Arrays.toString(IntegerStringUtility.findMaximumSimilarityGroup(arr)));
     }
-
     @Test
-    public void findMaxSimilarityGroupDifferentLengthGroups() {
-        int[] intArr = new int[]{988, 889, 765, 567, 657, 234};
-        assertTrue(Arrays.equals(new String[]{"765", "567", "657"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    public void findMaxSimilarityGroupAllDifferentSizeTest(){
+        int[] arr = new int[]{123, 234, 345};
+        String[] compareArr = new String[]{"345"};
+        assertEquals(Arrays.toString(compareArr), Arrays.toString(IntegerStringUtility.findMaximumSimilarityGroup(arr)));
     }
 }
