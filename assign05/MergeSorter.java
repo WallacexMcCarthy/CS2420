@@ -14,11 +14,11 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
 
     public static void main(String[] args) {
         ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(4);
-        arr.add(2);
-        arr.add(5);
-        arr.add(1);
         arr.add(3);
+        arr.add(5);
+        arr.add(4);
+        arr.add(1);
+        arr.add(2);
         MergeSorter<Integer> merger = new MergeSorter<>(0);
         merger.sort(arr);
         System.out.println(arr.toString());
@@ -55,7 +55,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         int leftPoint = 0;
         int rightPoint = 0;
 
-        while (leftPoint + left <= mid && rightPoint + mid + 1 <= right) {
+        while (leftPoint + left <= mid && rightPoint + mid + 1<= right) {
             if (list.get(leftPoint + left).compareTo(list.get(rightPoint + mid)) > 0) {
                 auxArray.set(left + leftPoint + rightPoint, list.get( mid + rightPoint));
                 rightPoint++;
@@ -69,13 +69,14 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         if (leftPoint + left > mid) {
             for (int i = rightPoint + leftPoint + mid; i < right; i++) {
                 auxArray.set(i, list.get(i + left + mid));
+                rightPoint++;
                 System.out.println("L" + list.get(i + left + mid));
                 System.out.println(auxArray);
             }
         } else {
-            for (int i = left + rightPoint + leftPoint; i <= mid + 1; i++) {
+            for (int i = left + rightPoint + leftPoint; i < right; i++) {
                 auxArray.set(i, list.get(left + leftPoint));
-                System.out.println(list.get(i + leftPoint - 1));
+                leftPoint++;
                 System.out.println(auxArray);
             }
         }
