@@ -40,11 +40,20 @@ public class Test {
             if(element.equals(a)){
                 return true;
             }
+            long b = 1;
+            long c = 2;
+            int[] array = new int[]{ 1, 2, 3, 4, 5 };
+            array[0]++;
+
+
         }
         return false;
     }
 
     public static void main(String[] args) {
+        int[] array = new int[]{ 0, 2, 3, 4, 5 };
+        array[0]++;
+        System.out.println(array[0]);
 
         System.out.println(power(3, 3));;
         Integer[] arr = new Integer[6];
@@ -53,4 +62,5 @@ public class Test {
         }
         System.out.println(Test.contains(arr, new PhoneNumber("801.333.3333")));
     }
+
 }
