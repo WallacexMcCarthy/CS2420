@@ -18,8 +18,9 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         arr.add(3);
         arr.add(2);
         arr.add(1);
-        MergeSorter<Integer> merger = new MergeSorter<>(5);
+        MergeSorter<Integer> merger = new MergeSorter<>(3);
         merger.sort(arr);
+        System.out.println(arr);
     }
 
     /**
@@ -33,12 +34,12 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         for (int i = 0; i < list.size(); i++) {
             auxArray.add(null);
         }
-        if (list.size() < threshold) {
-            insertionSort(list);
-            System.out.println("insert");
-            System.out.println(list.toString());
-            return;
-        }
+//        if (list.size() < threshold) {
+//            insertionSort(list);
+//            System.out.println("insert");
+//            System.out.println(list.toString());
+//            return;
+//        }
         mergeSort(list, auxArray, 0, list.size());
     }
 
@@ -54,6 +55,12 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
     }
 
     private void merge(ArrayList<T> list, ArrayList<T> auxArray, int mid, int left, int right){
+        if(right - left < threshold){
+            System.out.println("Insertion sort: ");
+            insertionSort(list, left , right);
+            System.out.println(list);
+            return;
+        }
         int leftPoint = 0;
         int rightPoint = 0;
 
@@ -87,8 +94,8 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
      * @param arr the array to be sorted
      * @param <T> the generic type of the array
      */
-    private <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr){
-        for (int i = 1; i < arr.size(); i++) {
+    private <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr, int left, int right){
+        for (int i = left + 1; i < right; i++) {
             int counter = 1;
             T element = arr.get(i);
             while(i-counter >= 0 && element.compareTo(arr.get(i - counter)) < 0){
