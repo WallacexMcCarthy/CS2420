@@ -5,14 +5,14 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
- * this class uses an insertion sort method to perform several operations on string arrays
+ * This class utilises insertion sort to accomplish a various set of tasks mostly pretaining to comparing string
  * @author Isaac Buehner and Wallace McCarthy
  * @version 09/13/24
  */
 public class IntegerStringUtility {
 
     /**
-     * this method sorts an array according to the sorting pattern defined by an input comparator
+     * This method sorts a given array with insertion sort using a given comparator.
      * @param arr the array to be sorted
      * @param cmp the comparator to sort with
      * @param <T> the generic type of the array
@@ -31,7 +31,7 @@ public class IntegerStringUtility {
     }
 
     /**
-     * this method uses insertion sort to return the max value of an array
+     * this method uses insertion sort to return the max value of an array given a comparator
      * @param arr the array to search
      * @param cmp the comparator to sort with
      * @return the maximum value according to the input comparator
@@ -53,6 +53,9 @@ public class IntegerStringUtility {
      * @return a 2D array of strings
      */
     public static String[][] getSimilarityGroups(String[] arr){
+        if(arr.length == 0){
+            return new String[][]{};
+        }
         String[] cloneArr = arr.clone();
         insertionSort(cloneArr, new StringSimilarityComparator());
         String temp = cloneArr[0];
@@ -101,6 +104,9 @@ public class IntegerStringUtility {
      */
     public static String[] findMaximumSimilarityGroup(int[] arr) throws NoSuchElementException{
         String[] array = new String[arr.length];
+        if(arr.length == 0){
+            return array;
+        }
         for (int i = 0; i < arr.length; i++) {
             array[i] = arr[i] + "";
         }

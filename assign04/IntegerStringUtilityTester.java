@@ -9,7 +9,7 @@ import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * this class contains tests for the IntegerStringUtility class
+ * This class contains comprehensive tests for the IntegerStringUtility class
  * @author Isaac Buehner and Wallace McCarthy
  * @version 09/19/24
  */
@@ -34,6 +34,8 @@ public class IntegerStringUtilityTester {
         assertTrue(stringNumericalCmp.compare("987", "1231") < 0);
         assertTrue(stringNumericalCmp.compare("11", "11") == 0);
         assertTrue(stringNumericalCmp.compare("", "11") < 0);
+        assertTrue(stringNumericalCmp.compare("000000", "11") < 0);
+        assertTrue(stringNumericalCmp.compare("000000", "0000") == 0);
         assertTrue(stringNumericalCmp.compare("9223372036854775808", "9223372036854775809") < 0);
     }
     @Test
@@ -100,6 +102,16 @@ public class IntegerStringUtilityTester {
         int[] intArr = new int[]{43, 3, 9, 100};
         assertTrue(Arrays.equals(new String[]{"100"}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
     }
+    @Test
+    public void findMaxSimilarityGroupEmpty() {
+        Integer[] intArr = new Integer[]{};
+        assertEquals(null,  IntegerStringUtility.findMax(intArr, Comparator.naturalOrder()));
+    }
+    @Test
+    public void findMaxSimilarityGroupDifferentIntEmpty() {
+        int[] intArr = new int[]{};
+        assertTrue(Arrays.equals(new String[]{}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+    }
 
     @Test
     public void findMaxSimilarityGroupDifferentLengthGroups() {
@@ -125,6 +137,11 @@ public class IntegerStringUtilityTester {
                 assertEquals(compareArr[i][j], IntegerStringUtility.getSimilarityGroups(stringArray)[i][j]);
             }
         }
+    }
+    @Test
+    public void getSimilarityGroupsEmpty() {
+        String[][] arr = new String[][]{};
+        assertEquals(Arrays.toString(arr), Arrays.toString(IntegerStringUtility.getSimilarityGroups(new String[]{})));
     }
 
     @Test
