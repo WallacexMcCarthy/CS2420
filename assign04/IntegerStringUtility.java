@@ -39,8 +39,8 @@ public class IntegerStringUtility {
      * @throws NoSuchElementException if the element checked does not exist
      */
     public static <T> T findMax(T[] arr, Comparator<? super T> cmp) throws NoSuchElementException {
-        if(arr.length ==0){
-            return null;
+        if(arr.length == 0){
+            throw new NoSuchElementException();
         }
         T[] clone = arr.clone();
         insertionSort(clone, cmp);
@@ -105,7 +105,7 @@ public class IntegerStringUtility {
     public static String[] findMaximumSimilarityGroup(int[] arr) throws NoSuchElementException{
         String[] array = new String[arr.length];
         if(arr.length == 0){
-            return array;
+            throw new NoSuchElementException();
         }
         for (int i = 0; i < arr.length; i++) {
             array[i] = arr[i] + "";

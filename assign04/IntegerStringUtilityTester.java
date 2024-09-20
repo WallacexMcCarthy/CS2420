@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
+import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -84,7 +84,7 @@ public class IntegerStringUtilityTester {
 
     @Test
     public void findMaxInEmpty() {
-        assertNull(IntegerStringUtility.findMax(new String[]{}, Comparator.naturalOrder()));
+        assertThrows(NoSuchElementException.class, () -> IntegerStringUtility.findMax(new String[]{}, Comparator.naturalOrder()));
     }
 
     @Test
@@ -105,12 +105,13 @@ public class IntegerStringUtilityTester {
     @Test
     public void findMaxSimilarityGroupEmpty() {
         Integer[] intArr = new Integer[]{};
-        assertEquals(null,  IntegerStringUtility.findMax(intArr, Comparator.naturalOrder()));
+
+        assertThrows(NoSuchElementException.class, () -> IntegerStringUtility.findMax(intArr, Comparator.naturalOrder()));
     }
     @Test
     public void findMaxSimilarityGroupDifferentIntEmpty() {
         int[] intArr = new int[]{};
-        assertTrue(Arrays.equals(new String[]{}, IntegerStringUtility.findMaximumSimilarityGroup(intArr)));
+        assertThrows(NoSuchElementException.class, () -> IntegerStringUtility.findMaximumSimilarityGroup(intArr));
     }
 
     @Test
