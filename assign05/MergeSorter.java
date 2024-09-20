@@ -16,6 +16,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         ArrayList<Integer> arr = new ArrayList<>();
         arr.add(4);
         arr.add(2);
+        arr.add(5);
         arr.add(1);
         arr.add(3);
         MergeSorter<Integer> merger = new MergeSorter<>(0);
@@ -43,9 +44,9 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         if(right - left < 2){
             return;
         }
-        int mid = (right- left) / 2;
+        int mid = (right + left) / 2;
         mergeSort(list, auxArray, left, mid);
-        mergeSort(list, auxArray, mid + 1, right);
+        mergeSort(list, auxArray, mid , right);
         merge(list, auxArray, mid, left, right);
 
     }
@@ -68,14 +69,20 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         if (leftPoint + left > mid) {
             for (int i = rightPoint + leftPoint + mid; i < right; i++) {
                 auxArray.set(i, list.get(i + left + mid));
+                System.out.println("L" + list.get(i + left + mid));
                 System.out.println(auxArray);
             }
         } else {
-            for (int i = left + rightPoint + leftPoint; i <= mid; i++) {
-                auxArray.set(i, list.get(i + leftPoint - 1));
+            for (int i = left + rightPoint + leftPoint; i <= mid + 1; i++) {
+                auxArray.set(i, list.get(left + leftPoint));
+                System.out.println(list.get(i + leftPoint - 1));
                 System.out.println(auxArray);
             }
         }
+        for (int i = left; i < right; i++) {
+            list.set(i, auxArray.get(i));
+        }
+        System.out.println("list" +list);
     }
 
     /**
