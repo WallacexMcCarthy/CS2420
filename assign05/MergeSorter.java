@@ -18,6 +18,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         arr.add(3);
         arr.add(2);
         arr.add(1);
+        arr.add(5);
         MergeSorter<Integer> merger = new MergeSorter<>(3);
         merger.sort(arr);
         System.out.println(arr);
@@ -98,7 +99,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         for (int i = left + 1; i < right; i++) {
             int counter = 1;
             T element = arr.get(i);
-            while(i-counter >= 0 && element.compareTo(arr.get(i - counter)) < 0){
+            while(i-counter >= left && element.compareTo(arr.get(i - counter)) < 0){
                 T temp = arr.get(i - counter);
                 arr.set(i - counter, element);
                 arr.set(i-counter + 1, temp);
