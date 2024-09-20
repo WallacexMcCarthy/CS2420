@@ -14,14 +14,12 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
 
     public static void main(String[] args) {
         ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(3);
-        arr.add(5);
         arr.add(4);
-        arr.add(1);
+        arr.add(3);
         arr.add(2);
-        MergeSorter<Integer> merger = new MergeSorter<>(0);
+        arr.add(1);
+        MergeSorter<Integer> merger = new MergeSorter<>(5);
         merger.sort(arr);
-        System.out.println(arr.toString());
     }
 
     /**
@@ -35,9 +33,13 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         for (int i = 0; i < list.size(); i++) {
             auxArray.add(null);
         }
+        if (list.size() < threshold) {
+            insertionSort(list);
+            System.out.println("insert");
+            System.out.println(list.toString());
+            return;
+        }
         mergeSort(list, auxArray, 0, list.size());
-
-
     }
 
     private void mergeSort(ArrayList<T> list, ArrayList<T> auxArray, int left, int right){
@@ -59,31 +61,25 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
             if (list.get(leftPoint + left).compareTo(list.get(rightPoint + mid)) > 0) {
                 auxArray.set(left + leftPoint + rightPoint, list.get( mid + rightPoint));
                 rightPoint++;
-                System.out.println(auxArray);
             } else {
                 auxArray.set(left + leftPoint + rightPoint, list.get(left + leftPoint));
                 leftPoint++;
-                System.out.println(auxArray);
             }
         }
         if (leftPoint + left > mid) {
             for (int i = rightPoint + leftPoint + mid; i < right; i++) {
                 auxArray.set(i, list.get(i + left + mid));
                 rightPoint++;
-                System.out.println("L" + list.get(i + left + mid));
-                System.out.println(auxArray);
             }
         } else {
             for (int i = left + rightPoint + leftPoint; i < right; i++) {
                 auxArray.set(i, list.get(left + leftPoint));
                 leftPoint++;
-                System.out.println(auxArray);
             }
         }
         for (int i = left; i < right; i++) {
             list.set(i, auxArray.get(i));
         }
-        System.out.println("list" +list);
     }
 
     /**
