@@ -20,7 +20,7 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
     }
 
     private void quickSort(ArrayList<T> list, int leftBound, int rightBound) {
-        if(rightBound - leftBound <= 1) {
+        if(rightBound - leftBound < 1) {
             return;
         }
         int pivot = this.chooser.getPivotIndex(list, leftBound, rightBound);
@@ -36,7 +36,7 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
         list.set(pivot, temp);
 
         int leftPointer = leftBound;
-        int rightPointer = rightBound - 1;
+        int rightPointer = rightBound;
 
         while(leftPointer < rightPointer) {
 
@@ -45,7 +45,7 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
             }
 
             while (list.get(rightPointer).compareTo(list.get(rightBound)) > 0) {
-                rightPointer++;
+                rightPointer--;
             }
 
             if (leftPointer > rightPointer) {
