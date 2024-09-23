@@ -105,6 +105,8 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
     /**
      * private method that sorts a given array with insertion sort
      * @param arr the array to be sorted
+     * @param left the left bounds of the list to be sorted
+     * @param right the right bounds of the list to be sorted
      * @param <T> the generic type of the array
      */
     private <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr, int left, int right){
