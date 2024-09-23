@@ -3,6 +3,7 @@ package assign05;
 import java.util.ArrayList;
 
 public class FirstPivotChooser <T extends Comparable<? super T>> implements PivotChooser<T>{
+
     /**
      * Selects an element in the given ArrayList to serve as the quicksort pivot.
      *

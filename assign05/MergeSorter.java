@@ -1,30 +1,28 @@
 package assign05;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
+/**
+ * this class is for sorting an ArrayList of a generic type using the MergeSort technique
+ * it uses the MergeSort technique and switches to Insertion sort if the sub-lists
+ * are equal to or less than a given threshold
+ * @param <T> the generic type
+ * @version 09/23/24
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
     private int threshold;
+
+    /**
+     * constructor for a MergeSorter
+     * @param threshold is the size of sublist that will start using insertion sort instead of merge sort
+     * @throws IllegalArgumentException
+     */
     public MergeSorter(int threshold) throws IllegalArgumentException{
         if(threshold < 0){
             throw new IllegalArgumentException();
         }
         this.threshold = threshold;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(4);
-        arr.add(3);
-        arr.add(2);
-        arr.add(1);
-        arr.add(8);
-        arr.add(7);
-        arr.add(6);
-        arr.add(5);
-        MergeSorter<Integer> merger = new MergeSorter<>(4);
-        merger.sort(arr);
-        System.out.println(arr);
     }
 
     /**
@@ -41,17 +39,33 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         mergeSort(list, auxArray, 0, list.size());
     }
 
+    /**
+     * private recursive method for splitting a list to be sorted
+     * @param list list to be sorted
+     * @param auxArray auxiliary array for sorting
+     * @param left the left bound of a subsection of the list
+     * @param right the right bound of a subsection of the list
+     */
     private void mergeSort(ArrayList<T> list, ArrayList<T> auxArray, int left, int right){
         if(right - left < 2){
             return;
         }
         int mid = (right + left) / 2;
+
         mergeSort(list, auxArray, left, mid);
         mergeSort(list, auxArray, mid , right);
-        merge(list, auxArray, mid, left, right);
 
+        merge(list, auxArray, mid, left, right);
     }
 
+    /**
+     * private method that merges 2 subsections together in sorted form
+     * @param list the list to be sorted
+     * @param auxArray auxiliary array for sorting
+     * @param mid the middle index of the subsection
+     * @param left the left bound of the subsection
+     * @param right the right bound of the subsection
+     */
     private void merge(ArrayList<T> list, ArrayList<T> auxArray, int mid, int left, int right){
         if(right - left <= threshold){
             insertionSort(list, left, right);
@@ -89,7 +103,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
     }
 
     /**
-     * This method sorts a given array with insertion sort using a given comparator.
+     * private method that sorts a given array with insertion sort
      * @param arr the array to be sorted
      * @param <T> the generic type of the array
      */
@@ -97,6 +111,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         for (int i = left + 1; i < right; i++) {
             int counter = 1;
             T element = arr.get(i);
+
             while(i-counter >= left && element.compareTo(arr.get(i - counter)) < 0){
                 T temp = arr.get(i - counter);
                 arr.set(i - counter, element);

@@ -2,9 +2,20 @@ package assign05;
 
 import java.util.ArrayList;
 
+/**
+ * this class is for sorting an ArrayList of a generic type using the QuickSort technique
+ * pivots can be chosen using an extended class of PivotChooser
+ * @param <T> a generic type
+ * @version 09/23/24
+ * @author Wallace McCarthy and Isaac Buehner
+ */
 public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
-
     private PivotChooser<T> chooser;
+
+    /**
+     * constructor for a QuickSorter
+     * @param chooser the pivot chooser for the quick sort process
+     */
     public QuickSorter(PivotChooser<T> chooser){
         this.chooser = chooser;
     }
@@ -19,6 +30,12 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
         quickSort(list, 0, list.size() - 1);
     }
 
+    /**
+     * private recursive method that quick sorts sections of the list
+     * @param list the list to be sorted
+     * @param leftBound the left bound of the subsection
+     * @param rightBound the right bound of the subsection
+     */
     private void quickSort(ArrayList<T> list, int leftBound, int rightBound) {
         if(rightBound - leftBound < 1) {
             return;
@@ -30,6 +47,14 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
         quickSort(list, partitionIndex + 1, rightBound);
     }
 
+    /**
+     * private method that sorts a section of the list
+     * @param list the list to be sorted
+     * @param pivot the pivot point to sort by
+     * @param leftBound the left bound of the subsection
+     * @param rightBound the right bound of the subsection
+     * @return the final place of the pivot element
+     */
     private int partition(ArrayList<T> list, int pivot, int leftBound, int rightBound) {
         T temp = list.get(rightBound);
         list.set(rightBound, list.get(pivot));
@@ -37,13 +62,11 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
 
         int leftPointer = leftBound;
         int rightPointer = rightBound;
-
         while(leftPointer < rightPointer) {
 
             while (list.get(leftPointer).compareTo(list.get(rightBound)) < 0) {
                 leftPointer++;
             }
-
             while (list.get(rightPointer).compareTo(list.get(rightBound)) > 0) {
                 rightPointer--;
             }
@@ -51,12 +74,10 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
             if (leftPointer > rightPointer) {
                 break;
             }
-
             temp = list.get(leftPointer);
             list.set(leftPointer, list.get(rightPointer));
             list.set(rightPointer, temp);
         }
-
         temp = list.get(leftPointer);
         list.set(leftPointer, list.get(rightBound));
         list.set(rightBound, temp);

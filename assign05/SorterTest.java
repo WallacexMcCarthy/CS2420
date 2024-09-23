@@ -10,6 +10,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * this class contains tests for the MergeSorter and QuickSorter classes
+ */
 public class SorterTest {
     public MergeSorter<Integer> mergeSort = new MergeSorter<>(3);
     public FirstPivotChooser<Integer> firstPivotIntegerChooser = new FirstPivotChooser<>();
@@ -28,7 +31,6 @@ public class SorterTest {
         Collections.shuffle(smallIntArray);
     }
 
-    // Test Merge Sort
     @Test
     public void test3ElementMergeSortForward() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 2, 3));
@@ -36,6 +38,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementMergeSortBackward() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 2, 1));
@@ -43,6 +46,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementMergeSortSmallBigMiddle() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 3, 2));
@@ -50,6 +54,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementMergeSortMiddleBigSmall() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 3, 1));
@@ -57,6 +62,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementMergeSortBigSmallMiddle() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 1, 2));
@@ -64,6 +70,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementMergeSortMiddleSmallBig() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 1, 3));
@@ -71,6 +78,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void testMergeSortNotConsecutive() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(8, 6, 1, 0, 4));
@@ -78,6 +86,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(Arrays.asList(0, 1, 4, 6, 8), integerArrayList);
     }
+
     @Test
     public void testMergeSortVeryLargeBackwardsSorted() {
         ArrayList<Integer> integerArrayList = new ArrayList<>();
@@ -90,6 +99,7 @@ public class SorterTest {
         mergeSort.sort(integerArrayList);
         assertEquals(integerArrayListSorted, integerArrayList);
     }
+
     @Test
     public void testMergeSortVeryLargeRandom() {
         ArrayList<Integer> integerArrayList = randomIntegerArrayList(1000);
@@ -99,7 +109,6 @@ public class SorterTest {
         assertEquals(integerArrayListSorted, integerArrayList);
     }
 
-    //////
     @Test
     public void test3ElementQuickSortForward() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 2, 3));
@@ -107,6 +116,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementQuickSortBackward() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 2, 1));
@@ -114,6 +124,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementQuickSortSmallBigMiddle() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 3, 2));
@@ -121,6 +132,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementQuickSortMiddleBigSmall() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 3, 1));
@@ -128,6 +140,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementQuickSortBigSmallMiddle() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 1, 2));
@@ -135,6 +148,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void test3ElementQuickSortMiddleSmallBig() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 1, 3));
@@ -142,6 +156,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
     }
+
     @Test
     public void testQuickSortNotConsecutive() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(8, 6, 1, 0, 4));
@@ -149,6 +164,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(Arrays.asList(0, 1, 4, 6, 8), integerArrayList);
     }
+
     @Test
     public void testQuickSortVeryLargeBackwardsSorted() {
         ArrayList<Integer> integerArrayList = new ArrayList<>();
@@ -161,6 +177,7 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(integerArrayListSorted, integerArrayList);
     }
+
     @Test
     public void testQuickSortVeryLargeRandom() {
         ArrayList<Integer> integerArrayList = randomIntegerArrayList(1000);
@@ -169,7 +186,6 @@ public class SorterTest {
         quickSort.sort(integerArrayList);
         assertEquals(integerArrayListSorted, integerArrayList);
     }
-
 
     public ArrayList<Integer> randomIntegerArrayList(int size){
         ArrayList<Integer> arraylist = sorrtedIntegerArrayList(size);
@@ -183,6 +199,7 @@ public class SorterTest {
         }
         return arraylist;
     }
+
     public ArrayList<Integer> sorrtedIntegerArrayList(int size){
         ArrayList<Integer> arraylist = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -190,6 +207,5 @@ public class SorterTest {
         }
         return arraylist;
     }
-
 
 }
