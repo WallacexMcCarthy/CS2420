@@ -14,11 +14,15 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
 
     public static void main(String[] args) {
         ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(1);
+        arr.add(4);
         arr.add(3);
         arr.add(2);
-
-        MergeSorter<Integer> merger = new MergeSorter<>(3);
+        arr.add(1);
+        arr.add(8);
+        arr.add(7);
+        arr.add(6);
+        arr.add(5);
+        MergeSorter<Integer> merger = new MergeSorter<>(4);
         merger.sort(arr);
         System.out.println(arr);
     }
@@ -34,12 +38,6 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         for (int i = 0; i < list.size(); i++) {
             auxArray.add(null);
         }
-//        if (list.size() < threshold) {
-//            insertionSort(list);
-//            System.out.println("insert");
-//            System.out.println(list.toString());
-//            return;
-//        }
         mergeSort(list, auxArray, 0, list.size());
     }
 
@@ -55,15 +53,13 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
     }
 
     private void merge(ArrayList<T> list, ArrayList<T> auxArray, int mid, int left, int right){
-//        if(right - left < threshold){
-//            System.out.println("Insertion sort: ");
-//            insertionSort(list, left , right);
-//            for (int i = left; i < right; i++) {
-//                auxArray.set(i, list.get(i));
-//            }
-//            System.out.println(list);
-//            return;
-//        }
+        if(right - left <= threshold){
+            insertionSort(list, left, right);
+            for (int i = left; i < right; i++) {
+                auxArray.set(i, list.get(i));
+            }
+            return;
+        }
         int leftPoint = 0;
         int rightPoint = 0;
 
@@ -76,9 +72,9 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
                 leftPoint++;
             }
         }
-        if (leftPoint + left >= mid) {
-            for (int i = rightPoint + mid; i < right; i++) {
-                auxArray.set(i, list.get(rightPoint + mid));
+        if (left + leftPoint >= mid) {
+            for (int i = mid + rightPoint; i < right; i++) {
+                auxArray.set(i, list.get(mid + rightPoint));
                 rightPoint++;
             }
         } else {

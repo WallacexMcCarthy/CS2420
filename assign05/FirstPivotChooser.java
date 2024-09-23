@@ -13,6 +13,6 @@ public class FirstPivotChooser <T extends Comparable<? super T>> implements Pivo
      */
     @Override
     public int getPivotIndex(ArrayList<T> list, int leftIndex, int rightIndex) {
-        return 0;
+        return leftIndex;
     }
 }
