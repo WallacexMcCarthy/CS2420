@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SorterTest {
     public MergeSorter<Integer> mergeSort = new MergeSorter<>(3);
+    public FirstPivotChooser<Integer> firstPivotIntegerChooser = new FirstPivotChooser<>();
+    public QuickSorter<Integer> quickSort = new QuickSorter<>(firstPivotIntegerChooser);
     public ArrayList<Integer> smallIntArray;
     public ArrayList<Integer> smallSortedIntArray;
 
@@ -94,6 +96,77 @@ public class SorterTest {
         ArrayList<Integer> integerArrayListSorted = sorrtedIntegerArrayList(1000);
 
         mergeSort.sort(integerArrayList);
+        assertEquals(integerArrayListSorted, integerArrayList);
+    }
+
+    //////
+    @Test
+    public void test3ElementQuickSortForward() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 2, 3));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void test3ElementQuickSortBackward() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 2, 1));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void test3ElementQuickSortSmallBigMiddle() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 3, 2));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void test3ElementQuickSortMiddleBigSmall() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 3, 1));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void test3ElementQuickSortBigSmallMiddle() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(3, 1, 2));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void test3ElementQuickSortMiddleSmallBig() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(2, 1, 3));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(1, 2, 3), integerArrayList);
+    }
+    @Test
+    public void testQuickSortNotConsecutive() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(8, 6, 1, 0, 4));
+
+        quickSort.sort(integerArrayList);
+        assertEquals(Arrays.asList(0, 1, 4, 6, 8), integerArrayList);
+    }
+    @Test
+    public void testQuickSortVeryLargeBackwardsSorted() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        ArrayList<Integer> integerArrayListSorted = new ArrayList<>();
+        for (int i = 999; i >= 0; i--) {
+            integerArrayList.add(i);
+            integerArrayListSorted.add(999 - i);
+        }
+
+        quickSort.sort(integerArrayList);
+        assertEquals(integerArrayListSorted, integerArrayList);
+    }
+    @Test
+    public void testQuickSortVeryLargeRandom() {
+        ArrayList<Integer> integerArrayList = randomIntegerArrayList(1000);
+        ArrayList<Integer> integerArrayListSorted = sorrtedIntegerArrayList(1000);
+
+        quickSort.sort(integerArrayList);
         assertEquals(integerArrayListSorted, integerArrayList);
     }
 
