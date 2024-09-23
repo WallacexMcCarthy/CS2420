@@ -48,6 +48,10 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
                 rightPointer++;
             }
 
+            if (leftPointer > rightPointer) {
+                break;
+            }
+
             temp = list.get(leftPointer);
             list.set(leftPointer, list.get(rightPointer));
             list.set(rightPointer, temp);
