@@ -1,6 +1,7 @@
 import assign02.PhoneNumber;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Test {
 
@@ -48,6 +49,31 @@ public class Test {
 
         }
         return false;
+    }
+
+    public void selectionSort(int[] arr){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if(arr[i] < arr[j]){
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+    }
+
+    public static <T> void insertionSort(T[] arr, Comparator<? super T> cmp){
+        for (int i = 1; i < arr.length; i++) {
+            int counter = 1;
+            T element = arr[i];
+            while(i-counter >= 0 && cmp.compare(element, arr[i - counter]) < 0){
+                T temp = arr[i - counter];
+                arr[i - counter] = element;
+                arr[i-counter + 1] = temp;
+                counter++;
+            }
+        }
     }
 
     public static void main(String[] args) {
