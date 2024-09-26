@@ -1,5 +1,7 @@
 package assign05;
 
+import com.sun.jdi.InterfaceType;
+
 import java.util.ArrayList;
 
 /**
@@ -61,13 +63,13 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
         list.set(pivot, temp);
 
         int leftPointer = leftBound;
-        int rightPointer = rightBound;
+        int rightPointer = rightBound - 1;
         while(leftPointer < rightPointer) {
 
             while (list.get(leftPointer).compareTo(list.get(rightBound)) < 0) {
                 leftPointer++;
             }
-            while (list.get(rightPointer).compareTo(list.get(rightBound)) > 0) {
+            while (list.get(rightPointer).compareTo(list.get(rightBound)) >= 0 && rightPointer > 0) {
                 rightPointer--;
             }
 
@@ -78,10 +80,11 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
             list.set(leftPointer, list.get(rightPointer));
             list.set(rightPointer, temp);
         }
-        temp = list.get(leftPointer);
-        list.set(leftPointer, list.get(rightBound));
-        list.set(rightBound, temp);
-
+        if (list.get(leftPointer).compareTo(list.get(rightBound)) >= 0) {
+            temp = list.get(leftPointer);
+            list.set(leftPointer, list.get(rightBound));
+            list.set(rightBound, temp);
+        }
         return leftPointer;
     }
 
