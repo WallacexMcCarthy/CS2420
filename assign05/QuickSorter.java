@@ -29,6 +29,7 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
      */
     @Override
     public void sort(ArrayList<T> list) {
+
         quickSort(list, 0, list.size() - 1);
     }
 

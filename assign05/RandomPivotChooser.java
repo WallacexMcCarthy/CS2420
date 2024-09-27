@@ -1,7 +1,15 @@
 package assign05;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+/**
+ * this class is a pivot chooser for the quicksort algorithm
+ * it returns a random index in the array
+ * @param <T> a generic type
+ * @version 09/27/24
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class RandomPivotChooser<T extends Comparable<? super T>> implements PivotChooser<T>{
     /**
      * Selects an element in the given ArrayList to serve as the quicksort pivot.
@@ -13,6 +21,7 @@ public class RandomPivotChooser<T extends Comparable<? super T>> implements Pivo
      */
     @Override
     public int getPivotIndex(ArrayList<T> list, int leftIndex, int rightIndex) {
-        return 0;
+        Random rng = new Random();
+        return rng.nextInt(leftIndex, rightIndex);
     }
 }

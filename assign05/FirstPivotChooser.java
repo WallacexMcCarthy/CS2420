@@ -2,6 +2,13 @@ package assign05;
 
 import java.util.ArrayList;
 
+/**
+ * this class is a pivot chooser for the quicksort algorithm
+ * it returns 0, which is the first index in the array
+ * @param <T> a generic type
+ * @version 09/27/24
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class FirstPivotChooser <T extends Comparable<? super T>> implements PivotChooser<T>{
 
     /**
