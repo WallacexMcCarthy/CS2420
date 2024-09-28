@@ -19,8 +19,8 @@ public class SorterTest {
     public MedianOfThreePivotChooser<Integer> medianPivotIntegerChooser = new MedianOfThreePivotChooser<>();
     public RandomPivotChooser<Integer> randomPivotIntegerChooser = new RandomPivotChooser<>();
     public QuickSorter<Integer> quickSortFirstPivot = new QuickSorter<>(firstPivotIntegerChooser);
-    public QuickSorter<Integer> quickSortMedianPivot = new QuickSorter<>(firstPivotIntegerChooser);
-    public QuickSorter<Integer> quickSortRandomPivot = new QuickSorter<>(firstPivotIntegerChooser);
+    public QuickSorter<Integer> quickSortMedianPivot = new QuickSorter<>(medianPivotIntegerChooser);
+    public QuickSorter<Integer> quickSortRandomPivot = new QuickSorter<>(randomPivotIntegerChooser);
 
     public ArrayList<Integer> smallIntArray;
     public ArrayList<Integer> smallSortedIntArray;

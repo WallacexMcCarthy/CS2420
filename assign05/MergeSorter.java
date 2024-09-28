@@ -1,6 +1,7 @@
 package assign05;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * this class is for sorting an ArrayList of a generic type using the MergeSort technique
