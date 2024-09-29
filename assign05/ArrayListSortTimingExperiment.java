@@ -35,7 +35,7 @@ public abstract class ArrayListSortTimingExperiment extends TimingExperiment {
         array = new ArrayList<>();
         int currentElement = rng.nextInt(20);
         for (int i = 0; i < problemSize; i++) {
-            array.set(i, currentElement);
+            array.add(currentElement);
             currentElement += rng.nextInt(10);
         }
     }

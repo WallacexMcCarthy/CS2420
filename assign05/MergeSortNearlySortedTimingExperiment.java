@@ -1,17 +1,18 @@
 package assign05;
 
 public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingExperiment{
+    private static String problemSizeDescription = "Merge Sort Shuffled";
+    private static int problemSizeMin = 1000;
+    private static int problemSizeCount = 20;
+    private static int problemSizeStep = 1000;
+    private static int experimentIterationCount = 50;
     protected static int threshold;
+    private MergeSorter<Integer> mergeSort;
+
     /**
      * Constructor to build a general timing experiment.
-     *
-     * @param problemSizeDescription   - description of the problem size for the experiment
-     * @param problemSizeMin           - minimum array size
-     * @param problemSizeCount         - number of array sizes to use in the experiment
-     * @param problemSizeStep          - Step size between consecutive array sizes
-     * @param experimentIterationCount - Number of times to run computation for a given array size
      */
-    public MergeSortNearlySortedTimingExperiment(String problemSizeDescription, int problemSizeMin, int problemSizeCount, int problemSizeStep, int experimentIterationCount) {
+    public MergeSortNearlySortedTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
     }
 
@@ -23,7 +24,8 @@ public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingEx
      */
     @Override
     protected void setupExperiment(int problemSize) {
-
+        populateNearlyAscendingArray(problemSize);
+        this.mergeSort = new MergeSorter<>(threshold);
     }
 
     /**
@@ -31,6 +33,12 @@ public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingEx
      */
     @Override
     protected void runComputation() {
+        mergeSort.sort(array);
+    }
 
+    public static void main(String[] args) {
+        MergeSortShuffledTimingExperiment experiment = new MergeSortShuffledTimingExperiment();
+        threshold = 3;
+        experiment.printResults();
     }
 }
