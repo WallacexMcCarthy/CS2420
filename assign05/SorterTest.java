@@ -243,7 +243,12 @@ public class SorterTest {
         assertEquals(Arrays.asList(), emptyArrayList);
     }
 
-    public ArrayList<Integer> randomIntegerArrayList(int size){
+    /**
+     * private helper method for populating a random ArrayList of a given size
+     * @param size the size of the desired ArrayList
+     * @return the randomly populated ArrayList
+     */
+    private ArrayList<Integer> randomIntegerArrayList(int size){
         ArrayList<Integer> arraylist = sorrtedIntegerArrayList(size);
         Random random = new Random();
         for (int i = 0; i < size; i++) {
@@ -256,7 +261,12 @@ public class SorterTest {
         return arraylist;
     }
 
-    public ArrayList<Integer> sorrtedIntegerArrayList(int size){
+    /**
+     * private helper method for populating a sorted ArrayList of a given size
+     * @param size the size of the desired ArrayList
+     * @return the sorted ArrayList
+     */
+    private ArrayList<Integer> sorrtedIntegerArrayList(int size){
         ArrayList<Integer> arraylist = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             arraylist.add(i);

@@ -1,5 +1,10 @@
 package assign05;
 
+/**
+ * this class is for testing the runtime of the mergesort algorithm on a descending ArrayList
+ * @version 09/30/24
+ * @author Isaac Buehner
+ */
 public class MergeSortDescendingTimingExperiment extends ArrayListSortTimingExperiment{
     private static String problemSizeDescription = "Merge Sort Shuffled";
     private static int problemSizeMin = 1000;
@@ -17,7 +22,7 @@ public class MergeSortDescendingTimingExperiment extends ArrayListSortTimingExpe
     }
 
     /**
-     * Abstract method for setting up the infrastructure for the experiment
+     * method for setting up the infrastructure for the experiment
      * for a given problem size.
      *
      * @param problemSize - the problem size for one experiment
@@ -29,7 +34,7 @@ public class MergeSortDescendingTimingExperiment extends ArrayListSortTimingExpe
     }
 
     /**
-     * Abstract method to run the computation to be timed.
+     * method to run the computation to be timed.
      */
     @Override
     protected void runComputation() {

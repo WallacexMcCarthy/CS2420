@@ -1,11 +1,16 @@
 package assign05;
 
+/**
+ * this class is for testing the runtime of the mergesort algorithm on a shuffled ArrayList
+ * @version 09/30/24
+ * @author Isaac Buehner
+ */
 public class MergeSortShuffledTimingExperiment extends ArrayListSortTimingExperiment{
     private static String problemSizeDescription = "Merge Sort Shuffled";
-    private static int problemSizeMin = 1000;
+    private static int problemSizeMin = 10000;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 50;
+    private static int problemSizeStep = 5000;
+    private static int experimentIterationCount = 20;
     protected static int threshold;
     private MergeSorter<Integer> mergeSort;
 
@@ -18,7 +23,7 @@ public class MergeSortShuffledTimingExperiment extends ArrayListSortTimingExperi
     }
 
     /**
-     * Abstract method for setting up the infrastructure for the experiment
+     * method for setting up the infrastructure for the experiment
      * for a given problem size.
      *
      * @param problemSize - the problem size for one experiment
@@ -30,7 +35,7 @@ public class MergeSortShuffledTimingExperiment extends ArrayListSortTimingExperi
     }
 
     /**
-     * Abstract method to run the computation to be timed.
+     * method to run the computation to be timed.
      */
     @Override
     protected void runComputation() {
@@ -39,7 +44,7 @@ public class MergeSortShuffledTimingExperiment extends ArrayListSortTimingExperi
 
     public static void main(String[] args) {
         MergeSortShuffledTimingExperiment experiment = new MergeSortShuffledTimingExperiment();
-        threshold = 3;
+        threshold = 24;
         experiment.printResults();
     }
 }

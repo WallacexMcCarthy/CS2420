@@ -1,36 +1,49 @@
 package assign05;
 
+/**
+ * this class is for testing the runtime of the quicksort algorithm on a shuffled ArrayList
+ * @version 09/30/24
+ * @author Isaac Buehner
+ */
 public class QuickSortShuffledTimingExperiment extends ArrayListSortTimingExperiment{
+    private static String problemSizeDescription = "Merge Sort Shuffled";
+    private static int problemSizeMin = 10000;
+    private static int problemSizeCount = 20;
+    private static int problemSizeStep = 5000;
+    private static int experimentIterationCount = 20;
+    private QuickSorter<Integer> quickSort;
     protected static PivotChooser<Integer> pivotChooser;
+
     /**
      * Constructor to build a general timing experiment.
-     *
-     * @param problemSizeDescription   - description of the problem size for the experiment
-     * @param problemSizeMin           - minimum array size
-     * @param problemSizeCount         - number of array sizes to use in the experiment
-     * @param problemSizeStep          - Step size between consecutive array sizes
-     * @param experimentIterationCount - Number of times to run computation for a given array size
      */
-    public QuickSortShuffledTimingExperiment(String problemSizeDescription, int problemSizeMin, int problemSizeCount, int problemSizeStep, int experimentIterationCount) {
+    public QuickSortShuffledTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
     }
 
     /**
-     * Abstract method for setting up the infrastructure for the experiment
+     * method for setting up the infrastructure for the experiment
      * for a given problem size.
      *
      * @param problemSize - the problem size for one experiment
      */
     @Override
     protected void setupExperiment(int problemSize) {
-
+        populateRandomArray(problemSize);
+        this.quickSort = new QuickSorter<>(pivotChooser);
     }
 
     /**
-     * Abstract method to run the computation to be timed.
+     * method to run the computation to be timed.
      */
     @Override
     protected void runComputation() {
+        quickSort.sort(array);
+    }
 
+    public static void main(String[] args) {
+        QuickSortShuffledTimingExperiment experiment = new QuickSortShuffledTimingExperiment();
+        pivotChooser = new MedianOfThreePivotChooser<>();
+        experiment.printResults();
     }
 }

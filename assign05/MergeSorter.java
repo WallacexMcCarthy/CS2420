@@ -51,6 +51,13 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         if(right - left < 2){
             return;
         }
+        if(right - left <= threshold){
+            insertionSort(list, left, right);
+            for (int i = left; i < right; i++) {
+                auxArray.set(i, list.get(i));
+            }
+            return;
+        }
         int mid = (right + left) / 2;
 
         mergeSort(list, auxArray, left, mid);
@@ -68,13 +75,6 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
      * @param right the right bound of the subsection
      */
     private void merge(ArrayList<T> list, ArrayList<T> auxArray, int mid, int left, int right){
-        if(right - left <= threshold){
-            insertionSort(list, left, right);
-            for (int i = left; i < right; i++) {
-                auxArray.set(i, list.get(i));
-            }
-            return;
-        }
         int leftPoint = 0;
         int rightPoint = 0;
 
