@@ -21,12 +21,12 @@ public class MedianOfThreePivotChooser <T extends Comparable<? super T>> impleme
     @Override
     public int getPivotIndex(ArrayList<T> list, int leftIndex, int rightIndex) {
         T element1 = list.get(leftIndex);
-        T element2 = list.get((rightIndex - leftIndex) / 2);
+        T element2 = list.get((rightIndex + leftIndex) / 2);
         T element3 = list.get(rightIndex);
 
         if ((element1.compareTo(element2) >= 0 && element2.compareTo(element3) >= 0) ||
                 element3.compareTo(element2) >= 0 && element2.compareTo(element1) >= 0) {
-            return (rightIndex - leftIndex) / 2;
+            return (rightIndex + leftIndex) / 2;
         } else if ((element1.compareTo(element3) >= 0 && element3.compareTo(element2) >= 0) ||
                 element2.compareTo(element3) >= 0 && element3.compareTo(element1) >= 0) {
             return rightIndex;

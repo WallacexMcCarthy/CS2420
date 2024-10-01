@@ -44,7 +44,7 @@ public class MergeSortShuffledTimingExperiment extends ArrayListSortTimingExperi
 
     public static void main(String[] args) {
         MergeSortShuffledTimingExperiment experiment = new MergeSortShuffledTimingExperiment();
-        threshold = 24;
+        threshold = 16;
         experiment.printResults();
     }
 }

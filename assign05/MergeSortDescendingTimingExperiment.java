@@ -6,10 +6,10 @@ package assign05;
  * @author Isaac Buehner
  */
 public class MergeSortDescendingTimingExperiment extends ArrayListSortTimingExperiment{
-    private static String problemSizeDescription = "Merge Sort Shuffled";
+    private static String problemSizeDescription = "Merge Sort Descending";
     private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 1000;
+    private static int problemSizeStep = 500;
     private static int experimentIterationCount = 50;
     protected static int threshold;
     private MergeSorter<Integer> mergeSort;
@@ -42,8 +42,8 @@ public class MergeSortDescendingTimingExperiment extends ArrayListSortTimingExpe
     }
 
     public static void main(String[] args) {
-        MergeSortShuffledTimingExperiment experiment = new MergeSortShuffledTimingExperiment();
-        threshold = 3;
+        MergeSortDescendingTimingExperiment experiment = new MergeSortDescendingTimingExperiment();
+        threshold = 16;
         experiment.printResults();
     }
 }

@@ -6,11 +6,11 @@ package assign05;
  * @author Isaac Buehner
  */
 public class QuickSortNearlySortedTimingExperiment extends ArrayListSortTimingExperiment{
-    private static String problemSizeDescription = "Merge Sort Shuffled";
-    private static int problemSizeMin = 10000;
+    private static String problemSizeDescription = "Quick Sort Nearly Sorted";
+    private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 5000;
-    private static int experimentIterationCount = 20;
+    private static int problemSizeStep = 500;
+    private static int experimentIterationCount = 50;
     private QuickSorter<Integer> quickSort;
     protected static PivotChooser<Integer> pivotChooser;
 

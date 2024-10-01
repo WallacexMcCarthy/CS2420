@@ -6,7 +6,7 @@ package assign05;
  * @author Isaac Buehner
  */
 public class QuickSortShuffledTimingExperiment extends ArrayListSortTimingExperiment{
-    private static String problemSizeDescription = "Merge Sort Shuffled";
+    private static String problemSizeDescription = "Quick Sort Shuffled";
     private static int problemSizeMin = 10000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 5000;

@@ -65,27 +65,25 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
 
         int leftPointer = leftBound;
         int rightPointer = rightBound - 1;
-        while(leftPointer < rightPointer) {
+        while(leftPointer <= rightPointer) {
 
-            while (list.get(leftPointer).compareTo(list.get(rightBound)) < 0) {
+            while (leftPointer <= rightPointer && list.get(leftPointer).compareTo(list.get(rightBound)) < 0) {
                 leftPointer++;
             }
-            while (list.get(rightPointer).compareTo(list.get(rightBound)) >= 0 && rightPointer > 0) {
+            while (leftPointer <= rightPointer && list.get(rightPointer).compareTo(list.get(rightBound)) >= 0) {
                 rightPointer--;
             }
 
-            if (leftPointer > rightPointer) {
-                break;
+            if (leftPointer < rightPointer) {
+                temp = list.get(leftPointer);
+                list.set(leftPointer, list.get(rightPointer));
+                list.set(rightPointer, temp);
             }
-            temp = list.get(leftPointer);
-            list.set(leftPointer, list.get(rightPointer));
-            list.set(rightPointer, temp);
         }
-        if (list.get(leftPointer).compareTo(list.get(rightBound)) >= 0) {
-            temp = list.get(leftPointer);
-            list.set(leftPointer, list.get(rightBound));
-            list.set(rightBound, temp);
-        }
+        temp = list.get(leftPointer);
+        list.set(leftPointer, list.get(rightBound));
+        list.set(rightBound, temp);
+
         return leftPointer;
     }
 
