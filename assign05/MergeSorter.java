@@ -78,6 +78,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
         int leftPoint = 0;
         int rightPoint = 0;
 
+        // while both sections aren't empty add the smallest of the sections to the array until one section is empty
         while (leftPoint + left < mid && rightPoint + mid + 1 <= right) {
             if (list.get(leftPoint + left).compareTo(list.get(rightPoint + mid)) > 0) {
                 auxArray.set(left + leftPoint + rightPoint, list.get( mid + rightPoint));
@@ -87,6 +88,7 @@ public class MergeSorter <T extends Comparable<? super T>> implements Sorter<T>{
                 leftPoint++;
             }
         }
+        // copy the remaining elements in the full section to the back of the subsection
         if (left + leftPoint >= mid) {
             for (int i = mid + rightPoint; i < right; i++) {
                 auxArray.set(i, list.get(mid + rightPoint));

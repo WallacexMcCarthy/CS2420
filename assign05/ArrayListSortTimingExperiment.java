@@ -3,13 +3,13 @@ package assign05;
 import java.util.*;
 
 /**
- * Abstract class to perform timing experiments for sorting arrays with varying degrees of "sortedness".
+ * Abstract class to perform timing experiments for sorting ArrayLists with varying degrees of "sortedness".
  *
- * @author CS 2420 Course Staff
+ * @author CS 2420 Course Staff and Isaac Buehner
  * @version 2024-09-12
  */
 public abstract class ArrayListSortTimingExperiment extends TimingExperiment {
-    protected ArrayList<Integer> array;
+    protected ArrayList<Integer> list;
     protected Random rng = new Random();
 
     /**
@@ -26,54 +26,54 @@ public abstract class ArrayListSortTimingExperiment extends TimingExperiment {
     }
 
     /**
-     * Helper method to populate the array with random integers in ascending order.
+     * Helper method to populate the ArrayList with random integers in ascending order.
      *
      * @implNote integers are bounded between 0 and 20 + 10 * problemSize
      * @param problemSize - size of the array
      */
     protected void populateAscendingArrayList(int problemSize) {
-        array = new ArrayList<>();
+        list = new ArrayList<>();
         int currentElement = rng.nextInt(20);
         for (int i = 0; i < problemSize; i++) {
-            array.add(currentElement);
+            list.add(currentElement);
             currentElement += rng.nextInt(10);
         }
     }
 
     /**
-     * Helper method to populate the array with random integers in random order.
+     * Helper method to populate the ArrayList with random integers in random order.
      *
-     * @implNote method must call populateAscendingArray and then shuffle the contents of the array
+     * @implNote method must call populateAscendingArrayList and then shuffle the contents of the ArrayList
      * @param problemSize - size of the array
      */
-    protected void populateRandomArray(int problemSize) {
+    protected void populateRandomArrayList(int problemSize) {
         this.populateAscendingArrayList(problemSize);
-        Collections.shuffle(array);
+        Collections.shuffle(list);
     }
 
     /**
-     * Helper method to populate the array with random integers in descending order.
+     * Helper method to populate the ArrayList with random integers in descending order.
      *
-     * @implNote method must call populateAscendingArray and then reverse the contents of the array
+     * @implNote method must call populateAscendingArrayList and then reverse the contents of the array
      * @param problemSize - size of the array
      */
-    protected void populateDescendingArray(int problemSize) {
+    protected void populateDescendingArrayList(int problemSize) {
         this.populateAscendingArrayList(problemSize);
         int temp;
-        for (int i = array.size() - 1; i >= array.size()/2; i--) {
-            temp = this.array.get(i);
-            this.array.set(i, array.size() - i - 1);
-            array.set((this.array.size() - i - 1), temp);
+        for (int i = list.size() - 1; i >= list.size()/2; i--) {
+            temp = this.list.get(i);
+            this.list.set(i, list.size() - i - 1);
+            list.set((this.list.size() - i - 1), temp);
         }
     }
 
     /**
-     * Helper method to populate the array with random integers in nearly ascending order.
+     * Helper method to populate the ArrayList with random integers in nearly ascending order.
      *
-     * @implNote method must call populateAscending array and then swap a small number of random
+     * @implNote method must call populateAscendingArrayList and then swap a small number of random
      * pairs of nearby elements
      */
-    protected void populateNearlyAscendingArray(int problemSize) {
+    protected void populateNearlyAscendingArrayList(int problemSize) {
         populateAscendingArrayList(problemSize);
         // Choose a random number of pairs to swap, between 5 and 19
         int swapCount = 5 + rng.nextInt(15);
@@ -88,19 +88,19 @@ public abstract class ArrayListSortTimingExperiment extends TimingExperiment {
     }
 
     /**
-     * Helper method to swap two entries of the array.
+     * Helper method to swap two entries of the ArrayList.
      *
      * @param idx1 - first index to swap
      * @param idx2 - second index to swap
      * @throws IndexOutOfBoundsException if either index is out of bounds
      */
     private void swapEntries(int idx1, int idx2) throws IndexOutOfBoundsException {
-        if (idx1 < 0 || idx1 >= array.size() || idx2 < 0 || idx2 >= array.size()) {
+        if (idx1 < 0 || idx1 >= list.size() || idx2 < 0 || idx2 >= list.size()) {
             throw new IndexOutOfBoundsException();
         }
-        int temp = array.get(idx1);
-        array.set(idx1, array.get(idx2));
-        array.set(idx2, temp);
+        int temp = list.get(idx1);
+        list.set(idx1, list.get(idx2));
+        list.set(idx2, temp);
     }
 
 }

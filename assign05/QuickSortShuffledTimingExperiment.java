@@ -12,10 +12,10 @@ public class QuickSortShuffledTimingExperiment extends ArrayListSortTimingExperi
     private static int problemSizeStep = 5000;
     private static int experimentIterationCount = 20;
     private QuickSorter<Integer> quickSort;
-    protected static PivotChooser<Integer> pivotChooser;
+    protected static PivotChooser<Integer> pivotChooser = new MedianOfThreePivotChooser<>();
 
     /**
-     * Constructor to build a general timing experiment.
+     * Constructor to build the timing experiment.
      */
     public QuickSortShuffledTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
@@ -29,7 +29,7 @@ public class QuickSortShuffledTimingExperiment extends ArrayListSortTimingExperi
      */
     @Override
     protected void setupExperiment(int problemSize) {
-        populateRandomArray(problemSize);
+        populateRandomArrayList(problemSize);
         this.quickSort = new QuickSorter<>(pivotChooser);
     }
 
@@ -38,7 +38,7 @@ public class QuickSortShuffledTimingExperiment extends ArrayListSortTimingExperi
      */
     @Override
     protected void runComputation() {
-        quickSort.sort(array);
+        quickSort.sort(list);
     }
 
     public static void main(String[] args) {

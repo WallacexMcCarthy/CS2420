@@ -15,7 +15,7 @@ public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingEx
     private MergeSorter<Integer> mergeSort;
 
     /**
-     * Constructor to build a general timing experiment.
+     * Constructor to build the timing experiment.
      */
     public MergeSortNearlySortedTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
@@ -29,7 +29,7 @@ public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingEx
      */
     @Override
     protected void setupExperiment(int problemSize) {
-        populateNearlyAscendingArray(problemSize);
+        populateNearlyAscendingArrayList(problemSize);
         this.mergeSort = new MergeSorter<>(threshold);
     }
 
@@ -38,7 +38,7 @@ public class MergeSortNearlySortedTimingExperiment extends ArrayListSortTimingEx
      */
     @Override
     protected void runComputation() {
-        mergeSort.sort(array);
+        mergeSort.sort(list);
     }
 
     public static void main(String[] args) {

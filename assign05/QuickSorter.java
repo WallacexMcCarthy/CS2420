@@ -59,6 +59,7 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
      * @return the final place of the pivot element
      */
     private int partition(ArrayList<T> list, int pivot, int leftBound, int rightBound) {
+        // move pivot to the end
         T temp = list.get(rightBound);
         list.set(rightBound, list.get(pivot));
         list.set(pivot, temp);
@@ -74,12 +75,14 @@ public class QuickSorter<T extends Comparable<? super T>> implements Sorter<T> {
                 rightPointer--;
             }
 
+            // swap elements if the earlier is greater than the latter
             if (leftPointer < rightPointer) {
                 temp = list.get(leftPointer);
                 list.set(leftPointer, list.get(rightPointer));
                 list.set(rightPointer, temp);
             }
         }
+        // set pivot into its final place
         temp = list.get(leftPointer);
         list.set(leftPointer, list.get(rightBound));
         list.set(rightBound, temp);
