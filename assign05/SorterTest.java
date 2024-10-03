@@ -36,6 +36,11 @@ public class SorterTest {
         Collections.shuffle(smallIntArray);
     }
 
+
+    @Test
+    public void testMergesortExceptionHandling(){
+        assertThrows(IllegalArgumentException.class, () -> new MergeSorter<>(-1));
+    }
     @Test
     public void test3ElementMergeSortForward() {
         ArrayList<Integer> integerArrayList = new ArrayList<>(Arrays.asList(1, 2, 3));
