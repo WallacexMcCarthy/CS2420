@@ -4,11 +4,9 @@ import java.util.*;
 
 public class Graph <T> {
     private Map<T, Vertex<T>> map;
-    private boolean weighted;
 
-    public Graph(boolean weighted) {
+    public Graph() {
         map = new HashMap<>();
-        this.weighted = weighted;
     }
 
     public void addEdge(T source, T destination, double weight) {
@@ -27,11 +25,7 @@ public class Graph <T> {
             destinationVertex = new Vertex<>(destination);
             map.put(source, destinationVertex);
         }
-        if (weighted) {
-            sourceVertex.addEdge(destinationVertex, weight);
-        } else {
-            sourceVertex.addEdge(destinationVertex, 1);
-        }
+        sourceVertex.addEdge(destinationVertex, weight);
     }
 
     public List<T> BFS(T source, T destination) {
@@ -69,6 +63,19 @@ public class Graph <T> {
             currentData = map.get(currentData).getPrevious().getData();
         }
         return list;
+    }
+
+    public List<T> shortestWeightedDistance(T source, T destination) {
+        if (!map.containsKey(source) || !map.containsKey(destination)) {
+            throw new IllegalArgumentException();
+        }
+
+        Vertex<T> current = map.get(source);
+        for (Vertex<T> v : map.values()) {
+            v.setDistanceFromStart(Double.MAX_VALUE);
+        }
+
+
     }
 
 }

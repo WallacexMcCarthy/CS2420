@@ -3,11 +3,11 @@ package assign07;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Vertex <T> {
+public class Vertex <T>{
     private T data;
     private LinkedList<Edge<T>> adjList = new LinkedList<>();
     private Vertex<T> previous = null;
-    private int distanceFromStart;
+    private double distanceFromStart;
 
     public Vertex(T data){
         this.data = data;
@@ -24,11 +24,11 @@ public class Vertex <T> {
     public LinkedList<Edge<T>> getEdges(){
         return this.adjList;
     }
-    public void setDistanceFromStart(int distanceFromStart){
+    public void setDistanceFromStart(double distanceFromStart){
         this.distanceFromStart = distanceFromStart;
     }
 
-    public int getDistanceFromStart() {
+    public double getDistanceFromStart() {
         return distanceFromStart;
     }
 
