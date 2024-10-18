@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * this class contains tests for the MergeSorter and QuickSorter classes
+ * @version 10/03/24
+ * @author Isaac Buehner and Wallace McCarthy
  */
 public class SorterTest {
     public MergeSorter<Integer> mergeSort = new MergeSorter<>(3);

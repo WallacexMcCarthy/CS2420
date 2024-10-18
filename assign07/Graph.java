@@ -1,4 +1,5 @@
 package assign07;
 
-public class Graph {
+public class Graph <T> {
+    
 }
