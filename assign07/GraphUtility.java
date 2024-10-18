@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GraphUtility {
     public static <Type> List<Type> shortestPath(List<Type> sources, List<Type> destinations, Type srcData, Type dstData) {
-        return null;
+        return
     }
 
     public static <Type> List<Type> shortestWeightedPath(List<Type> sources, List<Type> destinations, List<Double> weights, Type srcData, Type dstData) {
