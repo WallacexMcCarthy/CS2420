@@ -12,7 +12,11 @@ public class GraphUtility {
     }
 
     public static <Type> List<Type> shortestWeightedPath(List<Type> sources, List<Type> destinations, List<Double> weights, Type srcData, Type dstData) {
-        return null;
+        Graph<Type> graph = new Graph<>();
+        for (int i = 0; i < sources.size(); i++) {
+            graph.addEdge(sources.get(i), destinations.get(i), weights.get(i));
+        }
+        return graph.shortestWeightedDistance(srcData, dstData);
     }
 
     public static <Type> List<Type> sort(List<Type> sources, List<Type> destinations) {

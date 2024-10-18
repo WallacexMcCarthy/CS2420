@@ -14,7 +14,7 @@ public class Vertex <T>{
     }
 
     public void addEdge(Vertex<T> destination, double weight){
-        adjList.add(new Edge<T>(destination, weight));
+        adjList.add(new Edge<>(destination, weight));
     }
 
     public T getData(){

@@ -23,7 +23,7 @@ public class Graph <T> {
             destinationVertex = map.get(destination);
         } else {
             destinationVertex = new Vertex<>(destination);
-            map.put(source, destinationVertex);
+            map.put(destination, destinationVertex);
         }
         sourceVertex.addEdge(destinationVertex, weight);
     }
@@ -62,6 +62,7 @@ public class Graph <T> {
             list.addLast(currentData);
             currentData = map.get(currentData).getPrevious().getData();
         }
+        list.addLast(currentData);
         return list;
     }
 
@@ -69,13 +70,39 @@ public class Graph <T> {
         if (!map.containsKey(source) || !map.containsKey(destination)) {
             throw new IllegalArgumentException();
         }
+        ArrayList<Vertex<T>> unvisited = new ArrayList<>();
 
-        Vertex<T> current = map.get(source);
         for (Vertex<T> v : map.values()) {
             v.setDistanceFromStart(Double.MAX_VALUE);
+            unvisited.add(v);
+        }
+        Vertex<T> current = map.get(source);
+        current.setDistanceFromStart(0);
+        while (!unvisited.isEmpty()) {
+            unvisited.sort(new VertexComparator<>());
+            Vertex<T> closest = unvisited.getLast();
+
+            for (Edge<T> edge : closest.getEdges()) {
+                if (closest.getDistanceFromStart() + edge.getWeight() < edge.getDestination().getDistanceFromStart()) {
+                    edge.getDestination().setDistanceFromStart(closest.getDistanceFromStart() + edge.getWeight());
+                    edge.getDestination().setPrevious(current);
+                }
+            }
+            unvisited.removeLast();
         }
 
+        if (map.get(destination).getDistanceFromStart() == Double.MAX_VALUE) {
+            throw new IllegalArgumentException();
+        }
 
+        LinkedList<T> list = new LinkedList<>();
+        T currentData = destination;
+        while(map.get(currentData).getPrevious() != null) {
+            list.addLast(currentData);
+            currentData = map.get(currentData).getPrevious().getData();
+        }
+        list.addLast(currentData);
+        return list;
     }
 
 }
