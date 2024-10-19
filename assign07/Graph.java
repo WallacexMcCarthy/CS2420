@@ -135,10 +135,10 @@ public class Graph <T> {
         T currentData = destination;
         // from the destination vertex, work backwards through the 'previous' vertices until one is null
         while(map.get(currentData).getPrevious() != null) {
-            list.addLast(currentData);
+            list.addFirst(currentData);
             currentData = map.get(currentData).getPrevious().getData();
         }
-        list.addLast(currentData);
+        list.addFirst(currentData);
         return list;
     }
 
