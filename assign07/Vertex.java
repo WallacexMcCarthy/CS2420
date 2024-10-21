@@ -24,7 +24,7 @@ public class Vertex <T>{
     }
 
     /**
-     * this method adds an edge to this vertex connecting it to another vertex or itself
+     * this method adds an edge to this vertex connecting it to another vertex or itself and adds 1 to its inDegree
      * the vertex connected is also add to this vertex's adjacency list
      * @param destination a vertex for a new edge to be connected to
      * @param weight the weight of the new edge
@@ -68,6 +68,10 @@ public class Vertex <T>{
         return this.previous;
     }
 
+    /**
+     * this method returns this vertex's inDegree
+     * @return the number of input edges attached to this vertex
+     */
     public int getInDegree() {
         return this.inDegree;
     }
@@ -92,10 +96,16 @@ public class Vertex <T>{
         this.previous = vertex;
     }
 
+    /**
+     * this method increases this vertex's inDegree by 1
+     */
     public void increaseInDegree() {
         inDegree++;
     }
 
+    /**
+     * this method decreases this vertex's inDegree by 1
+     */
     public void decreaseInDegree() {
         inDegree--;
     }

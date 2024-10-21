@@ -54,6 +54,15 @@ public class GraphUtility {
         return graph.shortestWeightedPath(srcData, dstData);
     }
 
+    /**
+     * this method is the driver for the topologicalSort method in the Graph class
+     * finds and returns a list of the vertices in the given graph data sorted in topological order
+     * throws an IllegalArgumentException if the graph is not acyclic
+     * @param sources a list of sources to construct a weighted graph
+     * @param destinations a list of destinations to construct a weighted graph
+     * @return a list of vertices sorted by number of input edges lowest to highest
+     * @param <Type> the generic type of the graph
+     */
     public static <Type> List<Type> sort(List<Type> sources, List<Type> destinations) {
         if(sources.size() != destinations.size()) {
             throw new IllegalArgumentException();

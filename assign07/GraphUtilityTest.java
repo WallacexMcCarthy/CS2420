@@ -2,7 +2,7 @@ package assign07;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,8 +19,8 @@ public class GraphUtilityTest {
     }
 
     public static void main(String[] args) {
-        List<String> sources = Arrays.asList("A", "A", "B", "C", "D", "D");
-        List<String> destinations = Arrays.asList("B", "C", "D", "D", "E", "E");
+        List<String> sources = Arrays.asList("A", "A", "B", "C", "D");
+        List<String> destinations = Arrays.asList("B", "C", "D", "D", "E");
         List list = GraphUtility.sort(sources, destinations);
         System.out.println(list);
     }

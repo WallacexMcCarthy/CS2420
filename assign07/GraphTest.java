@@ -1,6 +1,5 @@
 package assign07;
 
-import assign05.MergeSorter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

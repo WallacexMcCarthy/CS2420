@@ -70,7 +70,7 @@ public class Graph <T> {
         while(!queue.isEmpty()) {
             current = queue.poll();
             for (Edge<T> edge : current.getEdges()) {
-                // if a vertex has a distance from start of -1 (not visited), set the distance from the start to 1 + the previous
+                // if a vertex has a distance from start of INF (not visited), set the distance from the start to 1 + the previous
                 if (edge.getDestination().getDistanceFromStart() == Double.MAX_VALUE) {
                     edge.getDestination().setDistanceFromStart(current.getDistanceFromStart() + 1);
                     edge.getDestination().setPrevious(current);
@@ -78,7 +78,7 @@ public class Graph <T> {
                 }
             }
         }
-        if (map.get(destination).getDistanceFromStart() == -1) {
+        if (map.get(destination).getDistanceFromStart() == Double.MAX_VALUE) {
             throw new IllegalArgumentException();
         }
 
@@ -97,6 +97,8 @@ public class Graph <T> {
      * this method finds and returns a list containing the shortest path of
      * vertices from source to destination for a weighted graph
      * uses Dijkstra's graph traversal algorithm
+     * throws an IllegalArgumentException if the source or destination isn't in the map OR
+     * if there is no path between the source and destination
      * @param source the starting vertex in the search
      * @param destination the ending vertex in the search
      * @return a linked list containing the path from source to destination
@@ -105,7 +107,7 @@ public class Graph <T> {
         if (!map.containsKey(source) || !map.containsKey(destination)) {
             throw new IllegalArgumentException();
         }
-        ArrayList<Vertex<T>> unvisited = new ArrayList<>();
+        LinkedList<Vertex<T>> unvisited = new LinkedList<>();
         for (Vertex<T> v : map.values()) {
             v.setDistanceFromStart(Double.MAX_VALUE);
             unvisited.add(v);
@@ -142,6 +144,11 @@ public class Graph <T> {
         return list;
     }
 
+    /**
+     * this method finds a returns a list of the vertices in this graph sorted by topographical order
+     * throws an IllegalArgumentException when the graph is not acyclic
+     * @return a list of vertices sorted by number of input edges
+     */
     public List<T> topologicalSort() {
         Queue<Vertex<T>> queue = new LinkedList<>();
         for (Vertex<T> vertex: map.values()) {
