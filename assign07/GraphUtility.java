@@ -55,6 +55,13 @@ public class GraphUtility {
     }
 
     public static <Type> List<Type> sort(List<Type> sources, List<Type> destinations) {
-        return null;
+        if(sources.size() != destinations.size()) {
+            throw new IllegalArgumentException();
+        }
+        Graph<Type> graph = new Graph<>();
+        for (int i = 0; i < sources.size(); i++) {
+            graph.addEdge(sources.get(i), destinations.get(i), 1);
+        }
+        return graph.topologicalSort();
     }
 }

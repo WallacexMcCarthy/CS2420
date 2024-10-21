@@ -142,4 +142,30 @@ public class Graph <T> {
         return list;
     }
 
+    public List<T> topologicalSort() {
+        Queue<Vertex<T>> queue = new LinkedList<>();
+        for (Vertex<T> vertex: map.values()) {
+            if (vertex.getInDegree() == 0) {
+                queue.offer(vertex);
+            }
+        }
+
+        LinkedList<T> result = new LinkedList<>();
+        while (!queue.isEmpty()) {
+            Vertex<T> current = queue.poll();
+            result.addLast(current.getData());
+            for (Edge<T> edge : current.getEdges()) {
+                edge.getDestination().decreaseInDegree();
+                if (edge.getDestination().getInDegree() == 0) {
+                    queue.offer(edge.getDestination());
+                }
+            }
+        }
+
+        if(result.size() != map.size()) {
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+
 }

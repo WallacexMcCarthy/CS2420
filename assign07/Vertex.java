@@ -13,6 +13,7 @@ public class Vertex <T>{
     private final LinkedList<Edge<T>> adjList = new LinkedList<>();
     private Vertex<T> previous = null;
     private double distanceFromStart;
+    private int inDegree = 0;
 
     /**
      * the regular constructor for a Vertex object
@@ -31,6 +32,7 @@ public class Vertex <T>{
     public void addEdge(Vertex<T> destination, double weight){
         // maybe worth making sure multiple of the same vertex cant be added
         adjList.add(new Edge<>(destination, weight));
+        destination.increaseInDegree();
     }
 
     /**
@@ -66,6 +68,10 @@ public class Vertex <T>{
         return this.previous;
     }
 
+    public int getInDegree() {
+        return this.inDegree;
+    }
+
     /**
      * this method sets this vertex's distance from a starting vertex | to be used in traversal algorithms
      * @param distanceFromStart the new distance from the starting vertex
@@ -84,5 +90,13 @@ public class Vertex <T>{
      */
     public void setPrevious(Vertex<T> vertex) {
         this.previous = vertex;
+    }
+
+    public void increaseInDegree() {
+        inDegree++;
+    }
+
+    public void decreaseInDegree() {
+        inDegree--;
     }
 }
