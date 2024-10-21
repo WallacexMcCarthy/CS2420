@@ -1,5 +1,7 @@
 package assign07;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import java.util.ArrayList;
 
 /**
@@ -8,24 +10,9 @@ import java.util.ArrayList;
  *  * @author Wallace McCarthy and Isaac Buehner
  */
 public class GraphUtilityTest {
-    public static void main(String[] args) {
-        ArrayList<Integer> sources = new ArrayList<>();
-        ArrayList<Integer> destinations = new ArrayList<>();
-        ArrayList<Integer> weights = new ArrayList<>();
+    static Graph<Integer> intGraph = new Graph<>();
+    @BeforeEach
+    public void setUp() {
 
-        sources.add(1);
-        sources.add(2);
-        sources.add(4);
-        sources.add(1);
-        sources.add(4);
-
-        destinations.add(2);
-        destinations.add(3);
-        destinations.add(3);
-        destinations.add(4);
-        destinations.add(1);
-
-
-        System.out.println(GraphUtility.shortestPath(sources, destinations, 1, 3));
     }
 }

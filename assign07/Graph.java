@@ -61,7 +61,7 @@ public class Graph <T> {
 
         Vertex<T> current = map.get(source);
         for (Vertex<T> v : map.values()) {
-            v.setDistanceFromStart(-1);
+            v.setDistanceFromStart(Double.MAX_VALUE);
         }
 
         Queue<Vertex<T>> queue = new LinkedList<>();
@@ -71,7 +71,7 @@ public class Graph <T> {
             current = queue.poll();
             for (Edge<T> edge : current.getEdges()) {
                 // if a vertex has a distance from start of -1 (not visited), set the distance from the start to 1 + the previous
-                if (edge.getDestination().getDistanceFromStart() == -1) {
+                if (edge.getDestination().getDistanceFromStart() == Double.MAX_VALUE) {
                     edge.getDestination().setDistanceFromStart(current.getDistanceFromStart() + 1);
                     edge.getDestination().setPrevious(current);
                     queue.offer(edge.getDestination());

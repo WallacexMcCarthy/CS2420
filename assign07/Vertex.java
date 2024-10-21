@@ -29,6 +29,7 @@ public class Vertex <T>{
      * @param weight the weight of the new edge
      */
     public void addEdge(Vertex<T> destination, double weight){
+        // maybe worth making sure multiple of the same vertex cant be added
         adjList.add(new Edge<>(destination, weight));
     }
 
@@ -70,6 +71,9 @@ public class Vertex <T>{
      * @param distanceFromStart the new distance from the starting vertex
      */
     public void setDistanceFromStart(double distanceFromStart){
+        if (distanceFromStart < 0) {
+            throw new IllegalArgumentException();
+        }
         this.distanceFromStart = distanceFromStart;
     }
 
