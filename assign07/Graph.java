@@ -123,7 +123,7 @@ public class Graph <T> {
                 // edge's destination's current distance from the start, reset the destinations distance
                 if (closest.getDistanceFromStart() + edge.getWeight() < edge.getDestination().getDistanceFromStart()) {
                     edge.getDestination().setDistanceFromStart(closest.getDistanceFromStart() + edge.getWeight());
-                    edge.getDestination().setPrevious(current);
+                    edge.getDestination().setPrevious(closest);
                 }
             }
             unvisited.removeLast();

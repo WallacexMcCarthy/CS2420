@@ -1,8 +1,5 @@
 package assign07;
 
-import org.junit.jupiter.api.BeforeEach;
-
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,16 +9,13 @@ import java.util.List;
  *  * @author Wallace McCarthy and Isaac Buehner
  */
 public class GraphUtilityTest {
-    static Graph<Integer> intGraph = new Graph<>();
-    @BeforeEach
-    public void setUp() {
-
-    }
 
     public static void main(String[] args) {
-        List<String> sources = Arrays.asList("A", "A", "B", "C", "D");
-        List<String> destinations = Arrays.asList("B", "C", "D", "D", "E");
-        List list = GraphUtility.sort(sources, destinations);
+        List<String> sources = Arrays.asList("A", "A", "B", "C", "D", "A");
+        List<String> destinations = Arrays.asList("B", "C", "D", "D", "E", "E");
+        List<Double> weights = Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
+        List<String> list = GraphUtility.shortestWeightedPath(sources, destinations, weights, "A", "E");
         System.out.println(list);
     }
+
 }
