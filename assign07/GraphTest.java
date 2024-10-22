@@ -14,11 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class GraphTest {
     private Vertex<Integer> intVertex;
-    private Graph<Integer> intGraph;
 
     @BeforeEach
     public void setUp() {
-        intGraph = new Graph<>();
         intVertex = new Vertex<>(1);
     }
 

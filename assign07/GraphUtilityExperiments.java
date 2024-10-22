@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class GraphUtilityExperiments extends TimingExperiment{
     private static String problemSizeDescription = "Graph Util";
-    private static int problemSizeMin = 5;
+    private static int problemSizeMin = 50;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 5;
+    private static int problemSizeStep = 50;
     private static int experimentIterationCount = 20;
 
     protected List<Integer> sources = new ArrayList<>();
