@@ -59,14 +59,14 @@ public class Graph <T> {
             throw new IllegalArgumentException();
         }
 
-        Vertex<T> current = map.get(source);
         for (Vertex<T> v : map.values()) {
             v.setDistanceFromStart(Double.MAX_VALUE);
         }
+        Vertex<T> current = map.get(source);
+        current.setDistanceFromStart(0);
 
         Queue<Vertex<T>> queue = new LinkedList<>();
         queue.offer(current);
-        current.setDistanceFromStart(0);
         while(!queue.isEmpty()) {
             current = queue.poll();
             for (Edge<T> edge : current.getEdges()) {

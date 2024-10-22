@@ -1,14 +1,15 @@
 package assign07;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class GraphUtilityExperiments extends TimingExperiment{
     private static String problemSizeDescription = "Graph Util";
-    private static int problemSizeMin = 100;
+    private static int problemSizeMin = 5;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 100;
+    private static int problemSizeStep = 5;
     private static int experimentIterationCount = 20;
 
     protected List<Integer> sources = new ArrayList<>();
@@ -40,7 +41,11 @@ public class GraphUtilityExperiments extends TimingExperiment{
             sources.add(rng.nextInt(problemSize));
             destinations.add(i);
             destinations.add(rng.nextInt(problemSize));
+            weights.add(rng.nextDouble());
+            weights.add(rng.nextDouble());
         }
+        Collections.shuffle(sources);
+        Collections.shuffle(destinations);
         srcData = rng.nextInt(problemSize);
         destData = rng.nextInt(problemSize);
     }
@@ -52,9 +57,9 @@ public class GraphUtilityExperiments extends TimingExperiment{
     protected void runComputation() {
         try {
             GraphUtility.shortestPath(sources, destinations, srcData, destData);
-        } catch (IllegalArgumentException e) {
-
-        }
+//            GraphUtility.shortestWeightedPath(sources, destinations, weights, srcData, destData);
+//            GraphUtility.sort(sources, destinations);
+        } catch (IllegalArgumentException e) {}
     }
 
     public static void main(String[] args) {
