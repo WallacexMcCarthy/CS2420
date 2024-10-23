@@ -37,15 +37,14 @@ public class GraphUtilityExperiments extends TimingExperiment{
     @Override
     protected void setupExperiment(int problemSize) {
         for (int i = 0; i < problemSize; i++) {
-            sources.add(i);
             sources.add(rng.nextInt(problemSize));
-            destinations.add(i);
             destinations.add(rng.nextInt(problemSize));
             weights.add(rng.nextDouble());
-            weights.add(rng.nextDouble());
         }
-        Collections.shuffle(sources);
+        Collections.shuffle(sources); // for cyclic
         Collections.shuffle(destinations);
+//        Collections.sort(sources); // for acyclic
+//        Collections.sort(destinations);
         srcData = rng.nextInt(problemSize);
         destData = rng.nextInt(problemSize);
     }

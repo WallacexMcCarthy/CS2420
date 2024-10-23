@@ -30,8 +30,7 @@ public class Vertex <T>{
      * @param weight the weight of the new edge
      */
     public void addEdge(Vertex<T> destination, double weight){
-        // maybe worth making sure multiple of the same vertex cant be added
-        adjList.add(new Edge<>(destination, weight));
+        adjList.addLast(new Edge<>(destination, weight));
         destination.increaseInDegree();
     }
 

@@ -12,10 +12,14 @@ public class Edge <T> {
 
     /**
      * regular constructor for an Edge object
+     * throws an IllegalArgumentException if the given weight is below 0
      * @param destination the edge's destination vertex
      * @param weight the weight of traversing the edge
      */
     public Edge(Vertex<T> destination, double weight){
+        if (weight < 0) {
+            throw new IllegalArgumentException();
+        }
         this.destination = destination;
         this.weight = weight;
     }
