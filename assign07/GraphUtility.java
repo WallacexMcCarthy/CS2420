@@ -26,7 +26,9 @@ public class GraphUtility {
         }
         Graph<Type> graph = new Graph<>();
         for (int i = 0; i < sources.size(); i++) {
-            graph.addEdge(sources.get(i), destinations.get(i), 1);
+            graph.addEdge(sources.getFirst(), destinations.getFirst(), 1);
+            sources.removeFirst();
+            destinations.removeFirst();
         }
         return graph.shortestPath(srcData, dstData);
     }
