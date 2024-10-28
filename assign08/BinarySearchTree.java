@@ -9,7 +9,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
     private TreeNode<Type> root;
 
     private static class TreeNode <T extends Comparable<? super T>>{
-        private final T data;
+        private T data;
         protected TreeNode<T> parent;
         protected TreeNode<T> left = null;
         protected TreeNode<T> right = null;
@@ -45,8 +45,17 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
             this.size++;
             return true;
         }
-
-        return false;
+        TreeNode<Type> current = traverseDriver(item);
+        TreeNode<Type> addThis = new TreeNode<>(item);
+        addThis.parent = current;
+        if(current.data.compareTo(item) == 0){
+            return false;
+        }else if(current.data.compareTo(item) > 0){
+            current.left = addThis;
+        }else{
+            current.right = addThis;
+        }
+        return true;
     }
 
     /**
@@ -159,7 +168,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public ArrayList<Type> toArrayList() {
-
+        return inOrderTraverseDriver();
     }
 
     /**
@@ -173,7 +182,20 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public boolean remove(Type item) {
-        throw new UnsupportedOperationException("remove");
+        if(!contains(item)){
+            return false;
+        }
+        TreeNode<Type> element = traverseDriver(item);
+        System.out.println(element.data);
+        TreeNode<Type> leaf = element.left;
+        while(leaf.right != null){
+            leaf = leaf.right;
+        }
+        System.out.println(leaf.data);
+        leaf.parent.right = null;
+        element.data = leaf.data;
+        System.out.println(element.data);
+        return true;
     }
 
     /**
@@ -189,7 +211,13 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public boolean removeAll(Collection<? extends Type> items) {
-        throw new UnsupportedOperationException("removeAll");
+        boolean flag = false;
+        for(Type item : items){
+            if(remove(item)){
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     private TreeNode<Type> traverseDriver(Type item) {
@@ -198,17 +226,36 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
     }
 
     private TreeNode<Type> traverse(TreeNode<Type> current, Type item) {
-        if(current == null) {
-            return current.parent;
-        }
         if (item.compareTo(current.data) > 0) {
-            traverse(current.right, item);
+            if(current.right == null){
+                return current;
+            }else{
+                return traverse(current.right, item);
+            }
         } else if (item.compareTo((current.data)) < 0) {
-            traverse(current.left, item);
+            if(current.left == null){
+                return current;
+            }else{
+                return traverse(current.left, item);
+            }
         } else {
             return current;
         }
-        return current;
     }
+
+    private ArrayList<Type> inOrderTraverseDriver() {
+        ArrayList<Type> arr = new ArrayList<>();
+        inOrderTraverse(arr, root);
+        return arr;
+    }
+    private void inOrderTraverse(ArrayList<Type> array, TreeNode<Type> current) {
+        if(current == null){
+            return;
+        }
+        inOrderTraverse(array, current.left);
+        array.add(current.data);
+        inOrderTraverse(array, current.right);
+    }
+
 
 }
