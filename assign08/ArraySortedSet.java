@@ -1,12 +1,10 @@
 package assign08;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ArraySortedSet<Type extends Comparable<? super Type>> implements SortedSet<Type>{
-    private Object[] backingArr;
-
+    private Object[] backingArray = new Object[20];
+    private int size = 0;
     /**
      * Ensures that this set contains the specified item.
      *
@@ -15,8 +13,23 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * the input item was actually inserted); otherwise, returns false
      */
     @Override
-    public boolean add(Comparable item) {
-        return false;
+    public boolean add(Type item) {
+        if(isEmpty()){
+            backingArray[0] = item;
+            size++;
+            return true;
+        }
+        int index = binarySearch(item);
+        if(getAtIndex(index).compareTo(item) == 0){
+            return false;
+        }
+        if(size() >= backingArray.length){
+            resize(item, index);
+        }else{
+            shiftElements(item, index);
+        }
+        size++;
+        return true;
     }
 
     /**
@@ -28,8 +41,14 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * returns false
      */
     @Override
-    public boolean addAll(Collection items) {
-        return false;
+    public boolean addAll(Collection<? extends Type> items) {
+        boolean flag = false;
+        for(Type item : items){
+            if(add(item)){
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     /**
@@ -38,7 +57,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public void clear() {
-
+        backingArray = new Object[20];
     }
 
     /**
@@ -50,8 +69,8 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * otherwise, returns false
      */
     @Override
-    public boolean contains(Comparable item) {
-        return false;
+    public boolean contains(Type item) {
+        return getAtIndex(binarySearch(item)).compareTo(item) == 0;
     }
 
     /**
@@ -63,8 +82,13 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * in this set that is equal to it; otherwise, returns false
      */
     @Override
-    public boolean containsAll(Collection items) {
-        return false;
+    public boolean containsAll(Collection<? extends Type> items) {
+        for(Type item : items){
+            if(!contains(item)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -72,7 +96,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size() == 0;
     }
 
     /**
@@ -82,7 +106,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public Type min() throws NoSuchElementException {
-        return null;
+        return getAtIndex(0);
     }
 
     /**
@@ -92,7 +116,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public Type max() throws NoSuchElementException {
-        return null;
+        return getAtIndex(this.size() - 1);
     }
 
     /**
@@ -100,7 +124,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -108,7 +132,64 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * order.
      */
     @Override
-    public ArrayList toArrayList() {
-        return null;
+    public ArrayList<Type> toArrayList() {
+        ArrayList<Type> arr = new ArrayList<>();
+        for (int i = 0; i < this.size(); i++) {
+            arr.add(getAtIndex(i));
+        }
+        return arr;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Type getAtIndex(int index){
+        return (Type) backingArray[index];
+    }
+
+    private void shiftElements(Type item, int index){
+        for (int i = size; i > index ; i--) {
+            backingArray[i] = backingArray[i - 1];
+        }
+        backingArray[index] = item;
+    }
+
+    private void resize(Type item, int index){
+        Object[] arr = Arrays.copyOf(backingArray, backingArray.length);
+        backingArray = new Object[backingArray.length * 2];
+        int j = 0;
+        for (int i = 0; i <= arr.length; i++) {
+            if (i == index) {
+                backingArray[i] = item;
+                i++;
+            } else {
+                backingArray[i] = arr[j];
+                j++;
+            }
+        }
+    }
+
+    /**
+     * uses binary to return the index of an element if it is in the array.
+     * if the element is not in the list, returns the closest index to the element.
+     *
+     * @param target element to be searched for
+     * @return an index for the array
+     */
+    private int binarySearch( Type target) {
+        int l = 0, r = this.size(), mid = (r - l) / 2 + l;
+
+        while(l < r) {
+            if (getAtIndex(mid).equals(target)) {
+                break;
+            }
+            if (getAtIndex(mid).compareTo(target) > 0) {
+                r = mid - 1;
+            }
+            else {
+                l = mid + 1;
+            }
+            mid = (r - l) / 2 + l;
+
+        }
+        return mid;
     }
 }

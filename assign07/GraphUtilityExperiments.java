@@ -7,10 +7,10 @@ import java.util.Random;
 
 public class GraphUtilityExperiments extends TimingExperiment{
     private static String problemSizeDescription = "Graph Util";
-    private static int problemSizeMin = 50;
+    private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 50;
-    private static int experimentIterationCount = 20;
+    private static int problemSizeStep = 1000;
+    private static int experimentIterationCount = 10;
 
     protected List<Integer> sources = new ArrayList<>();
     protected List<Integer> destinations = new ArrayList<>();
@@ -37,16 +37,16 @@ public class GraphUtilityExperiments extends TimingExperiment{
     @Override
     protected void setupExperiment(int problemSize) {
         for (int i = 0; i < problemSize; i++) {
-            sources.add(rng.nextInt(problemSize));
-            destinations.add(rng.nextInt(problemSize));
+            sources.add(i);
+            destinations.add(i + 1);
             weights.add(rng.nextDouble());
         }
-        Collections.shuffle(sources); // for cyclic
-        Collections.shuffle(destinations);
+//        Collections.shuffle(sources); // for cyclic
+//        Collections.shuffle(destinations);
 //        Collections.sort(sources); // for acyclic
 //        Collections.sort(destinations);
-        srcData = rng.nextInt(problemSize);
-        destData = rng.nextInt(problemSize);
+        srcData = 0;
+        destData = problemSize;
     }
 
     /**
