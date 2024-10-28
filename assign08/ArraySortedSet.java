@@ -20,6 +20,11 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
             return true;
         }
         int index = binarySearch(item);
+        if(index >= size()){
+            backingArray[size()] = item;
+            size++;
+            return true;
+        }
         if(getAtIndex(index).compareTo(item) == 0){
             return false;
         }
@@ -58,6 +63,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
     @Override
     public void clear() {
         backingArray = new Object[20];
+        size = 0;
     }
 
     /**
