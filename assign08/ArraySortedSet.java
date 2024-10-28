@@ -180,7 +180,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * @param target element to be searched for
      * @return an index for the array
      */
-    private int binarySearch( Type target) {
+    private int binarySearch(Type target) {
         int l = 0, r = this.size(), mid = (r - l) / 2 + l;
 
         while(l < r) {
