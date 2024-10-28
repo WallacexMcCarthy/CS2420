@@ -55,6 +55,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
         }else{
             current.right = addThis;
         }
+        size++;
         return true;
     }
 
@@ -186,15 +187,30 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
             return false;
         }
         TreeNode<Type> element = traverseDriver(item);
-        System.out.println(element.data);
-        TreeNode<Type> leaf = element.left;
-        while(leaf.right != null){
-            leaf = leaf.right;
+        if(element.left == null){
+            if(element.right == null){
+                if(element.parent.left.data.compareTo(element.data) == 0){
+                    element.parent.left = null;
+                }else{
+                    element.parent.right = null;
+                }
+            }else{
+                if(element.parent.left.data.compareTo(element.data) == 0){
+                    element.parent.left = element.right;
+                }else{
+                    element.parent.right = element.right;
+                }
+            }
+        }else{
+            System.out.println("");
+            TreeNode<Type> leaf = element.left;
+            while(leaf.right != null){
+                leaf = leaf.right;
+            }
+            leaf.parent.right = null;
+            element.data = leaf.data;
         }
-        System.out.println(leaf.data);
-        leaf.parent.right = null;
-        element.data = leaf.data;
-        System.out.println(element.data);
+        size--;
         return true;
     }
 
