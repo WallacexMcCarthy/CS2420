@@ -1,7 +1,6 @@
 package assign08;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -13,9 +12,9 @@ import java.util.Random;
  */
 public class BSTAddAllNearlySortedTimingExperiment extends TimingExperiment{
     private static String problemSizeDescription = "BST Nearly Sorted";
-    private static int problemSizeMin = 1000;
+    private static int problemSizeMin = 25;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 1000;
+    private static int problemSizeStep = 25;
     private static int experimentIterationCount = 10;
 
     protected BinarySearchTree<Integer> sortedSet;

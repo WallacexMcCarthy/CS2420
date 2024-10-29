@@ -49,7 +49,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
             this.size++;
             return true;
         }
-        TreeNode<Type> current = traverseDriver(item);
+        TreeNode<Type> current = traverseSearch(item);
         TreeNode<Type> newNode = new TreeNode<>(item);
         newNode.parent = current;
         if(current.data.compareTo(item) == 0){
@@ -102,7 +102,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public boolean contains(Type item) {
-        return !isEmpty() && traverseDriver(item).data.compareTo(item) == 0;
+        return !isEmpty() && traverseSearch(item).data.compareTo(item) == 0;
     }
 
     /**
@@ -198,7 +198,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
         if(!contains(item)){
             return false;
         }
-        TreeNode<Type> element = traverseDriver(item);
+        TreeNode<Type> element = traverseSearch(item);
         // The element has no children
         if(element.left == null && element.right == null){
             if(element.parent == null){ // There is only one node in the tree
@@ -277,7 +277,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      * @param item the data to be searched for
      * @return the node with data equal to item or closest to it
      */
-    private TreeNode<Type> traverseDriver(Type item) {
+    private TreeNode<Type> traverseSearch(Type item) {
         TreeNode<Type> current = this.root;
         return traverse(current, item);
     }

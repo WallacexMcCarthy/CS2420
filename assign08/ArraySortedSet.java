@@ -10,7 +10,7 @@ import java.util.*;
  * @author Isaac Buehner and Wallace McCarthy
  */
 public class ArraySortedSet<Type extends Comparable<? super Type>> implements SortedSet<Type>{
-    private Object[] backingArray = new Object[5];
+    private Object[] backingArray = new Object[20];
     private int size = 0;
 
     /**
@@ -33,7 +33,8 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
             backingArray[index] = item;
             size++;
             return true;
-        }else if(size() >= backingArray.length && index >= size()){
+        }
+        else if(size() >= backingArray.length && index >= size()){
             resize(item, index);
             size++;
             return true;

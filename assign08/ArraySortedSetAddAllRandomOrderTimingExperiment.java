@@ -12,9 +12,9 @@ import java.util.Random;
  */
 public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExperiment{
     private static String problemSizeDescription = "Array Randomly Sorted";
-    private static int problemSizeMin = 1000;
+    private static int problemSizeMin = 25;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 1000;
+    private static int problemSizeStep = 25;
     private static int experimentIterationCount = 20;
 
     protected ArraySortedSet<Integer> sortedSet;
