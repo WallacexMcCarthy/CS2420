@@ -4,30 +4,34 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
+/**
+ * this class is a Binary Search Tree meaning, it has a root node and any nodes with data smaller than
+ * that of the root are to its left, and any nodes with larger data are to the right
+ * @param <Type> the generic type of the data
+ * @version 10/28/2024
+ * @author Wallace McCarthy and Isaac Buehner
+ */
 public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type> {
     private int size;
     private TreeNode<Type> root;
 
+    /**
+     * this nested class is used to represent each node in the tree
+     * each node has data, a parent node(except the root), and children nodes left and right
+     * @param <T> the generic type of the data
+     */
     private static class TreeNode <T extends Comparable<? super T>>{
         private T data;
         protected TreeNode<T> parent;
         protected TreeNode<T> left = null;
         protected TreeNode<T> right = null;
 
+        /**
+         * constructor for a node
+         * @param data the data to be assigned to the node
+         */
         public TreeNode (T data) {
             this.data = data;
-        }
-
-        protected void setParent(TreeNode<T> parent) {
-            this.parent = parent;
-        }
-
-        protected void setLeft(TreeNode<T> left) {
-            this.left = left;
-        }
-
-        protected void setRight(TreeNode<T> right) {
-            this.right = right;
         }
     }
 
@@ -46,14 +50,14 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
             return true;
         }
         TreeNode<Type> current = traverseDriver(item);
-        TreeNode<Type> addThis = new TreeNode<>(item);
-        addThis.parent = current;
+        TreeNode<Type> newNode = new TreeNode<>(item);
+        newNode.parent = current;
         if(current.data.compareTo(item) == 0){
             return false;
         }else if(current.data.compareTo(item) > 0){
-            current.left = addThis;
+            current.left = newNode;
         }else{
-            current.right = addThis;
+            current.right = newNode;
         }
         size++;
         return true;
@@ -134,6 +138,9 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public Type min() throws NoSuchElementException {
+        if(isEmpty()) {
+            throw new NoSuchElementException();
+        }
         TreeNode<Type> current = this.root;
         while(current.left != null) {
             current = current.left;
@@ -148,6 +155,9 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public Type max() throws NoSuchElementException {
+        if(isEmpty()) {
+            throw new NoSuchElementException();
+        }
         TreeNode<Type> current = this.root;
         while(current.right != null) {
             current = current.right;
@@ -169,7 +179,9 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
      */
     @Override
     public ArrayList<Type> toArrayList() {
-        return inOrderTraverseDriver();
+        ArrayList<Type> arr = new ArrayList<>();
+        inOrderTraverse(arr, root);
+        return arr;
     }
 
     /**
@@ -202,7 +214,6 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
                 }
             }
         }else{
-            System.out.println("");
             TreeNode<Type> leaf = element.left;
             while(leaf.right != null){
                 leaf = leaf.right;
@@ -236,11 +247,23 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
         return flag;
     }
 
+    /**
+     * this method is a driver method for the traverse method
+     * @param item the data to be searched for
+     * @return the node with data equal to item or closest to it
+     */
     private TreeNode<Type> traverseDriver(Type item) {
         TreeNode<Type> current = this.root;
         return traverse(current, item);
     }
 
+    /**
+     * this method traverses the tree to find a node containing the data equal to item
+     * if no node is found, then the node with the closest matching data is returned
+     * @param current the node being processed
+     * @param item the data being searched for
+     * @return the node with the closest data to item
+     */
     private TreeNode<Type> traverse(TreeNode<Type> current, Type item) {
         if (item.compareTo(current.data) > 0) {
             if(current.right == null){
@@ -259,11 +282,11 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
         }
     }
 
-    private ArrayList<Type> inOrderTraverseDriver() {
-        ArrayList<Type> arr = new ArrayList<>();
-        inOrderTraverse(arr, root);
-        return arr;
-    }
+    /**
+     * this method runs an in-order traversal of the tree to populate an array with the data in the tree
+     * @param array the array to be populated
+     * @param current the current node being added
+     */
     private void inOrderTraverse(ArrayList<Type> array, TreeNode<Type> current) {
         if(current == null){
             return;

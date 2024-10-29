@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GraphUtilityExperiments extends TimingExperiment{
-    private static String problemSizeDescription = "Graph Util";
+    private static String problemSizeDescription = "Array Randomly Sorted";
     private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;

@@ -2,9 +2,17 @@ package assign08;
 
 import java.util.*;
 
+/**
+ * this class is a sorted set of values
+ * every value in the ArraySortedSet is unique
+ * @param <Type> the generic type
+ * @version 10/28/2024
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class ArraySortedSet<Type extends Comparable<? super Type>> implements SortedSet<Type>{
     private Object[] backingArray = new Object[20];
     private int size = 0;
+
     /**
      * Ensures that this set contains the specified item.
      *
@@ -20,6 +28,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
             return true;
         }
         int index = binarySearch(item);
+        // if the array is full we want to expand, otherwise we check for a duplicate and add accordingly
         if(index >= size()){
             backingArray[size()] = item;
             size++;
@@ -146,19 +155,48 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
         return arr;
     }
 
+    /**
+     * this method gets an item from the backing array at a specified index
+     * this is used instead of a normal get method to avoid suppressing additional warnings
+     * @throws IllegalArgumentException if the provided index is outside the arrays range
+     * @param index the index of the desired element
+     * @return the element at the index
+     */
     @SuppressWarnings("unchecked")
     private Type getAtIndex(int index){
+        if(index >= size() || index < 0) {
+            throw new IllegalArgumentException();
+        }
         return (Type) backingArray[index];
     }
 
+    /**
+     * this method shifts all the elements after a specified index up one index and inserts an element in the gap
+     * @throws IllegalArgumentException if the provided index is outside the arrays range
+     * @param item the element to be inserted
+     * @param index the index to shift and insert at
+     */
     private void shiftElements(Type item, int index){
-        for (int i = size; i > index ; i--) {
+        if(index >= size() || index < 0) {
+            throw new IllegalArgumentException();
+        }
+        for (int i = size(); i > index ; i--) {
             backingArray[i] = backingArray[i - 1];
         }
         backingArray[index] = item;
     }
 
+    /**
+     * this method resizes the array to provide more space for elements
+     * it also inserts an element at the specified index during the expansion
+     * @throws IllegalArgumentException if the provided index is outside the arrays range
+     * @param item the element to be inserted
+     * @param index the index to insert the element at
+     */
     private void resize(Type item, int index){
+        if(index >= size() || index < 0) {
+            throw new IllegalArgumentException();
+        }
         Object[] arr = Arrays.copyOf(backingArray, backingArray.length);
         backingArray = new Object[backingArray.length * 2];
         int j = 0;
