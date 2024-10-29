@@ -199,27 +199,52 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
             return false;
         }
         TreeNode<Type> element = traverseDriver(item);
-        if(element.left == null){
-            if(element.right == null){
-                if(element.parent.left.data.compareTo(element.data) == 0){
-                    element.parent.left = null;
-                }else{
-                    element.parent.right = null;
-                }
-            }else{
-                if(element.parent.left.data.compareTo(element.data) == 0){
-                    element.parent.left = element.right;
-                }else{
-                    element.parent.right = element.right;
-                }
+        // The element has no children
+        if(element.left == null && element.right == null){
+            if(element.parent == null){ // There is only one node in the tree
+                root = null;
+            }else if(element.parent.left != null && element.parent.left.data.compareTo(element.data) == 0){ // The element is its parents left node
+                element.parent.left = null;
+            }else{ // The element is its parents right node
+                element.parent.right = null;
             }
-        }else{
+        }else if(element.left == null){
+            if(element.parent == null){ // There is only one node in the tree with one child
+                root = element.right;
+                element.right.parent = null;
+            }else if(element.parent.left != null && element.parent.left.data.compareTo(element.data) == 0){ // The element is its parents left node
+                element.parent.left = element.right;
+                element.right.parent = element.parent;
+            }else{ // The element is its parents right node
+                element.parent.right = element.right;
+                element.right.parent = element.parent;
+            }
+        }else if(element.right == null){
+            if(element.parent == null){ // There is only one node in the tree with one child
+                root = element.left;
+                element.left.parent = null;
+            }else if(element.parent.left != null && element.parent.left.data.compareTo(element.data) == 0){ // The element is its parents left node
+                element.parent.left = element.left;
+                element.left.parent = element.parent;
+            }else{ // The element is its parents right node
+                element.parent.right = element.left;
+                element.left.parent = element.parent;
+            }
+        }else{ // THe node has two children
             TreeNode<Type> leaf = element.left;
             while(leaf.right != null){
                 leaf = leaf.right;
             }
-            leaf.parent.right = null;
             element.data = leaf.data;
+            if (leaf.parent.left != null && leaf.parent.left.data.compareTo(leaf.data) == 0) {
+                leaf.parent.left = leaf.left;
+            } else {
+                leaf.parent.right = leaf.left;
+            }
+
+            if (leaf.left != null) {
+                leaf.left.parent = leaf.parent;
+            }
         }
         size--;
         return true;
