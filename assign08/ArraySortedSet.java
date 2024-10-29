@@ -29,8 +29,12 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
         }
         int index = binarySearch(item);
         // if the array is full we want to expand, otherwise we check for a duplicate and add accordingly
-        if (index >= size()) {
+        if (size() < backingArray.length && index >= size()) {
             backingArray[index] = item;
+            size++;
+            return true;
+        }else if(size() >= backingArray.length && index >= size()){
+            resize(item, index);
             size++;
             return true;
         }
@@ -122,7 +126,11 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public Type min() throws NoSuchElementException {
-        return getAtIndex(0);
+        if(this.size() == 0){
+            throw new NoSuchElementException();
+        }else{
+            return getAtIndex(0);
+        }
     }
 
     /**
@@ -132,7 +140,11 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public Type max() throws NoSuchElementException {
-        return getAtIndex(this.size() - 1);
+        if(this.size() == 0){
+            throw new NoSuchElementException();
+        }else{
+            return getAtIndex(this.size() - 1);
+        }
     }
 
     /**
@@ -195,7 +207,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * @param index the index to insert the element at
      */
     private void resize(Type item, int index){
-        if(index >= size() || index < 0) {
+        if(index < 0) {
             throw new IllegalArgumentException();
         }
         Object[] arr = Arrays.copyOf(backingArray, backingArray.length);
@@ -220,11 +232,13 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * @return an index for the array
      */
     private int binarySearch(Type target) {
-        int l = 0, r = this.size(), mid = (r - l) / 2 + l;
+        int l = 0;
+        int r = this.size() - 1;
 
-        while(l < r) {
+        while(l <= r) {
+            int mid = (l + r) / 2;
             if (getAtIndex(mid).equals(target)) {
-                break;
+                return mid;
             }
             if (getAtIndex(mid).compareTo(target) > 0) {
                 r = mid - 1;
@@ -232,9 +246,7 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
             else {
                 l = mid + 1;
             }
-            mid = (r - l) / 2 + l;
-
         }
-        return mid;
+        return l;
     }
 }
