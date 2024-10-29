@@ -216,7 +216,6 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
         for (int i = 0; i <= arr.length; i++) {
             if (i == index) {
                 backingArray[i] = item;
-                i++;
             } else {
                 backingArray[i] = arr[j];
                 j++;
