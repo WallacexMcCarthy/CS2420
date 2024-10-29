@@ -10,7 +10,7 @@ import java.util.*;
  * @author Isaac Buehner and Wallace McCarthy
  */
 public class ArraySortedSet<Type extends Comparable<? super Type>> implements SortedSet<Type>{
-    private Object[] backingArray = new Object[20];
+    private Object[] backingArray = new Object[5];
     private int size = 0;
 
     /**
@@ -29,17 +29,18 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
         }
         int index = binarySearch(item);
         // if the array is full we want to expand, otherwise we check for a duplicate and add accordingly
-        if(index >= size()){
-            backingArray[size()] = item;
+        if (index >= size()) {
+            backingArray[index] = item;
             size++;
             return true;
         }
-        if(getAtIndex(index).compareTo(item) == 0){
+        if(getAtIndex(index).compareTo(item) == 0) {
             return false;
         }
         if(size() >= backingArray.length){
             resize(item, index);
-        }else{
+        }
+        else{
             shiftElements(item, index);
         }
         size++;

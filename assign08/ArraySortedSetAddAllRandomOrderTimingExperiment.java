@@ -1,5 +1,6 @@
 package assign08;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,10 +12,10 @@ import java.util.Random;
  */
 public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExperiment{
     private static String problemSizeDescription = "Array Randomly Sorted";
-    private static int problemSizeMin = 1000;
-    private static int problemSizeCount = 20;
+    private static int problemSizeMin = 10;
+    private static int problemSizeCount = 1;
     private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 10;
+    private static int experimentIterationCount = 1;
 
     protected ArraySortedSet<Integer> sortedSet;
     protected List<Integer> elementsToAdd;
@@ -24,7 +25,8 @@ public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExper
      */
     public ArraySortedSetAddAllRandomOrderTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
-
+        elementsToAdd = new ArrayList<>();
+        sortedSet = new ArraySortedSet<>();
     }
     /**
      * method for setting up the infrastructure for the experiment
