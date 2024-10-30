@@ -207,11 +207,11 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      * @param item the element to be inserted
      * @param index the index to insert the element at
      */
-    private void resize(Type item, int index){
+    public void resize(Type item, int index){
         if(index < 0) {
             throw new IllegalArgumentException();
         }
-        Object[] arr = Arrays.copyOf(backingArray, backingArray.length);
+        Object[] arr = backingArray;
         backingArray = new Object[backingArray.length * 2];
         int j = 0;
         for (int i = 0; i <= arr.length; i++) {
