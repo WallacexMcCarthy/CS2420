@@ -91,6 +91,10 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @Override
     public boolean contains(Type item) {
+        int index = binarySearch(item);
+        if(getAtIndex(binarySearch(item)) == null){
+            return false;
+        }
         return getAtIndex(binarySearch(item)).compareTo(item) == 0;
     }
 
@@ -178,9 +182,6 @@ public class ArraySortedSet<Type extends Comparable<? super Type>> implements So
      */
     @SuppressWarnings("unchecked")
     private Type getAtIndex(int index){
-        if(index >= size() || index < 0) {
-            throw new IllegalArgumentException();
-        }
         return (Type) backingArray[index];
     }
 
