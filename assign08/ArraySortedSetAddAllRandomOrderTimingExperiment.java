@@ -3,32 +3,30 @@ package assign08;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
- * This class times the ArraySortedSet addAll method for a list of randomly sorted elements.
+ * this class contains an experiment for the ArraySortedSet addAll method for a list of randomly sorted elements
  * @version 10/29/2024
- * @author Wallace McCarthy
+ * @author Isaac Buehner
  */
 public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExperiment{
     private static String problemSizeDescription = "ArraySortedSet Randomly Sorted List";
     private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 20;
+    private static int experimentIterationCount = 50;
 
     protected ArraySortedSet<Integer> sortedSet;
     protected List<Integer> elementsToAdd;
 
     /**
-     * The constructor for the timing experiment
+     * the constructor for the timing experiment
      */
     public ArraySortedSetAddAllRandomOrderTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
     }
     /**
-     * The method for setting up the infrastructure for the experiment
-     * for a given problem size.
+     * the method for setting up the experiment for a given problem size
      *
      * @param problemSize - the problem size for one experiment
      */
@@ -40,7 +38,7 @@ public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExper
     }
 
     /**
-     * THis method runs the computation to be timed.
+     * this method runs the computation to be timed.
      */
     @Override
     protected void runComputation() {
@@ -48,7 +46,7 @@ public class ArraySortedSetAddAllRandomOrderTimingExperiment extends TimingExper
     }
 
     /**
-     * This is the public helper method that will populate the list that we will use when timing our addAll method.
+     * this is the public helper method that will populate the list with random elements
      * @param problemSize the number of elements to add
      */
     private void populateRandomList(int problemSize) {

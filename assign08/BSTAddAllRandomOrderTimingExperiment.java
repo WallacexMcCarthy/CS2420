@@ -6,30 +6,29 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class times the Binary Search Tree's addAll method for a list of randomly sorted elements.
+ * this class contains an experiment for the BinarySearchTree's addAll method for a list of randomly sorted elements
  * @version 10/29/2024
- * @author Wallace McCarthy
+ * @author Isaac Buehner
  */
 public class BSTAddAllRandomOrderTimingExperiment extends TimingExperiment{
     private static String problemSizeDescription = "BST Randomly Sorted List";
     private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 20;
+    private static int experimentIterationCount = 50;
 
     protected BinarySearchTree<Integer> sortedSet;
     protected List<Integer> elementsToAdd;
 
 
     /**
-     * The constructor for the timing experiment
+     * the constructor for the timing experiment
      */
     public BSTAddAllRandomOrderTimingExperiment() {
         super(problemSizeDescription, problemSizeMin, problemSizeCount, problemSizeStep, experimentIterationCount);
     }
     /**
-     * The method for setting up the infrastructure for the experiment
-     * for a given problem size.
+     * the method for setting up the experiment for a given problem size.
      *
      * @param problemSize - the problem size for one experiment
      */
@@ -41,7 +40,7 @@ public class BSTAddAllRandomOrderTimingExperiment extends TimingExperiment{
     }
 
     /**
-     * THis method runs the computation to be timed.
+     * this method runs the computation to be timed.
      */
     @Override
     protected void runComputation() {
@@ -49,7 +48,7 @@ public class BSTAddAllRandomOrderTimingExperiment extends TimingExperiment{
     }
 
     /**
-     * This is the public helper method that will populate the list that we will use when timing our addAll method.
+     * this is the public helper method that will populate the list in a random order
      * @param problemSize the number of elements to add
      */
     private void populateRandomList(int problemSize) {
