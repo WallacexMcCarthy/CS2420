@@ -1,8 +1,18 @@
 package assign09;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HashTable<K, V> implements Map<K, V> {
+    private MapEntry<K,V>[] table;
+    private int size;
+    private double loadFactor = 0.5;
+    final int[] primes = new int[]{11,23,47,97,197,397,797,1597,3203,6421,12853,25717,51437,102877,205759,411527,823117,1646237,3292489,6584983,13169977,26339969,52679969,105359939,210719881,421439783,842879579,1685759167};
+    private int currentPrimeIndex = 0;
+    public HashTable(){
+        this.table = (MapEntry<K, V>[]) new Object[primes[currentPrimeIndex]];
+        this.size = 0;
+    }
     /**
      * Removes all mappings from this map.
      * <p>
@@ -10,7 +20,9 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public void clear() {
-
+        this.size = 0;
+        this.currentPrimeIndex = 0;
+        this.table = (MapEntry<K,V>[]) new Object[primes[currentPrimeIndex]];
     }
 
     /**
@@ -23,6 +35,19 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public boolean containsKey(K key) {
+        int index = key.hashCode() % primes[currentPrimeIndex];
+        int quadratic = 0;
+        while(table[index + (quadratic * quadratic)] != null){
+            if(table[index + (quadratic * quadratic)].equals(key)){
+                return true;
+            }else{
+                if(quadratic == 0){
+                    quadratic = 1;
+                }else{
+                    quadratic++;
+                }
+            }
+        }
         return false;
     }
 
@@ -37,6 +62,13 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public boolean containsValue(V value) {
+        for (int i = 0; i < table.length; i++) {
+            if(table[i] != null){
+                if(table[i].equals(value)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -50,7 +82,13 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public List<MapEntry<K, V>> entries() {
-        return List.of();
+        List<MapEntry<K, V>> out = new ArrayList<>();
+        for (int i = 0; i < table.length; i++) {
+            if(table[i] != null){
+                out.add(table[i]);
+            }
+        }
+        return out;
     }
 
     /**
@@ -64,6 +102,19 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public V get(K key) {
+        int index = key.hashCode() % primes[currentPrimeIndex];
+        int quadratic = 0;
+        while(table[index + (quadratic * quadratic)] != null){
+            if(table[index + (quadratic * quadratic)].equals(key)){
+                return table[index + (quadratic * quadratic)].getValue();
+            }else{
+                if(quadratic == 0){
+                    quadratic = 1;
+                }else{
+                    quadratic++;
+                }
+            }
+        }
         return null;
     }
 
@@ -76,7 +127,7 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     /**
@@ -94,6 +145,22 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public V put(K key, V value) {
+        int index = key.hashCode() % primes[currentPrimeIndex];
+        int quadratic = 0;
+        while(table[index + (quadratic * quadratic)] != null){
+            if(table[index + (quadratic * quadratic)].equals(key)){
+                V out = table[index + (quadratic * quadratic)].getValue();
+                table[index + (quadratic * quadratic)].setValue(value);
+                return out;
+            }else{
+                if(quadratic == 0){
+                    quadratic = 1;
+                }else{
+                    quadratic++;
+                }
+            }
+        }
+        table[index + (quadratic * quadratic)] = new MapEntry<>(key, value);
         return null;
     }
 
@@ -108,6 +175,21 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(K key) {
+        int index = key.hashCode() % primes[currentPrimeIndex];
+        int quadratic = 0;
+        while(table[index + (quadratic * quadratic)] != null){
+            if(table[index + (quadratic * quadratic)].equals(key)){
+                V out = table[index + (quadratic * quadratic)].getValue();
+                table[index + (quadratic * quadratic)] = null;
+                return out;
+            }else{
+                if(quadratic == 0){
+                    quadratic = 1;
+                }else{
+                    quadratic++;
+                }
+            }
+        }
         return null;
     }
 
@@ -120,6 +202,6 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 }
