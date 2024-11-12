@@ -143,7 +143,8 @@ public class HashTable<K, V> implements Map<K, V> {
             if(getFromArray(index + (quadratic * quadratic)).getKey().equals(key)){
                 V out = getFromArray(index + (quadratic * quadratic)).getValue();
                 getFromArray(index + (quadratic * quadratic)).setValue(value);
-                if((double)size / table.length >= loadFactor){
+                if(((double)size + 1) / table.length >= loadFactor){
+                    this.size = 0;
                     rehash();
                 }
                 return out;
@@ -153,6 +154,10 @@ public class HashTable<K, V> implements Map<K, V> {
         }
         table[index + (quadratic * quadratic)] = new MapEntry<>(key, value);
         size++;
+        if(((double)size) / table.length >= loadFactor){
+            this.size = 0;
+            rehash();
+        }
         return null;
     }
 
