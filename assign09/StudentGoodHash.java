@@ -84,6 +84,6 @@ public class StudentGoodHash {
     }
 
     public int hashCode() {
-        return (getFirstName().length() + getLastName().length()) * getUid();
+        return getUid();
     }
 }
