@@ -7,9 +7,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * this class contains tests for the HashTable class
+ * @version 11/12/2024
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class HashTableTest {
     HashTable<Integer, String> integerHashTable;
     HashTable<Integer, Double> emptyTable;
+
     @BeforeEach
     public void setUp() {
         integerHashTable = new HashTable<>();
@@ -134,7 +140,7 @@ public class HashTableTest {
     }
 
     @Test
-    public void testPutUntilResize() {
+    public void testPutUntilResizeSmall() {
         for (int i = 5; i < 30; i++) {
             integerHashTable.put(i, "" + i);
         }
@@ -142,6 +148,45 @@ public class HashTableTest {
         List<MapEntry<Integer, String>> list = integerHashTable.entries();
         for (int i = 0; i < 30; i++) {
             assertEquals(i, list.get(i).getKey());
+        }
+    }
+
+    @Test
+    public void testPutUntilResizeLarge() {
+        for (int i = 5; i < 500; i++) {
+            integerHashTable.put(i, "" + i);
+        }
+        assertEquals(500, integerHashTable.size());
+        List<MapEntry<Integer, String>> list = integerHashTable.entries();
+        for (int i = 0; i < 500; i++) {
+            assertEquals(i, list.get(i).getKey());
+        }
+    }
+
+    @Test
+    public void testRemove() {
+        String removed = integerHashTable.remove(0);
+        assertEquals("0", removed);
+        assertEquals(4, integerHashTable.size());
+        assertFalse(integerHashTable.containsKey(0));
+    }
+
+    @Test
+    public void testRemoveEmpty() {
+        Double removed = emptyTable.remove(0);
+        assertNull(removed);
+        assertEquals(0, emptyTable.size());
+    }
+
+    @Test
+    public void testRemoveUntilEmpty() {
+        for (int i = 0; i < 5; i++) {
+            String removed = integerHashTable.remove(i);
+            assertEquals("" + i, removed);
+        }
+        assertEquals(0, integerHashTable.size());
+        for (int i = 0; i < 5; i++) {
+            assertFalse(integerHashTable.containsKey(i));
         }
     }
 

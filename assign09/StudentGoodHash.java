@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
  * table.
  *
  * @author CS 2420 course staff and Wallace McCarty and Isaac Buehner
- * @version ?
+ * @version 11/12/2024
  */
 public class StudentGoodHash {
 
