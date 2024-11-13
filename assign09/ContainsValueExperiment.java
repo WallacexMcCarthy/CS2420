@@ -5,9 +5,9 @@ import java.util.TreeMap;
 
 public class ContainsValueExperiment extends TimingExperiment {
     private static String problemSizeDescription = "Contains Value Experiment";
-    private static int problemSizeMin = 1000;
+    private static int problemSizeMin = 10000;
     private static int problemSizeCount = 20;
-    private static int problemSizeStep = 1000;
+    private static int problemSizeStep = 10000;
     private static int experimentIterationCount = 20;
 
     protected Map<String, Integer> hashMap;
@@ -40,8 +40,8 @@ public class ContainsValueExperiment extends TimingExperiment {
      */
     @Override
     protected void runComputation() {
-        hashMap.containsValue(rng.nextInt());
-//        treeMap.containsValue(rng.nextInt());
+//        hashMap.containsValue(rng.nextInt());
+        treeMap.containsValue(rng.nextInt());
     }
 
     public static void main(String[] args) {

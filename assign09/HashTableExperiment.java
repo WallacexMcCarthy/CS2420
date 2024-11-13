@@ -1,19 +1,15 @@
 package assign09;
 
-import assign07.GraphUtilityExperiments;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class HashTableExperiment extends TimingExperiment {
     private static String problemSizeDescription = "Array Randomly Sorted";
     private static int problemSizeMin = 1000;
-    private static int problemSizeCount = 21;
+    private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;
     private static int experimentIterationCount = 1;
-    private HashTable<StudentGoodHash, String> table = new HashTable<>();
+    private HashTable<StudentBadHash, String> table = new HashTable<>();
     private ArrayList<StudentBadHash> bad = new ArrayList<>();
     private ArrayList<StudentMediumHash> medium = new ArrayList<>();
     private ArrayList<StudentGoodHash> good = new ArrayList<>();
@@ -50,17 +46,17 @@ public class HashTableExperiment extends TimingExperiment {
      */
     @Override
     protected void runComputation() {
-//        for (int i = 0; i < bad.size(); i++) {
-//            table.put(bad.get(i), bad.get(i).getFirstName());
-//        }
+        for (int i = 0; i < bad.size(); i++) {
+            table.put(bad.get(i), bad.get(i).getFirstName());
+        }
 
 //        for (int i = 0; i < medium.size(); i++) {
 //            table.put(medium.get(i), medium.get(i).getFirstName());
 //        }
 
-        for (int i = 0; i < good.size(); i++) {
-            table.put(good.get(i), good.get(i).getFirstName());
-        }
+//        for (int i = 0; i < good.size(); i++) {
+//            table.put(good.get(i), good.get(i).getFirstName());
+//        }
     }
 
     public static void main(String[] args) {
@@ -79,7 +75,11 @@ public class HashTableExperiment extends TimingExperiment {
             for (int j = 0; j < random.nextInt(9); j++) {
                 str = str + "l";
             }
-            array.add(new StudentBadHash(0, str, str + "M"));
+            String last = "";
+            for (int j = 0; j < random.nextInt(19); j++) {
+                last = last + "l";
+            }
+            array.add(new StudentBadHash(random.nextInt(0, 1000000), str, last));
         }
         return array;
     }
@@ -95,7 +95,7 @@ public class HashTableExperiment extends TimingExperiment {
             for (int j = 0; j < random.nextInt(19); j++) {
                 last = last + "l";
             }
-            array.add(new StudentMediumHash(random.nextInt(100000), str, last));
+            array.add(new StudentMediumHash(random.nextInt(0, 1000000), str, last));
         }
         return array;
     }
@@ -112,7 +112,7 @@ public class HashTableExperiment extends TimingExperiment {
             for (int j = 0; j < random.nextInt(19); j++) {
                 last = last + "l";
             }
-            array.add(new StudentGoodHash(random.nextInt(100000), str, last));
+            array.add(new StudentGoodHash(random.nextInt(0,1000000), str, last));
         }
         return array;
     }

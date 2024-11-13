@@ -238,6 +238,7 @@ public class HashTable<K, V> implements Map<K, V> {
                 quadratic++;
             }
             table[(index + (quadratic * quadratic)) % table.length] = entry;
+            size++;
         }
     }
 
