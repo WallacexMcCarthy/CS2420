@@ -32,9 +32,9 @@ public class HashTableExperiment extends TimingExperiment {
      */
     @Override
     protected void setupExperiment(int problemSize) {
-        if(table.getCollisions() != 0){
-            collisions.add(table.getCollisions());
-        }
+//        if(table.getCollisions() != 0){
+//            collisions.add(table.getCollisions());
+//        }
         table = new HashTable<>();
         bad = buildStudentBadHash(problemSize);
         medium = buildStudentMediumHash(problemSize);

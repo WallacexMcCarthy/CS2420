@@ -46,8 +46,8 @@ public class HashTable<K, V> implements Map<K, V> {
     public boolean containsKey(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray((index + (quadratic * quadratic)) % table.length) != null){
-            if(getFromArray((index + (quadratic * quadratic)) % table.length).getKey().equals(key)){
+        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+            if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 return true;
             }else{
                 quadratic++;
@@ -109,9 +109,9 @@ public class HashTable<K, V> implements Map<K, V> {
     public V get(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray((index + (quadratic * quadratic)) % table.length) != null){
-            if(getFromArray((index + (quadratic * quadratic)) % table.length).getKey().equals(key)){
-                return getFromArray((index + (quadratic * quadratic)) % table.length).getValue();
+        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+            if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
+                return getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getValue();
             }else{
                 quadratic++;
             }
@@ -148,10 +148,10 @@ public class HashTable<K, V> implements Map<K, V> {
     public V put(K key, V value) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray((index + (quadratic * quadratic)) % table.length) != null){
-            if(getFromArray((index + (quadratic * quadratic)) % table.length).getKey().equals(key)){
-                V out = getFromArray((index + (quadratic * quadratic)) % table.length).getValue();
-                getFromArray((index + (quadratic * quadratic)) % table.length).setValue(value);
+        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+            if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
+                V out = getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getValue();
+                getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).setValue(value);
                 if(((double)size + 1) / table.length >= loadFactor){
                     this.size = 0;
                     rehash();
@@ -161,7 +161,7 @@ public class HashTable<K, V> implements Map<K, V> {
                 quadratic++;
             }
         }
-        table[(index + (quadratic * quadratic)) % table.length] = new MapEntry<>(key, value);
+        table[Math.abs((index + (quadratic * quadratic)) % table.length)] = new MapEntry<>(key, value);
         size++;
         if(((double)size) / table.length >= loadFactor){
             this.size = 0;
@@ -183,8 +183,8 @@ public class HashTable<K, V> implements Map<K, V> {
     public V remove(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray((index + (quadratic * quadratic)) % table.length) != null){
-            if(getFromArray((index + (quadratic * quadratic)) % table.length).getKey().equals(key)){
+        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+            if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 V out = getFromArray((index + (quadratic * quadratic))% table.length).getValue();
                 table[index + (quadratic * quadratic) % table.length] = null;
                 size--;
@@ -216,7 +216,7 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     @SuppressWarnings("unchecked")
     private MapEntry<K, V> getFromArray(int i) {
-        return (MapEntry<K, V>)table[i];
+        return (MapEntry<K, V>)table[Math.abs(i)];
     }
 
     /**
@@ -229,7 +229,7 @@ public class HashTable<K, V> implements Map<K, V> {
         for(MapEntry<K,V> entry : entries){
             int index = entry.getKey().hashCode() % primes[currentPrimeIndex];
             int quadratic = 0;
-            while(getFromArray((index + (quadratic * quadratic)) % table.length) != null){
+            while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
                 quadratic++;
             }
             table[(index + (quadratic * quadratic)) % table.length] = entry;

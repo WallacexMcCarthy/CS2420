@@ -69,6 +69,17 @@ public class HashTableTest {
     }
 
     @Test
+    public void containsKeyTrueBigger() {
+        for (int i = 5; i < 20; i++) {
+            integerHashTable.put(i, ""+i);
+        }
+        for (int i = 0; i < 20; i++) {
+            assertTrue(integerHashTable.containsKey(i));
+        }
+        assertEquals(20, integerHashTable.size());
+    }
+
+    @Test
     public void containsKeyFalse() {
         assertFalse(integerHashTable.containsKey(5));
     }
