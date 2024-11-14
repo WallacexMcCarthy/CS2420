@@ -190,4 +190,19 @@ public class HashTableTest {
         }
     }
 
+    @Test
+    public void testPutCollisions() {
+        // starting size is 11 for our HashTable, so multiples of 11 will cause collisions until a resize
+        HashTable<Integer, String> collisionTable = new HashTable<>();
+        for (int i = 0; i < 66; i+= 11) {
+            assertNull(collisionTable.put(i, "" + i));
+        }
+        assertEquals(6, collisionTable.size());
+        // first resize will make the backing array size 23
+        for (int i = 23; i < 23*6; i += 23) {
+            assertNull(collisionTable.put(i, "" + i));
+        }
+        assertEquals(11, collisionTable.size());
+    }
+
 }

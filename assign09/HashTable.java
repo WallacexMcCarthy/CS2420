@@ -17,7 +17,6 @@ public class HashTable<K, V> implements Map<K, V> {
     final double loadFactor = 0.5;
     private final int[] primes = new int[]{11,23,47,97,197,397,797,1597,3203,6421,12853,25717,51437,102877,205759,411527,823117,1646237,3292489,6584983,13169977,26339969,52679969,105359939,210719881,421439783,842879579,1685759167};
     private int currentPrimeIndex = 0;
-    private int collisions = 0;
     public HashTable(){
         this.table = new Object[primes[currentPrimeIndex]];
         this.size = 0;
@@ -153,16 +152,12 @@ public class HashTable<K, V> implements Map<K, V> {
             if(getFromArray((index + (quadratic * quadratic)) % table.length).getKey().equals(key)){
                 V out = getFromArray((index + (quadratic * quadratic)) % table.length).getValue();
                 getFromArray((index + (quadratic * quadratic)) % table.length).setValue(value);
-                collisions++;
                 if(((double)size + 1) / table.length >= loadFactor){
                     this.size = 0;
-                    int coll = collisions;
                     rehash();
-                    collisions = coll;
                 }
                 return out;
             }else{
-                collisions++;
                 quadratic++;
             }
         }
@@ -240,9 +235,5 @@ public class HashTable<K, V> implements Map<K, V> {
             table[(index + (quadratic * quadratic)) % table.length] = entry;
             size++;
         }
-    }
-
-    public int getCollisions(){
-        return this.collisions;
     }
 }
