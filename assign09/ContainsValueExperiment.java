@@ -40,8 +40,8 @@ public class ContainsValueExperiment extends TimingExperiment {
      */
     @Override
     protected void runComputation() {
-//        hashMap.containsValue(rng.nextInt());
-        treeMap.containsValue(rng.nextInt());
+        hashMap.containsValue(rng.nextInt());
+//        treeMap.containsValue(rng.nextInt());
     }
 
     public static void main(String[] args) {
