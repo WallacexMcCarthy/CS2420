@@ -1,6 +1,7 @@
 package assign09;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,12 +14,16 @@ import java.util.List;
  */
 public class HashTable<K, V> implements Map<K, V> {
     private Object[] table;
+    private boolean[] actives;
     private int size;
     final double loadFactor = 0.5;
     private final int[] primes = new int[]{11,23,47,97,197,397,797,1597,3203,6421,12853,25717,51437,102877,205759,411527,823117,1646237,3292489,6584983,13169977,26339969,52679969,105359939,210719881,421439783,842879579,1685759167};
     private int currentPrimeIndex = 0;
+
     public HashTable(){
         this.table = new Object[primes[currentPrimeIndex]];
+        this.actives = new boolean[primes[currentPrimeIndex]];
+        Arrays.fill(actives, true);
         this.size = 0;
     }
 
@@ -32,6 +37,8 @@ public class HashTable<K, V> implements Map<K, V> {
         this.size = 0;
         this.currentPrimeIndex = 0;
         this.table = new Object[primes[currentPrimeIndex]];
+        this.actives = new boolean[primes[currentPrimeIndex]];
+        Arrays.fill(actives, true);
     }
 
     /**
@@ -46,7 +53,13 @@ public class HashTable<K, V> implements Map<K, V> {
     public boolean containsKey(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+        // if the current item being indexed is not active then we want to skip over it in this method
+        while(!actives[(index + (quadratic * quadratic)) % table.length] ||
+                getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null) {
+            if(!actives[(index + (quadratic * quadratic)) % table.length]) {
+                quadratic++;
+                continue;
+            }
             if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 return true;
             }else{
@@ -109,7 +122,13 @@ public class HashTable<K, V> implements Map<K, V> {
     public V get(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+        // if the current item being indexed is not active then we want to skip over it in this method
+        while(!actives[(index + (quadratic * quadratic)) % table.length] ||
+                getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null) {
+            if(!actives[(index + (quadratic * quadratic)) % table.length]) {
+                quadratic++;
+                continue;
+            }
             if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 return getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getValue();
             }else{
@@ -148,7 +167,19 @@ public class HashTable<K, V> implements Map<K, V> {
     public V put(K key, V value) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+        // if the current item being indexed is not active then we want to insert in that position in this method
+        while(!actives[(index + (quadratic * quadratic)) % table.length] ||
+                getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null) {
+            if(!actives[(index + (quadratic * quadratic)) % table.length]) {
+                table[Math.abs((index + (quadratic * quadratic)) % table.length)] = new MapEntry<>(key, value);
+                size++;
+                actives[index + (quadratic * quadratic) % table.length] = true;
+                if(((double)size) / table.length >= loadFactor){
+                    this.size = 0;
+                    rehash();
+                }
+                return null;
+            }
             if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 V out = getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getValue();
                 getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).setValue(value);
@@ -183,10 +214,17 @@ public class HashTable<K, V> implements Map<K, V> {
     public V remove(K key) {
         int index = key.hashCode() % primes[currentPrimeIndex];
         int quadratic = 0;
-        while(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null){
+        // if the current item being indexed is not active then we want to skip over it in this method
+        while(!actives[(index + (quadratic * quadratic)) % table.length] ||
+                getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)) != null) {
+            if(!actives[(index + (quadratic * quadratic)) % table.length]) {
+                quadratic++;
+                continue;
+            }
             if(getFromArray(Math.abs((index + (quadratic * quadratic)) % table.length)).getKey().equals(key)){
                 V out = getFromArray((index + (quadratic * quadratic))% table.length).getValue();
                 table[index + (quadratic * quadratic) % table.length] = null;
+                actives[index + (quadratic * quadratic) % table.length] = false;
                 size--;
                 return out;
             }else{
@@ -226,6 +264,9 @@ public class HashTable<K, V> implements Map<K, V> {
         List<MapEntry<K,V>> entries = entries();
         currentPrimeIndex++;
         table = new Object[primes[currentPrimeIndex]];
+        this.actives = new boolean[primes[currentPrimeIndex]];
+        Arrays.fill(actives, true);
+
         for(MapEntry<K,V> entry : entries){
             int index = entry.getKey().hashCode() % primes[currentPrimeIndex];
             int quadratic = 0;

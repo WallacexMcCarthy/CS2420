@@ -83,7 +83,6 @@ public class StudentMediumHash {
     }
 
     public int hashCode() {
-
         return toString().length() * getFirstName().length();
     }
 }

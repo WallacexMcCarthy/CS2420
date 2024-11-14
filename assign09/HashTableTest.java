@@ -90,6 +90,17 @@ public class HashTableTest {
     }
 
     @Test
+    public void containsKeyCollisions() {
+        emptyTable.put(0, 0.0);
+        emptyTable.put(11, 11.0);
+        emptyTable.put(22, 22.0);
+        // since starting size is 11, putting multiples of 11 in will collide with the 0
+        assertTrue(emptyTable.containsKey(0));
+        assertTrue(emptyTable.containsKey(11));
+        assertTrue(emptyTable.containsKey(22));
+    }
+
+    @Test
     public void containsValueTrue() {
         for (int i = 0; i < 4; i++) {
             assertTrue(integerHashTable.containsValue("" + i));
@@ -136,6 +147,17 @@ public class HashTableTest {
     @Test
     public void testGetEmpty() {
         assertNull(emptyTable.get(0));
+    }
+
+    @Test
+    public void testGetCollisions() {
+        emptyTable.put(0, 0.0);
+        emptyTable.put(11, 11.0);
+        emptyTable.put(22, 22.0);
+
+        assertEquals(0.0, emptyTable.get(0));
+        assertEquals(11.0, emptyTable.get(11));
+        assertEquals(22.0, emptyTable.get(22));
     }
 
     @Test
@@ -202,6 +224,15 @@ public class HashTableTest {
     }
 
     @Test
+    public void testRemoveCollisions() {
+        emptyTable.put(0, 1.0);
+        emptyTable.put(11, 2.0);
+        assertEquals(1.0, emptyTable.remove(0));
+        assertEquals(2.0, emptyTable.get(11));
+
+    }
+
+    @Test
     public void testPutCollisions() {
         // starting size is 11 for our HashTable, so multiples of 11 will cause collisions until a resize
         HashTable<Integer, String> collisionTable = new HashTable<>();
@@ -214,6 +245,17 @@ public class HashTableTest {
             assertNull(collisionTable.put(i, "" + i));
         }
         assertEquals(11, collisionTable.size());
+    }
+
+    @Test
+    public void testPutAndRemoveWithCollisions() {
+        emptyTable.put(0, 1.0);
+        emptyTable.remove(0);
+        emptyTable.put(11, 2.0);
+        assertEquals(2.0, emptyTable.get(11));
+        emptyTable.remove(11);
+        emptyTable.put(0, 1.0);
+        assertEquals(1.0, emptyTable.get(0));
     }
 
 }
