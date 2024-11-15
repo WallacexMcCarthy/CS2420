@@ -5,27 +5,34 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class BinaryMinHeap<E> implements PriorityQueue<E> {
-    private Object[] backingArray = new Object[10];
+    private Object[] backingArray;
     private Comparator<? super E> comparator;
     private int size;
 
     public BinaryMinHeap() {
-        size = 0;
+        this.size = 0;
+        this.backingArray = new Object[10];
     }
 
     public BinaryMinHeap(Comparator<? super E> comparator) {
-        size = 0;
+        this.size = 0;
         this.comparator = comparator;
+        this.backingArray  = new Object[10];
     }
 
     public BinaryMinHeap(List<? extends E> list) {
-        size = 0;
-
+        this.size = 0;
+        for(E element : list){
+            this.add(element);
+        }
     }
 
     public BinaryMinHeap(List<? extends E> list, Comparator<? super E> comparator) {
-        size = 0;
+        this.size = 0;
         this.comparator = comparator;
+        for(E element : list){
+            this.add(element);
+        }
     }
     /**
      * Adds the given element to this priority queue.
@@ -47,7 +54,10 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public E peek() throws NoSuchElementException {
-        return null;
+        if (getFromArray(1) == null) {
+            throw new NoSuchElementException();
+        }
+        return getFromArray(1);
     }
 
     /**
@@ -70,7 +80,7 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     /**
@@ -81,7 +91,7 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     /**
@@ -90,7 +100,7 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public void clear() {
-
+        this.backingArray = new Object[10];
     }
 
     /**
@@ -104,6 +114,15 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] out = new Object[this.size];
+        for(int i = 0; i < this.size; i++) {
+            out[i] = backingArray[i + 1];
+        }
+        return out;
+    }
+
+    @SuppressWarnings("unchecked")
+    private E getFromArray(int index){
+        return (E) backingArray[index];
     }
 }
