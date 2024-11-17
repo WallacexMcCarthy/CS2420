@@ -1,38 +1,37 @@
 package assign10;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class BinaryMinHeap<E> implements PriorityQueue<E> {
+public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQueue<E> {
     private Object[] backingArray;
     private Comparator<? super E> comparator;
     private int size;
 
     public BinaryMinHeap() {
         this.size = 0;
-        this.backingArray = new Object[10];
+        backingArray = new Object[10];
     }
 
     public BinaryMinHeap(Comparator<? super E> comparator) {
         this.size = 0;
         this.comparator = comparator;
-        this.backingArray  = new Object[10];
+        backingArray = new Object[10];
     }
 
     public BinaryMinHeap(List<? extends E> list) {
         this.size = 0;
-        for(E element : list){
-            this.add(element);
-        }
+        backingArray = new Object[10];
+        heapify(list);
     }
 
     public BinaryMinHeap(List<? extends E> list, Comparator<? super E> comparator) {
         this.size = 0;
         this.comparator = comparator;
-        for(E element : list){
-            this.add(element);
-        }
+        backingArray = new Object[10];
+        heapify(list);
     }
     /**
      * Adds the given element to this priority queue.
@@ -42,7 +41,11 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public void add(E element) {
-
+        if (size + 1 > backingArray.length) {
+            resize();
+        }
+        percolateUp(element);
+        size++;
     }
 
     /**
@@ -69,6 +72,7 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
      */
     @Override
     public E extract() throws NoSuchElementException {
+        size--;
         return null;
     }
 
@@ -124,5 +128,42 @@ public class BinaryMinHeap<E> implements PriorityQueue<E> {
     @SuppressWarnings("unchecked")
     private E getFromArray(int index){
         return (E) backingArray[index];
+    }
+
+    private void heapify(List<? extends E> list) {
+
+    }
+
+    private void percolateUp(E element) {
+        int currentIndex = size;
+        while (currentIndex > 1) {
+            if (innerCompare(element, getFromArray(currentIndex / 2)) < 0) {
+                backingArray[currentIndex] = getFromArray(currentIndex / 2);
+                currentIndex = currentIndex / 2;
+            } else {
+                backingArray[currentIndex] = element;
+                return;
+            }
+        }
+        backingArray[1] = element;
+    }
+
+    private void percolateDown(E element) {
+
+    }
+
+    private int innerCompare(E item1, E item2) {
+        if (!(comparator == null)) {
+            return comparator.compare(item1, item2);
+        }
+        return item1.compareTo(item2);
+    }
+
+    private void resize() {
+        Object[] newArr = Arrays.copyOf(backingArray, size);
+        backingArray = new Object[size*2];
+        for (int i = 0; i < size; i++) {
+            backingArray[i] = newArr[i];
+        }
     }
 }
