@@ -94,16 +94,11 @@ public class BinaryMinHeapTest {
     public void testToArray() {
         BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
         heap.add(4);
-        System.out.println(Arrays.toString(heap.toArray()));
         heap.add(1);
-        System.out.println(Arrays.toString(heap.toArray()));
         heap.add(3);
-        System.out.println(Arrays.toString(heap.toArray()));
         heap.add(2);
-        System.out.println(Arrays.toString(heap.toArray()));
 
         Object[] expected = {1, 2, 3, 4};
-        System.out.print(Arrays.toString(heap.toArray()));
         assertArrayEquals(expected, heap.toArray());
     }
 

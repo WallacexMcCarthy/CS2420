@@ -78,7 +78,7 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         E temp = getFromArray(1);
         backingArray[1] = backingArray[size];
         size--;
-        percolateDown(getFromArray(1));
+        percolateDown(1);
         return temp;
     }
 
@@ -146,27 +146,17 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
                 this.backingArray[i + 1] = list.get(i);
             }
             this.size = list.size();
-            heapifyDown(1);
+            System.out.println(Arrays.toString(backingArray));
+            System.out.println(size);
+            int parent = size;
+            while(parent/2 >= 1){
+                percolateDown(parent / 2);
+                percolateDown(parent / 2 + 1);
+                parent = parent / 2;
+                System.out.println(Arrays.toString(backingArray));
+            }
         }
 
-    }
-
-    private void heapifyDown(int index) {
-        int smallest = index;
-        int leftChild = index * 2;
-        int rightChild = index * 2 + 1;
-        if(leftChild <= this.size && innerCompare(getFromArray(leftChild), getFromArray(smallest)) < 0) {
-            smallest = leftChild;
-        }
-        if(rightChild <= this.size && innerCompare(getFromArray(rightChild), getFromArray(smallest)) < 0) {
-            smallest = rightChild;
-        }
-        if(smallest != index) {
-            E temp = getFromArray(index);
-            backingArray[index] = getFromArray(smallest);
-            backingArray[smallest] = temp;
-            heapifyDown(smallest);
-        }
     }
 
     private void percolateUp(E element) {
@@ -182,20 +172,20 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         }
         backingArray[1] = element;
     }
-    private void percolateDown(E element) {
-        int currentIndex = 1;
-        while(2 * currentIndex + 1 >= size){
+    private void percolateDown(int index) {
+        int currentIndex = index;
+        while(2 * currentIndex + 1 <= size){
             int leftChild = 2 * currentIndex;
             int rightChild = 2 * currentIndex + 1;
             int smallestChild = leftChild;
             if(innerCompare(getFromArray(leftChild), getFromArray(rightChild)) > 0){
                 smallestChild = rightChild;
             }
-            if(innerCompare(getFromArray(smallestChild), element) >= 0){
+            if(innerCompare(getFromArray(smallestChild), getFromArray(currentIndex)) >= 0){
                 break;
             }else{
-                E temp = getFromArray(smallestChild);
-                backingArray[currentIndex] = element;
+                E temp = getFromArray(currentIndex);
+                backingArray[currentIndex] = getFromArray(smallestChild);
                 backingArray[smallestChild] = temp;
                 currentIndex = smallestChild;
             }
