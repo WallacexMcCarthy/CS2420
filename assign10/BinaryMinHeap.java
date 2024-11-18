@@ -171,14 +171,12 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
      * @param list the list to build the heap from
      */
     private void heapify(List<? extends E> list) {
-        if(list.isEmpty()){
-            return;
-        } else {
-            this.backingArray = new Object[list.size() + 1];
+        if(!list.isEmpty()){
+            this.backingArray = new Object[list.size() + 2];
             for (int i = 0; i < list.size(); i++) {
                 this.backingArray[i + 1] = list.get(i);
+                size++;
             }
-            this.size = list.size();
             int parent = size;
             while(parent/2 >= 1){
                 percolateDown(parent / 2);
@@ -186,7 +184,6 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
                 parent = parent / 2;
             }
         }
-
     }
 
     /**
@@ -218,9 +215,15 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         while(2 * currentIndex <= size){
             int leftChild = 2 * currentIndex;
             int rightChild = 2 * currentIndex + 1;
-            int smallestChild = leftChild;
-            if(innerCompare(getFromArray(leftChild), getFromArray(rightChild)) > 0){
+            int smallestChild;
+            if (getFromArray(rightChild) == null) {
+                smallestChild = leftChild;
+            }
+            else if (innerCompare(getFromArray(leftChild), getFromArray(rightChild)) > 0){
                 smallestChild = rightChild;
+            }
+            else {
+                smallestChild = leftChild;
             }
             if(innerCompare(getFromArray(smallestChild), getFromArray(currentIndex)) >= 0){
                 break;
