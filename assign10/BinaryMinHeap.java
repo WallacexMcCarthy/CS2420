@@ -1,38 +1,61 @@
 package assign10;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * this class is a Binary Min Heap data structure that uses the PriorityQueue interface in the same package
+ * it uses percolation to perform its operations
+ * @version 11/18/2024
+ * @author Wallace McCarthy and Isaac Buehner
+ */
 public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQueue<E> {
     private Object[] backingArray;
     private Comparator<? super E> comparator;
     private int size;
 
+    /**
+     * the default constructor for a BinaryMinHeap
+     */
     public BinaryMinHeap() {
         this.size = 0;
         backingArray = new Object[10];
     }
 
+    /**
+     * this constructor allows a comparator to be used for comparisons rather than the default comparison
+     * @param comparator the comparator to be used
+     */
     public BinaryMinHeap(Comparator<? super E> comparator) {
         this.size = 0;
         this.comparator = comparator;
         backingArray = new Object[10];
     }
 
+    /**
+     * this constructor creates a BinaryMinHeap from a given list using the private heapify method
+     * @param list the list to create the heap from
+     */
     public BinaryMinHeap(List<? extends E> list) {
         this.size = 0;
         backingArray = new Object[10];
         heapify(list);
     }
 
+    /**
+     * this constructor allows for a comparator to be used instead of default behavior
+     * and creates the heap from a given list
+     * @param list the list to create the heap from
+     * @param comparator the comparator to be used
+     */
     public BinaryMinHeap(List<? extends E> list, Comparator<? super E> comparator) {
         this.size = 0;
         this.comparator = comparator;
         backingArray = new Object[10];
         heapify(list);
     }
+
     /**
      * Adds the given element to this priority queue.
      * O(1) in the average case, O(log N) in the worst case
@@ -132,11 +155,21 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         return out;
     }
 
+    /**
+     * helper method to avoid unnecessary warnings when getting from the backing array
+     * @param index the index to retrieve from the backing array
+     * @return the item at the given index
+     */
     @SuppressWarnings("unchecked")
     private E getFromArray(int index){
         return (E) backingArray[index];
     }
 
+    /**
+     * helper method for creating the heap from a list
+     * uses heapBuild algorithm to create the heap more efficiently than adding N times
+     * @param list the list to build the heap from
+     */
     private void heapify(List<? extends E> list) {
         if(list.isEmpty()){
             return;
@@ -156,6 +189,11 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
 
     }
 
+    /**
+     * helper method for adding elements to the heap
+     * uses up percolation to move elements to the correct places
+     * @param element the element to add
+     */
     private void percolateUp(E element) {
         int currentIndex = this.size + 1;
         while (currentIndex > 1) {
@@ -170,6 +208,11 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         backingArray[1] = element;
     }
 
+    /**
+     * helper method for removing elements from the heap
+     * uses down percolation to move the elements to the correct places
+     * @param index the index to remove from the backing array
+     */
     private void percolateDown(int index) {
         int currentIndex = index;
         while(2 * currentIndex <= size){
@@ -190,6 +233,13 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         }
     }
 
+    /**
+     * helper method to avoid code duplication when comparing elements
+     * uses the given comparator if available and uses default behavior otherwise
+     * @param item1 the first element to be compared
+     * @param item2 the first element to be compared
+     * @return an int representing which element is bigger
+     */
     private int innerCompare(E item1, E item2) {
         if (!(comparator == null)) {
             return comparator.compare(item1, item2);
@@ -197,6 +247,9 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         return item1.compareTo(item2);
     }
 
+    /**
+     * helper method that doubles the size of the backing array when it is full
+     */
     private void resize() {
         Object[] newArr = new Object[backingArray.length * 2];
         for (int i = 1; i < this.size + 1; i++) {

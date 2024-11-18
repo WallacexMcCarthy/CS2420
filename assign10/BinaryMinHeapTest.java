@@ -7,6 +7,11 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * this class contains tests for the BinaryMinHeap class
+ * @version 11/18/2024
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class BinaryMinHeapTest {
     BinaryMinHeap<Integer> intHeap;
     BinaryMinHeap<Integer> emptyHeap;
