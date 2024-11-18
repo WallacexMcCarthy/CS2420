@@ -135,7 +135,7 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
     }
 
     private void percolateUp(E element) {
-        int currentIndex = size;
+        int currentIndex = size + 1;
         while (currentIndex > 1) {
             if (innerCompare(element, getFromArray(currentIndex / 2)) < 0) {
                 backingArray[currentIndex] = getFromArray(currentIndex / 2);

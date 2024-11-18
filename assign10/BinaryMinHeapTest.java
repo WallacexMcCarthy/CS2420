@@ -4,6 +4,7 @@ package assign10;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,17 +20,27 @@ public class BinaryMinHeapTest {
     }
 
     @Test
-    public void testListConstructor() {
+    public void listConstructor() {
 
     }
 
     @Test
-    public void testComparatorConstructor() {
+    public void comparatorConstructor() {
 
     }
 
     @Test
-    public void testListAndComparatorConstructor() {
+    public void listAndComparatorConstructor() {
+
+    }
+
+    @Test
+    public void toArrayNormal() {
+
+    }
+
+    @Test
+    public void toArrayEmpty() {
 
     }
 }
