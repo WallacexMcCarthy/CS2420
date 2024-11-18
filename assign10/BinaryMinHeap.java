@@ -41,11 +41,11 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
      */
     @Override
     public void add(E element) {
-        if (size + 1 > backingArray.length) {
+        if (size + 1 >= backingArray.length) {
             resize();
         }
-        percolateUp(element);
         size++;
+        percolateUp(element);
     }
 
     /**
@@ -57,7 +57,7 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
      */
     @Override
     public E peek() throws NoSuchElementException {
-        if (getFromArray(1) == null) {
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
         return getFromArray(1);
@@ -72,8 +72,14 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
      */
     @Override
     public E extract() throws NoSuchElementException {
+        if(isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        E temp = getFromArray(1);
+        backingArray[1] = backingArray[size];
         size--;
-        return null;
+        percolateDown(1);
+        return temp;
     }
 
     /**
@@ -104,6 +110,7 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
      */
     @Override
     public void clear() {
+        this.size = 0;
         this.backingArray = new Object[10];
     }
 
@@ -131,11 +138,29 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
     }
 
     private void heapify(List<? extends E> list) {
+        if(list.size() == 0){
+            return;
+        }else{
+            this.backingArray = new Object[list.size() + 1];
+            for (int i = 0; i < list.size(); i++) {
+                this.backingArray[i + 1] = list.get(i);
+            }
+            this.size = list.size();
+            System.out.println(Arrays.toString(backingArray));
+            System.out.println(size);
+            int parent = size;
+            while(parent/2 >= 1){
+                percolateDown(parent / 2);
+                percolateDown(parent / 2 + 1);
+                parent = parent / 2;
+                System.out.println(Arrays.toString(backingArray));
+            }
+        }
 
     }
 
     private void percolateUp(E element) {
-        int currentIndex = size + 1;
+        int currentIndex = this.size;
         while (currentIndex > 1) {
             if (innerCompare(element, getFromArray(currentIndex / 2)) < 0) {
                 backingArray[currentIndex] = getFromArray(currentIndex / 2);
@@ -147,9 +172,24 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         }
         backingArray[1] = element;
     }
-
-    private void percolateDown(E element) {
-
+    private void percolateDown(int index) {
+        int currentIndex = index;
+        while(2 * currentIndex + 1 <= size){
+            int leftChild = 2 * currentIndex;
+            int rightChild = 2 * currentIndex + 1;
+            int smallestChild = leftChild;
+            if(innerCompare(getFromArray(leftChild), getFromArray(rightChild)) > 0){
+                smallestChild = rightChild;
+            }
+            if(innerCompare(getFromArray(smallestChild), getFromArray(currentIndex)) >= 0){
+                break;
+            }else{
+                E temp = getFromArray(currentIndex);
+                backingArray[currentIndex] = getFromArray(smallestChild);
+                backingArray[smallestChild] = temp;
+                currentIndex = smallestChild;
+            }
+        }
     }
 
     private int innerCompare(E item1, E item2) {
@@ -160,10 +200,10 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
     }
 
     private void resize() {
-        Object[] newArr = Arrays.copyOf(backingArray, size);
-        backingArray = new Object[size*2];
-        for (int i = 0; i < size; i++) {
-            backingArray[i] = newArr[i];
+        Object[] newArr = new Object[backingArray.length * 2];
+        for (int i = 1; i < this.size; i++) {
+            newArr[i] = backingArray[i];
         }
+        backingArray = newArr;
     }
 }
