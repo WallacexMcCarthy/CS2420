@@ -1,61 +1,147 @@
 package assign10;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BinaryMinHeapTest {
+    BinaryMinHeap<Integer> intHeap;
+    BinaryMinHeap<Integer> emptyHeap;
+    Random rng;
 
-    @Test
-    public void testAddAndPeek() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        heap.add(5);
-        heap.add(2);
-        heap.add(8);
 
-        assertEquals(2, heap.peek()); // Min element should be 2
+    @BeforeEach
+    public void setUp() {
+        intHeap = new BinaryMinHeap<>();
+        emptyHeap = new BinaryMinHeap<>();
+        rng = new Random();
+
+        intHeap.add(3);
+        intHeap.add(4);
+        intHeap.add(5);
     }
 
     @Test
-    public void testExtract() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        heap.add(10);
-        heap.add(3);
-        heap.add(5);
-
-        assertEquals(3, heap.extract()); // Min element (3) removed
-        assertEquals(5, heap.peek());    // New min is 5
-        assertEquals(2, heap.size());   // Size decreases after extract
+    public void sizeNormal() {
+        assertEquals(3, intHeap.size());
     }
 
     @Test
-    public void testSizeAndIsEmpty() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        assertTrue(heap.isEmpty()); // Initially empty
-
-        heap.add(1);
-        assertEquals(1, heap.size());
-        assertFalse(heap.isEmpty());
-
-        heap.add(2);
-        assertEquals(2, heap.size());
+    public void sizeEmpty() {
+        assertEquals(0, emptyHeap.size());
     }
 
     @Test
-    public void testClear() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        heap.add(5);
-        heap.add(2);
+    public void toArrayNormal() {
+        Object[] expected = {3, 4, 5};
+        assertArrayEquals(expected, intHeap.toArray());
+    }
 
-        heap.clear();
-        assertTrue(heap.isEmpty()); // Heap should be empty after clearing
-        assertThrows(NoSuchElementException.class, heap::peek);
+    @Test
+    public void toArrayEmpty() {
+        Object[] expected = {};
+        assertArrayEquals(expected, emptyHeap.toArray());
+    }
+
+    @Test
+    public void clearNormal() {
+        intHeap.clear();
+        assertEquals(0, intHeap.size());
+        Object[] expected = {};
+        assertArrayEquals(expected, intHeap.toArray());
+    }
+
+    @Test
+    public void clearEmpty() {
+        emptyHeap.clear();
+        assertEquals(0, emptyHeap.size());
+        Object[] expected = {};
+        assertArrayEquals(expected, emptyHeap.toArray());
+    }
+
+    @Test
+    public void isEmptyFalse() {
+        assertFalse(intHeap.isEmpty());
+    }
+
+    @Test
+    public void isEmptyTrue() {
+        assertTrue(emptyHeap.isEmpty());
+    }
+
+    @Test
+    public void isEmptyAfterClear() {
+        intHeap.clear();
+        assertTrue(intHeap.isEmpty());
+    }
+
+    @Test
+    public void addNormal() {
+        intHeap.add(6);
+        intHeap.add(2);
+        assertEquals(2, intHeap.peek()); // Min element should be 2
+        assertEquals(5, intHeap.size());
+    }
+
+    @Test
+    public void addEmpty() {
+        emptyHeap.add(0);
+        assertEquals(0, emptyHeap.peek());
+    }
+
+    @Test
+    public void addRandom() {
+        int smallest = rng.nextInt();
+        emptyHeap.add(smallest);
+        for (int i = 0; i < 100; i++) {
+            int item = rng.nextInt();
+            if (item < smallest) {
+                smallest = item;
+            }
+            emptyHeap.add(item);
+        }
+        assertEquals(smallest, emptyHeap.peek());
+    }
+
+    @Test
+    public void extractNormal() {
+        assertEquals(3, intHeap.extract()); // Min element (3) removed
+        assertEquals(4, intHeap.peek());    // New min is 4
+        assertEquals(2, intHeap.size());   // Size decreases after extract
+    }
+
+    @Test
+    public void extractOnEmptyHeap() {
+        assertThrows(NoSuchElementException.class, emptyHeap::extract);
+    }
+
+    @Test
+    public void extractAll() {
+        for (int i = 0; i < 2; i++) {
+            assertEquals(i + 3, intHeap.extract());
+            assertEquals(2 - i, intHeap.size());
+        }
+    }
+
+    @Test
+    public void peekNormal() {
+        assertEquals(3, intHeap.peek());
+    }
+
+    @Test
+    public void peekOnEmptyHeap() {
+        assertThrows(NoSuchElementException.class, emptyHeap::peek);
+    }
+
+    @Test
+    public void peekAll() {
+        for (int i = 0; i < 2; i++) {
+            assertEquals(i + 3, intHeap.peek());
+            assertEquals(i + 3, intHeap.extract());
+        }
     }
 
     @Test
@@ -91,34 +177,10 @@ public class BinaryMinHeapTest {
     }
 
     @Test
-    public void testToArray() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        heap.add(4);
-        heap.add(1);
-        heap.add(3);
-        heap.add(2);
-
-        Object[] expected = {1, 2, 3, 4};
-        assertArrayEquals(expected, heap.toArray());
-    }
-
-    @Test
-    public void testPeekOnEmptyHeap() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        assertThrows(NoSuchElementException.class, heap::peek);
-    }
-
-    @Test
-    public void testExtractOnEmptyHeap() {
-        BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
-        assertThrows(NoSuchElementException.class, heap::extract);
-    }
-
-    @Test
     public void testResize() {
         BinaryMinHeap<Integer> heap = new BinaryMinHeap<>();
 
-        for (int i = 1; i <= 15; i++) {
+        for (int i = 1; i <= 15; i++) { // base size is 10, so adding 15 items will force a resize
             heap.add(i);
         }
 

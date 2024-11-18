@@ -44,8 +44,8 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         if (size + 1 >= backingArray.length) {
             resize();
         }
-        size++;
         percolateUp(element);
+        size++;
     }
 
     /**
@@ -138,29 +138,26 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
     }
 
     private void heapify(List<? extends E> list) {
-        if(list.size() == 0){
+        if(list.isEmpty()){
             return;
-        }else{
+        } else {
             this.backingArray = new Object[list.size() + 1];
             for (int i = 0; i < list.size(); i++) {
                 this.backingArray[i + 1] = list.get(i);
             }
             this.size = list.size();
-            System.out.println(Arrays.toString(backingArray));
-            System.out.println(size);
             int parent = size;
             while(parent/2 >= 1){
                 percolateDown(parent / 2);
                 percolateDown(parent / 2 + 1);
                 parent = parent / 2;
-                System.out.println(Arrays.toString(backingArray));
             }
         }
 
     }
 
     private void percolateUp(E element) {
-        int currentIndex = this.size;
+        int currentIndex = this.size + 1;
         while (currentIndex > 1) {
             if (innerCompare(element, getFromArray(currentIndex / 2)) < 0) {
                 backingArray[currentIndex] = getFromArray(currentIndex / 2);
@@ -172,9 +169,10 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
         }
         backingArray[1] = element;
     }
+
     private void percolateDown(int index) {
         int currentIndex = index;
-        while(2 * currentIndex + 1 <= size){
+        while(2 * currentIndex <= size){
             int leftChild = 2 * currentIndex;
             int rightChild = 2 * currentIndex + 1;
             int smallestChild = leftChild;
@@ -201,7 +199,7 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
 
     private void resize() {
         Object[] newArr = new Object[backingArray.length * 2];
-        for (int i = 1; i < this.size; i++) {
+        for (int i = 1; i < this.size + 1; i++) {
             newArr[i] = backingArray[i];
         }
         backingArray = newArr;
