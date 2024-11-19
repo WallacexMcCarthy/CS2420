@@ -11,6 +11,7 @@ public class SimpleMethodsTiming extends TimingExperiment{
     private static int problemSizeStep = 1000;
     private static int experimentIterationCount = 20;
     protected BinaryMinHeap<Integer> heap;
+    protected ArrayList<Integer> array;
     private Random rng;
 
     public SimpleMethodsTiming() {
@@ -24,6 +25,17 @@ public class SimpleMethodsTiming extends TimingExperiment{
      */
     @Override
     protected void setupExperiment(int problemSize) {
+        heap = new BinaryMinHeap<>();
+        array = new ArrayList<>();
+        rng = new Random();
+        for (int i = problemSize; i > 0; i--) { // worst case add
+            array.add(i);
+        }
+//        for (int i = 0; i < problemSize; i++) { // all others
+//            array.add(rng.nextInt());
+//        }
+
+//        heap = new BinaryMinHeap<>(array); // extract and peek
 
     }
 
@@ -32,6 +44,18 @@ public class SimpleMethodsTiming extends TimingExperiment{
      */
     @Override
     protected void runComputation() {
+        for (int i = 0; i < array.size(); i++) { // both adds
+            heap.add(array.get(i));
+        }
+//        for (int i = 0; i < array.size(); i++) { // extract
+//            heap.extract();
+//        }
+//        for (int i = 0; i < array.size(); i++) { // peek compiler kept optimizing only peek calls so extracting a little stops it
+//            if (i % 1000 == 0) {
+//                heap.extract();
+//            }
+//            heap.peek();
+//        }
 
     }
 
