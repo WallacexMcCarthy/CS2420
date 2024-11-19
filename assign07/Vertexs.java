@@ -8,10 +8,10 @@ import java.util.LinkedList;
  * @version 10/18/2024
  * @author Wallace McCarthy and Isaac Buehner
  */
-public class Vertex <T>{
+public class Vertexs<T>{
     private final T data;
-    private final LinkedList<Edge<T>> adjList = new LinkedList<>();
-    private Vertex<T> previous = null;
+    private final LinkedList<Edges<T>> adjList = new LinkedList<>();
+    private Vertexs<T> previous = null;
     private double distanceFromStart;
     private int inDegree = 0;
 
@@ -19,7 +19,7 @@ public class Vertex <T>{
      * the regular constructor for a Vertex object
      * @param data the data to be stored in this vertex
      */
-    public Vertex(T data){
+    public Vertexs(T data){
         this.data = data;
     }
 
@@ -29,8 +29,8 @@ public class Vertex <T>{
      * @param destination a vertex for a new edge to be connected to
      * @param weight the weight of the new edge
      */
-    public void addEdge(Vertex<T> destination, double weight){
-        adjList.addLast(new Edge<>(destination, weight));
+    public void addEdge(Vertexs<T> destination, double weight){
+        adjList.addLast(new Edges<>(destination, weight));
         destination.increaseInDegree();
     }
 
@@ -46,7 +46,7 @@ public class Vertex <T>{
      * this method returns the adjacency list associated with this vertex
      * @return the list of vertices connected to this vertex
      */
-    public LinkedList<Edge<T>> getEdges(){
+    public LinkedList<Edges<T>> getEdges(){
         return this.adjList;
     }
 
@@ -63,7 +63,7 @@ public class Vertex <T>{
      * to be used with traversal algorithms
      * @return a vertex that comes before this vertex in relation to a starting vertex
      */
-    public Vertex<T> getPrevious() {
+    public Vertexs<T> getPrevious() {
         return this.previous;
     }
 
@@ -91,7 +91,7 @@ public class Vertex <T>{
      * to be used in traversal algorithms
      * @param vertex the previous vertex to this vertex
      */
-    public void setPrevious(Vertex<T> vertex) {
+    public void setPrevious(Vertexs<T> vertex) {
         this.previous = vertex;
     }
 

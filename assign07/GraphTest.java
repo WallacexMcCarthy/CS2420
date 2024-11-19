@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
  *  * @author Wallace McCarthy and Isaac Buehner
  */
 public class GraphTest {
-    private Vertex<Integer> intVertex;
+    private Vertexs<Integer> intVertex;
 
     @BeforeEach
     public void setUp() {
-        intVertex = new Vertex<>(1);
+        intVertex = new Vertexs<>(1);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class GraphTest {
 
     @Test
     public void testAddEdgesOnEmptyVertex() {
-        intVertex.addEdge(new Vertex<>(2), 1);
+        intVertex.addEdge(new Vertexs<>(2), 1);
         assertEquals(1, intVertex.getEdges().size());
     }
 
@@ -45,22 +45,22 @@ public class GraphTest {
 
     @Test
     public void testAddEdgesMultipleConnected() {
-        intVertex.addEdge(new Vertex<>(2), 1);
-        intVertex.addEdge(new Vertex<>(3), 1);
-        intVertex.addEdge(new Vertex<>(4), 1);
+        intVertex.addEdge(new Vertexs<>(2), 1);
+        intVertex.addEdge(new Vertexs<>(3), 1);
+        intVertex.addEdge(new Vertexs<>(4), 1);
 
         assertEquals(3, intVertex.getEdges().size());
     }
 
     @Test
     public void testAddEdgesMultipleDisconnected() {
-        intVertex.addEdge(new Vertex<>(2), 1);
-        intVertex.addEdge(new Vertex<>(3), 1);
-        intVertex.addEdge(new Vertex<>(4), 1);
+        intVertex.addEdge(new Vertexs<>(2), 1);
+        intVertex.addEdge(new Vertexs<>(3), 1);
+        intVertex.addEdge(new Vertexs<>(4), 1);
 
-        Vertex<Integer> newVertex = new Vertex<>(0);
-        newVertex.addEdge(new Vertex<>(5), 1);
-        newVertex.addEdge(new Vertex<>(6), 1);
+        Vertexs<Integer> newVertex = new Vertexs<>(0);
+        newVertex.addEdge(new Vertexs<>(5), 1);
+        newVertex.addEdge(new Vertexs<>(6), 1);
         newVertex.addEdge(intVertex, 1);
 
         assertEquals(3, intVertex.getEdges().size());
@@ -69,7 +69,7 @@ public class GraphTest {
 
     @Test
     public void testAddEdgesCyclic() {
-        Vertex<Integer> newVertex = new Vertex<>(0);
+        Vertexs<Integer> newVertex = new Vertexs<>(0);
         intVertex.addEdge(newVertex, 1);
         newVertex.addEdge(intVertex, 1);
 
@@ -78,7 +78,7 @@ public class GraphTest {
 
     @Test
     public void testGetAdjacencyListSimple() {
-        intVertex.addEdge(new Vertex<>(2), 1);
+        intVertex.addEdge(new Vertexs<>(2), 1);
 
         assertEquals(2, intVertex.getEdges().get(0).getDestination().getData());
         assertEquals(1, intVertex.getEdges().get(0).getWeight());
@@ -86,9 +86,9 @@ public class GraphTest {
 
     @Test
     public void testGetAdjacencyListComplexConnected() {
-        intVertex.addEdge(new Vertex<>(2), 0);
-        intVertex.addEdge(new Vertex<>(3), 1);
-        intVertex.addEdge(new Vertex<>(4), 2);
+        intVertex.addEdge(new Vertexs<>(2), 0);
+        intVertex.addEdge(new Vertexs<>(3), 1);
+        intVertex.addEdge(new Vertexs<>(4), 2);
 
         for (int i = 0; i < intVertex.getEdges().size(); i++) {
             assertEquals(i + 2, intVertex.getEdges().get(i).getDestination().getData());
@@ -98,11 +98,11 @@ public class GraphTest {
 
     @Test
     public void testGetAdjacencyListComplexDisconnected() {
-        intVertex.addEdge(new Vertex<>(2), 0);
-        intVertex.addEdge(new Vertex<>(3), 1);
-        Vertex<Integer> newVertex = new Vertex<>(0);
-        newVertex.addEdge(new Vertex<>(4), 0);
-        newVertex.addEdge(new Vertex<>(5), 1);
+        intVertex.addEdge(new Vertexs<>(2), 0);
+        intVertex.addEdge(new Vertexs<>(3), 1);
+        Vertexs<Integer> newVertex = new Vertexs<>(0);
+        newVertex.addEdge(new Vertexs<>(4), 0);
+        newVertex.addEdge(new Vertexs<>(5), 1);
 
         for (int i = 0; i < intVertex.getEdges().size(); i++) {
             assertEquals(i + 2, intVertex.getEdges().get(i).getDestination().getData());
@@ -138,19 +138,19 @@ public class GraphTest {
 
     @Test
     public void testSetPrevious() {
-        intVertex.setPrevious(new Vertex<>(2));
+        intVertex.setPrevious(new Vertexs<>(2));
         assertEquals(2, intVertex.getPrevious().getData());
     }
 
     @Test
     public void testEdgeGetWeight() {
-        Edge<Integer> edge = new Edge<>(intVertex, 1);
+        Edges<Integer> edge = new Edges<>(intVertex, 1);
         assertEquals(1, edge.getWeight());
     }
 
     @Test
     public void testEdgeGetDestination() {
-        Edge<Integer> edge = new Edge<>(intVertex, 1);
+        Edges<Integer> edge = new Edges<>(intVertex, 1);
         assertEquals(1, edge.getDestination().getData());
     }
 }

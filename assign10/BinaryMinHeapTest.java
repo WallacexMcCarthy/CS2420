@@ -112,6 +112,14 @@ public class BinaryMinHeapTest {
     }
 
     @Test
+    public void addDuplicates() {
+        intHeap.add(3);
+        assertEquals(4, intHeap.size());
+        assertEquals(3, intHeap.extract());
+        assertEquals(3, intHeap.peek());
+    }
+
+    @Test
     public void extractNormal() {
         assertEquals(3, intHeap.extract()); // Min element (3) removed
         assertEquals(4, intHeap.peek());    // New min is 4
@@ -129,6 +137,13 @@ public class BinaryMinHeapTest {
             assertEquals(i + 3, intHeap.extract());
             assertEquals(2 - i, intHeap.size());
         }
+    }
+
+    @Test
+    public void extractDuplicates() {
+        intHeap.add(3);
+        assertEquals(3, intHeap.extract());
+        assertEquals(3, intHeap.extract());
     }
 
     @Test
@@ -224,5 +239,94 @@ public class BinaryMinHeapTest {
         BinaryMinHeap<Integer> heap = new BinaryMinHeap<>(emptyList);
 
         assertTrue(heap.isEmpty());
+    }
+
+    @Test
+    public void testShortestPathWithSimpleSinglePath() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sources.add(i);
+            destinations.add(i+1);
+            weights.add((double)i+1);
+        }
+        assertEquals(Arrays.asList(0, 1, 2, 3, 4, 5), GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 0, 5));
+    }
+
+    @Test
+    public void testShortestPathWithSimpleSecondPath() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sources.add(i);
+            destinations.add(i+1);
+            weights.add((double)i+1);
+        }
+        sources.add(0);
+        destinations.add(5);
+        weights.add(1.0);
+        assertEquals(Arrays.asList(0, 5), GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 0, 5));
+    }
+
+    @Test
+    public void testShortestPathWithNoPath() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sources.add(i);
+            destinations.add(i+1);
+            weights.add((double)i+1);
+        }
+        sources.add(0);
+        destinations.add(6);
+        weights.add(1.0);
+        assertThrows(IllegalArgumentException.class, () -> GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 1, 6));
+    }
+
+    @Test
+    public void testShortestPathWithNoSource() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sources.add(i);
+            destinations.add(i+1);
+            weights.add((double)i+1);
+        }
+
+        assertThrows(IllegalArgumentException.class, () -> GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 6, 0));
+    }
+
+    @Test
+    public void testShortestPathWithNoDestination() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            sources.add(i);
+            destinations.add(i+1);
+            weights.add((double)i+1);
+        }
+
+        assertThrows(IllegalArgumentException.class, () -> GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 0, 6));
+    }
+
+    @Test
+    public void testShortestPathWithComplexPath() {
+        ArrayList<Integer> sources = new ArrayList<>();
+        ArrayList<Integer> destinations = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            sources.add(i);
+            sources.add(i);
+            destinations.add(i+2);
+            destinations.add(i+3);
+            weights.add((double)i+1);
+            weights.add((double)i+2);
+        }
+        assertEquals(Arrays.asList(0, 2, 5), GraphUtility.shortestWeightedPathWithPriorityQueue(sources, destinations, weights, 0, 5));
     }
 }

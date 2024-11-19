@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @version 11/18/2024
  * @author Wallace McCarthy and Isaac Buehner
  */
-public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQueue<E> {
+public class BinaryMinHeap<E> implements PriorityQueue<E> {
     private Object[] backingArray;
     private Comparator<? super E> comparator;
     private int size;
@@ -237,17 +237,18 @@ public class BinaryMinHeap<E extends Comparable<? super E>> implements PriorityQ
     }
 
     /**
-     * helper method to avoid code duplication when comparing elements
+     * helper method to avoid code duplication and unnecessary warnings when comparing elements
      * uses the given comparator if available and uses default behavior otherwise
      * @param item1 the first element to be compared
      * @param item2 the first element to be compared
      * @return an int representing which element is bigger
      */
+    @SuppressWarnings("unchecked")
     private int innerCompare(E item1, E item2) {
         if (!(comparator == null)) {
             return comparator.compare(item1, item2);
         }
-        return item1.compareTo(item2);
+        return ((Comparable< ? super E>)item1).compareTo(item2);
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.List;
  * Solves the shortest path problem for a generic, directed, weighted, sparse graphs
  * using two versions Dijkstra's algorithm.
  * 
- * @author CS 2420 course staff and ?
+ * @author CS 2420 course staff and Isaac Buehner and Wallace McCarthy
  * @version November 14, 2024
  */
 public class GraphUtility {
@@ -32,11 +32,22 @@ public class GraphUtility {
 			List<Double> weights, Type srcData, Type dstData) throws IllegalArgumentException {
 		return buildGraph(sources, destinations, weights).shortestWeightedPathWithSorting(srcData, dstData);
 	}
-	
+
+	/**
+	 * this method finds the shortest weighted path between 2 vertices defined by the given lists
+	 * uses Dijkstra's algorithm with a BinaryMinHeap priority queue
+	 *
+	 * @param sources - list of data for the source vertices of edges in the graph being defined
+	 * @param destinations - list of data for the destination vertices of edges in the graph being defined
+	 * @param weights - list of weights for the edges in the graph being defined
+	 * @param srcData - data of the starting vertex of the path being sought
+	 * @param dstData - data of the ending vertex of the path being sought
+	 * @return ordered list of data for the vertices that make up the shortest weighted path
+	 * @throws IllegalArgumentException if any of the given lists are ill-formatted or there is no such path
+	 */
 	public static <Type> List<Type> shortestWeightedPathWithPriorityQueue(List<Type> sources, List<Type> destinations, 
 			List<Double> weights, Type srcData, Type dstData) throws IllegalArgumentException {
-		// TODO: Fill in and add Javadoc comment.
-		return null;
+		return buildGraph(sources, destinations, weights).shortestWeightedPathWithPriorityQueue(srcData, dstData);
 	}
 	
 	/**
@@ -193,10 +204,41 @@ public class GraphUtility {
 			
 			throw new IllegalArgumentException("There is no path between vertex " + startData + " and vertex " + startData + ".");
 		}
-		
+
+		/**
+		 * this method finds the shortest path in a weighted graph by using Dijkstra's algorithm with a
+		 * BinaryMinHeap as a priority queue
+		 * @param startData the data of the vertex to start from
+		 * @param endData the data of the vertex to find
+		 * @throws IllegalArgumentException if the start or end data are not in the graph or if no path exists
+		 * @return a list containing the sequence of vertices from startData to endData
+		 */
 		public List<Type> shortestWeightedPathWithPriorityQueue(Type startData, Type endData) {
-			// TODO: Fill in and add Javadoc comment.
-			return null;
+			Vertex<Type> startingVertex = vertices.get(startData);
+			if(startingVertex == null)
+				throw new IllegalArgumentException("Vertex " + startData + " does not exist.");
+			Vertex<Type> endingVertex = vertices.get(endData);
+			if(endingVertex == null)
+				throw new IllegalArgumentException("Vertex " + endData + " does not exist.");
+
+            List<Vertex<Type>> list = new ArrayList<>(vertices.values());
+            BinaryMinHeap<Vertex<Type>> unvisitedVertices = new BinaryMinHeap<>(list, (x1, x2)-> (int) (x1.distanceFromStart - x2.distanceFromStart));
+			startingVertex.distanceFromStart = 0;
+
+			while(!unvisitedVertices.isEmpty()) {
+				Vertex<Type> currentVertex = unvisitedVertices.peek();
+				if(currentVertex.data.equals(endData)) {
+					return generatePath(endingVertex, startData);
+				}
+				for(Edge<Type> e : currentVertex.adjacencyList)
+					if(currentVertex.distanceFromStart + e.weight < e.destination.distanceFromStart) {
+						e.destination.distanceFromStart = currentVertex.distanceFromStart + e.weight;
+						e.destination.previous = currentVertex;
+					}
+				unvisitedVertices.extract();
+			}
+
+			throw new IllegalArgumentException("There is no path between vertex " + startData + " and vertex " + startData + ".");
 		}
 		
 		/**

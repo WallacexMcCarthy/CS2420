@@ -9,7 +9,7 @@ import java.util.*;
  * @author Isaac Buehner and Wallace McCarthy
  */
 public class Graph <T> {
-    private final Map<T, Vertex<T>> map;
+    private final Map<T, Vertexs<T>> map;
 
     /**
      * the regular constructor for a Graph object
@@ -26,19 +26,19 @@ public class Graph <T> {
      * @param weight the weight of the new edge
      */
     public void addEdge(T source, T destination, double weight) {
-        Vertex<T> sourceVertex;
+        Vertexs<T> sourceVertex;
         if(map.containsKey(source)) {
             sourceVertex = map.get(source);
         } else {
-            sourceVertex = new Vertex<>(source);
+            sourceVertex = new Vertexs<>(source);
             map.put(source, sourceVertex);
         }
 
-        Vertex<T> destinationVertex;
+        Vertexs<T> destinationVertex;
         if(map.containsKey(destination)) {
             destinationVertex = map.get(destination);
         } else {
-            destinationVertex = new Vertex<>(destination);
+            destinationVertex = new Vertexs<>(destination);
             map.put(destination, destinationVertex);
         }
         sourceVertex.addEdge(destinationVertex, weight);
@@ -59,17 +59,17 @@ public class Graph <T> {
             throw new IllegalArgumentException();
         }
 
-        for (Vertex<T> v : map.values()) {
+        for (Vertexs<T> v : map.values()) {
             v.setDistanceFromStart(Double.MAX_VALUE);
         }
-        Vertex<T> current = map.get(source);
+        Vertexs<T> current = map.get(source);
         current.setDistanceFromStart(0);
 
-        Queue<Vertex<T>> queue = new LinkedList<>();
+        Queue<Vertexs<T>> queue = new LinkedList<>();
         queue.offer(current);
         while(!queue.isEmpty()) {
             current = queue.poll();
-            for (Edge<T> edge : current.getEdges()) {
+            for (Edges<T> edge : current.getEdges()) {
                 // if a vertex has a distance from start of INF (not visited), set the distance from the start to 1 + the previous
                 if (edge.getDestination().getDistanceFromStart() == Double.MAX_VALUE) {
                     edge.getDestination().setDistanceFromStart(current.getDistanceFromStart() + 1);
@@ -107,18 +107,18 @@ public class Graph <T> {
         if (!map.containsKey(source) || !map.containsKey(destination)) {
             throw new IllegalArgumentException();
         }
-        LinkedList<Vertex<T>> unvisited = new LinkedList<>();
-        for (Vertex<T> v : map.values()) {
+        LinkedList<Vertexs<T>> unvisited = new LinkedList<>();
+        for (Vertexs<T> v : map.values()) {
             v.setDistanceFromStart(Double.MAX_VALUE);
             unvisited.add(v);
         }
 
-        Vertex<T> current = map.get(source);
+        Vertexs<T> current = map.get(source);
         current.setDistanceFromStart(0);
         while (!unvisited.isEmpty()) {
             unvisited.sort(new VertexComparator<>());
-            Vertex<T> closest = unvisited.getLast();
-            for (Edge<T> edge : closest.getEdges()) {
+            Vertexs<T> closest = unvisited.getLast();
+            for (Edges<T> edge : closest.getEdges()) {
                 // if the smallest distance from the start plus its current edge's weight is less than the
                 // edge's destination's current distance from the start, reset the destinations distance
                 if (closest.getDistanceFromStart() + edge.getWeight() < edge.getDestination().getDistanceFromStart()) {
@@ -150,8 +150,8 @@ public class Graph <T> {
      * @return a list of vertices sorted by number of input edges
      */
     public List<T> topologicalSort() {
-        Queue<Vertex<T>> queue = new LinkedList<>();
-        for (Vertex<T> vertex: map.values()) {
+        Queue<Vertexs<T>> queue = new LinkedList<>();
+        for (Vertexs<T> vertex: map.values()) {
             if (vertex.getInDegree() == 0) {
                 queue.offer(vertex);
             }
@@ -159,9 +159,9 @@ public class Graph <T> {
 
         LinkedList<T> result = new LinkedList<>();
         while (!queue.isEmpty()) {
-            Vertex<T> current = queue.poll();
+            Vertexs<T> current = queue.poll();
             result.addLast(current.getData());
-            for (Edge<T> edge : current.getEdges()) {
+            for (Edges<T> edge : current.getEdges()) {
                 edge.getDestination().decreaseInDegree();
                 if (edge.getDestination().getInDegree() == 0) {
                     queue.offer(edge.getDestination());

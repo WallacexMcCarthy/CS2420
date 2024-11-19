@@ -6,8 +6,8 @@ package assign07;
  * @version 10/18/2024
  * @author Wallace McCarthy and Isaac Buehner
  */
-public class Edge <T> {
-    private final Vertex<T> destination;
+public class Edges<T> {
+    private final Vertexs<T> destination;
     private final double weight;
 
     /**
@@ -16,7 +16,7 @@ public class Edge <T> {
      * @param destination the edge's destination vertex
      * @param weight the weight of traversing the edge
      */
-    public Edge(Vertex<T> destination, double weight){
+    public Edges(Vertexs<T> destination, double weight){
         if (weight < 0) {
             throw new IllegalArgumentException();
         }
@@ -28,7 +28,7 @@ public class Edge <T> {
      * this method returns this edge's destination vertex
      * @return a vertex at the end of this edge
      */
-    public Vertex<T> getDestination(){
+    public Vertexs<T> getDestination(){
         return this.destination;
     }
 
