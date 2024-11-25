@@ -1,15 +1,19 @@
 package comprehensive;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Word implements Comparable<Word>{
     private ArrayList<Definition> definitions;
     private int numberOfDefinitions;
     private String name;
+    private HashSet<String> partsOfSpeech;
 
     public Word(String name, Definition definition) {
-        definitions = new ArrayList<>();
         this.name = name;
+        partsOfSpeech = new HashSet<>();
+        partsOfSpeech.add(definition.getWordType());
+        definitions = new ArrayList<>();
         definitions.add(definition);
         numberOfDefinitions++;
     }
@@ -36,6 +40,14 @@ public class Word implements Comparable<Word>{
             if (i != definitions.size()-1) {
                 result += "\n";
             }
+        }
+        return result;
+    }
+
+    public String getPartsOfSpeech() {
+        String result = "";
+        for (String s : partsOfSpeech) {
+            result += s + "\n";
         }
         return result;
     }

@@ -1,69 +1,76 @@
 package comprehensive;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Glossary {
 
-    private TreeSet<Word> data;
+    private TreeSet<String> words;
+    private HashMap<String, Word> dataMap;
     private int definitions;
     private HashSet<String> partsOfSpeach;
 
-    public Glossary (String filename) {
-        this.data = new TreeSet<Word>();
+    public Glossary (String filename) throws FileNotFoundException {
+        words = new TreeSet<>();
+        this.dataMap = new HashMap<>();
         this.definitions = 0;
         this.partsOfSpeach = new HashSet<>();
-        Scanner scanner = new Scanner (filename);
-        while (scanner.hasNextLine()) {
-            this.definitions++;
-            String line = scanner.nextLine();
-            String[] words = line.split("::");
-            data.add(new Word(words[0], new Definition(words[1], words[2])))
-            partsOfSpeach.add(words[1]);
+        try {
+            Scanner scanner = new Scanner (new File(filename));
+            while (scanner.hasNextLine()) {
+                this.definitions++;
+                String line = scanner.nextLine();
+                String[] lineData = line.split("::");
+                words.add(lineData[0]);
+                dataMap.put(lineData[0], new Word(lineData[0], new Definition(lineData[1], lineData[2])));
+                partsOfSpeach.add(lineData[1]);
+            }
+            scanner.close();
+        } catch (Exception e) {
+            throw new FileNotFoundException();
         }
-        scanner.close();
+
+        System.out.println(words);
     }
 
     private String getMetaData(){
         String out = "";
-        out += "words: " + data.size() + "\n";
+        out += "words: " + dataMap.size() + "\n";
         out += "definitions: " + definitions + "\n";
-        out += "definitions per word: " + definitions / data.size() + "\n";
+        out += "definitions per word: " + definitions / dataMap.size() + "\n";
         out += "parts of speech: " + partsOfSpeach.size() + "\n";
-        out += "first word: " + data.first() + "\n";
-        out += "last word: " + data.last() + "\n";
+        out += "first word: " + words.first() + "\n";
+        out += "last word: " + words.last() + "\n";
         return out;
     }
-    private String getWordsInRange(String word1, String word2){
+    private Set<String> getWordsInRange(String word1, String word2){
         String out = "";
-        TreeSet<String> words = data.subSet(data.floor(word1), data.ceiling(word2));
+        Set<String> names = words.subSet(words.floor(word1), words.ceiling(word2));
+        return names;
     }
 
     private String getWord(String word){
-        return data.floor(word);
+        return words.floor(word);
     }
 
     private String getFirstWord(){
         try{
-            return data.first();
+            return words.first();
         } catch (Exception e) {
-            return "This dictionary is already empoty";
         }
+        return null;
     }
     private String getLastWord(){
         try{
-            return data.getLast();
+            return words.last();
         } catch (Exception e) {
-            return "This dictionary is already empoty";
         }
+        return null;
     }
 
-    private String getPartsOfSpeach(String word){
-        String out = "";
-        Word text = data.floor(word);
-
+    private String getPartsOfSpeech(String word){
+        return dataMap.get(words.floor(word)).getPartsOfSpeech();
     }
 
 
