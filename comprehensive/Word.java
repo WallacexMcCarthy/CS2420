@@ -2,7 +2,7 @@ package comprehensive;
 
 import java.util.ArrayList;
 
-public class Word {
+public class Word implements Comparable<Word>{
     private ArrayList<Definition> definitions;
     private int numberOfDefinitions;
     private String name;
@@ -49,5 +49,10 @@ public class Word {
             }
         }
         return result;
+    }
+
+    @Override
+    public int compareTo(Word o) {
+        return this.name.compareTo(o.name);
     }
 }
