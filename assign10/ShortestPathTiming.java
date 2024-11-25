@@ -7,7 +7,7 @@ public class ShortestPathTiming extends TimingExperiment{
     private static int problemSizeMin = 1000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 1000;
-    private static int experimentIterationCount = 25;
+    private static int experimentIterationCount = 20;
     protected ArrayList<Integer> sources;
     protected ArrayList<Integer> destinations;
     protected ArrayList<Double> weights;
