@@ -1,11 +1,11 @@
 package comprehensive;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class Word implements Comparable<Word>{
-    private ArrayList<Definition> definitions;
-    private int numberOfDefinitions;
+    private TreeSet<Definition> definitions;
+    public int numberOfDefinitions;
     private String name;
     private HashSet<String> partsOfSpeech;
 
@@ -13,33 +13,42 @@ public class Word implements Comparable<Word>{
         this.name = name;
         partsOfSpeech = new HashSet<>();
         partsOfSpeech.add(definition.getWordType());
-        definitions = new ArrayList<>();
+        definitions = new TreeSet<>();
         definitions.add(definition);
         numberOfDefinitions++;
     }
 
     public void addDefinition(String type, String def) {
         definitions.add(new Definition(type, def));
+        partsOfSpeech.add(type);
         numberOfDefinitions++;
     }
 
     public void deleteDefinition(int i) {
-        definitions.remove(i-1);
+        int counter = 1;
+        definitions.removeIf(definition -> counter == i);
         numberOfDefinitions--;
     }
 
     public void updateDefinition(int i, String def) {
-        definitions.get(i-1).setDescription(def);
+        int counter = 1;
+        for (Definition definition : definitions) {
+            if (counter == i) {
+                definition.setDescription(def);
+            }
+            counter++;
+        }
     }
 
     public String getDefinitions() {
         String result = "";
-        for (int i = 0; i < definitions.size(); i++) {
-            result += i + ". ";
-            result += definitions.get(i).toString();
-            if (i != definitions.size()-1) {
+        int counter = 1;
+        for (Definition definition : definitions) {
+            result += counter + ". " + definition;
+            if (counter != definitions.size()) {
                 result += "\n";
             }
+            counter++;
         }
         return result;
     }
@@ -54,12 +63,7 @@ public class Word implements Comparable<Word>{
 
     public String toString() {
         String result = name + "\n";
-        for (int i = 0; i < definitions.size(); i++) {
-            result += "\t\t" + definitions.get(i).toString();
-            if (i != definitions.size()-1) {
-                result += "\n";
-            }
-        }
+        result += this.getDefinitions();
         return result;
     }
 

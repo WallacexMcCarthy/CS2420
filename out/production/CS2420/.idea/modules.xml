@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CS2420.iml" filepath="$PROJECT_DIR$/.idea/CS2420.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comprehensive/comprehensive.iml" filepath="$PROJECT_DIR$/comprehensive/comprehensive.iml" />
     </modules>
   </component>
 </project>

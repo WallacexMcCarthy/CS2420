@@ -23,54 +23,72 @@ public class Glossary {
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
                 words.add(lineData[0]);
-                dataMap.put(lineData[0], new Word(lineData[0], new Definition(lineData[1], lineData[2])));
+                if(dataMap.containsKey(lineData[0])) {
+                    dataMap.get(lineData[0]).addDefinition(lineData[1], lineData[2]);
+                } else {
+                    dataMap.put(lineData[0], new Word(lineData[0], new Definition(lineData[1], lineData[2])));
+                }
                 partsOfSpeach.add(lineData[1]);
             }
             scanner.close();
         } catch (Exception e) {
             throw new FileNotFoundException();
         }
-
-        System.out.println(words);
     }
 
-    private String getMetaData(){
+    public String getMetaData(){
         String out = "";
         out += "words: " + dataMap.size() + "\n";
         out += "definitions: " + definitions + "\n";
-        out += "definitions per word: " + definitions / dataMap.size() + "\n";
+        out += "definitions per word: " + (float)definitions / dataMap.size() + "\n";
         out += "parts of speech: " + partsOfSpeach.size() + "\n";
         out += "first word: " + words.first() + "\n";
         out += "last word: " + words.last() + "\n";
         return out;
     }
-    private Set<String> getWordsInRange(String word1, String word2){
-        String out = "";
-        Set<String> names = words.subSet(words.floor(word1), words.ceiling(word2));
-        return names;
+    public Set<String> getWordsInRange(String word1, String word2){
+        return words.subSet(words.ceiling(word1), words.ceiling(word2));
     }
 
-    private String getWord(String word){
-        return words.floor(word);
+    public String getWord(String word){
+        if (!dataMap.containsKey(word)) {
+            return word + " not found in glossary";
+        }
+        return dataMap.get(word).toString();
     }
 
-    private String getFirstWord(){
+    public String getWordsDefinitions(String word){
+        if (!dataMap.containsKey(word)) {
+            return word + " not found in glossary";
+        }
+        return "Definitions for " + word + ": \n" + dataMap.get(word).getDefinitions();
+    }
+    public int getWordsNumberOfDefinitions(String word){
+       return dataMap.get(word).numberOfDefinitions;
+    }
+
+
+    public String getFirstWord(){
         try{
-            return words.first();
+            return dataMap.get(words.first()).toString();
         } catch (Exception e) {
         }
         return null;
     }
-    private String getLastWord(){
+    public String getLastWord(){
         try{
-            return words.last();
+            return dataMap.get(words.last()).toString();
         } catch (Exception e) {
         }
         return null;
     }
 
-    private String getPartsOfSpeech(String word){
+    public String getPartsOfSpeech(String word){
         return dataMap.get(words.floor(word)).getPartsOfSpeech();
+    }
+
+    public void updateWordDefinition(String name, int i, String def) {
+        dataMap.get(name).updateDefinition(i, def);
     }
 
 
