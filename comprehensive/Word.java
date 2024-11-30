@@ -26,15 +26,22 @@ public class Word implements Comparable<Word>{
 
     public void deleteDefinition(int i) {
         int counter = 1;
-        definitions.removeIf(definition -> counter == i);
+        for (Definition definition : definitions) {
+            if (counter == i) {
+                removeFromDefinitions(definition);
+                break;
+            }
+        }
         numberOfDefinitions--;
     }
 
-    public void updateDefinition(int i, String def) {
+    public void updateDefinition(int i, String newDef) {
         int counter = 1;
         for (Definition definition : definitions) {
             if (counter == i) {
-                definition.setDescription(def);
+                String type = definition.getWordType();
+                removeFromDefinitions(definition);
+                definitions.add(new Definition(type, newDef));
             }
             counter++;
         }
@@ -70,5 +77,9 @@ public class Word implements Comparable<Word>{
     @Override
     public int compareTo(Word o) {
         return this.name.compareTo(o.name);
+    }
+
+    private void removeFromDefinitions(Definition definition) {
+        definitions.remove(definition);
     }
 }

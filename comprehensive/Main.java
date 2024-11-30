@@ -1,6 +1,7 @@
 package comprehensive;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -10,7 +11,7 @@ public class Main {
         }
 
         Glossary glossary = new Glossary(args[0]);
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         System.out.print("""
                 Main menu
                 1.  Get metadata
@@ -29,6 +30,10 @@ public class Main {
         while(scanner.hasNext()) {
             int number = validEntry(scanner, 11);
             String word;
+            int definitionNumber;
+            int numberOfDefinitions;
+            String[] validPartsOfSpeech = {"noun", "verb", "adj", "adv", "pron", "prep", "conj", "interj"};
+
             switch(number) {
                 case 1:
                     System.out.println(glossary.getMetaData());
@@ -38,7 +43,7 @@ public class Main {
                     String word1 = scanner.next();
                     System.out.print("Ending Word:  ");
                     String word2 = scanner.next();
-                    System.out.println("The words in between " + word1 + " and " + word2 + " are:");
+                    System.out.println(" \n The words in between " + word1 + " and " + word2 + " are:");
                     for (String s : glossary.getWordsInRange(word1, word2)) {
                         System.out.println( "\t" + s);
                     }
@@ -49,43 +54,93 @@ public class Main {
                 case 3:
                     System.out.println("Select a word: ");
                     word = scanner.next();
-                    System.out.println("\n");
-                    System.out.println(glossary.getWord(word));
-                    System.out.println("\n");
+                    System.out.println( "\n" + glossary.getWord(word) + "\n");
                     break;
                 case 4:
-                    System.out.println(glossary.getFirstWord());
-                    System.out.println("\n");
+                    System.out.println( "\n" + glossary.getFirstWord() + "\n");
                     break;
                 case 5:
-                    System.out.println(glossary.getLastWord());
-                    System.out.println("\n");
+                    System.out.println("\n" + glossary.getLastWord() + "\n");
                     break;
                 case 6:
-                    System.out.println("Select a word: ");
+                    System.out.print("Select a word: ");
                     word = scanner.next();
-                    System.out.println("\n");
-                    System.out.println(glossary.getPartsOfSpeech(word));
+                    System.out.println("\n" + glossary.getPartsOfSpeech(word) + "\n");
                     break;
                 case 7:
-                    System.out.println("Select a word: ");
+                    System.out.print("Select a word: ");
                     word = scanner.next();
-                    System.out.println("\n");
-                    System.out.println(glossary.getWordsDefinitions(word));
-                    //TODO
-                    // make it so when a word isnt in the glossary it keeps asking until a good word is input
-                    System.out.println("Select a definition: ");
-                    int definitionNumber = validEntry(scanner, glossary.getWordsNumberOfDefinitions(word));
+
+                    while(!glossary.containsWord(word)) {
+                        System.out.println("\n Word not in glossary \n");
+                        System.out.print("Select a word: ");
+                        word = scanner.next();
+                    }
+                    numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
+
+                    do {
+
+                        System.out.println(glossary.getWordsDefinitions(word));
+                        System.out.println(numberOfDefinitions+1 + ". Back to main menu \n");
+                        System.out.print("Select a definition: ");
+                        definitionNumber = validEntry(scanner, numberOfDefinitions + 1);
+
+                    } while (definitionNumber == 0);
+
+                    if (definitionNumber == numberOfDefinitions + 1) {
+                        break;
+                    }
+
                     System.out.print("Type new definition: ");
                     String newDef = scanner.next();
                     glossary.updateWordDefinition(word, definitionNumber, newDef);
-                    System.out.println("Definition Updated");
+                    System.out.println("\n Definition Updated \n");
                     break;
                 case 8:
+                    System.out.println("Select a word: ");
+                    word = scanner.next();
+
+                    while(!glossary.containsWord(word)) {
+                        System.out.println(" \n Word not in glossary \n");
+                        System.out.print("Select a word: ");
+                        word = scanner.next();
+                    }
+                    numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
+
+                    do {
+                        System.out.println(glossary.getWordsDefinitions(word));
+                        System.out.println(numberOfDefinitions+1 + ". Back to main menu \n");
+                        System.out.print("Select a definition: ");
+                        definitionNumber = validEntry(scanner, numberOfDefinitions + 1);
+
+                    } while (definitionNumber == 0);
+
+                    if (definitionNumber == numberOfDefinitions + 1) {
+                        break;
+                    }
+
+                    glossary.deleteWordDefinition(word, definitionNumber);
+                    System.out.println("Definition Deleted \n");
                     break;
                 case 9:
+                    System.out.println("Type a word: ");
+                    word = scanner.next();
+
+                    System.out.println("Valid parts of speech: " + Arrays.toString(validPartsOfSpeech));
+                    System.out.print("Type a valid part of speech");
+                    String partOfSpeech = scanner.next();
+                    while(!isValidPartOfSpeech(validPartsOfSpeech, partOfSpeech)) {
+                        System.out.println(" \n invalid selection \n");
+                        System.out.print("Type a valid part of speech: ");
+                        partOfSpeech = scanner.next();
+                    }
+                    System.out.print("Type a definition: ");
+                    String definition = scanner.next();
+                    glossary.addDefinitionToWord(word, partOfSpeech, definition);
+                    System.out.println("\n" + "Definition Added");
                     break;
                 case 10:
+                    //TODO
                     break;
                 case 11:
                     System.exit(1);
@@ -111,15 +166,28 @@ public class Main {
         }
     }
 
-    public static int validEntry(Scanner s, int bound) {
+    private static int validEntry(Scanner s, int bound) {
         if(s.hasNextInt()) {
             int number = s.nextInt();
-            if (bound <= number || number < 1) {
-                System.out.println("invalid input \n");
+            if (bound < number || number < 1) {
+                System.out.println();
+                System.out.println("Invalid input \n");
+                return 0;
             }
             return number;
         }
+        System.out.println();
+        System.out.println("Invalid input \n");
         s.next();
         return 0;
+    }
+
+    private static boolean isValidPartOfSpeech(String[] parts, String part) {
+        for (String word : parts) {
+            if(part.equals(word)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

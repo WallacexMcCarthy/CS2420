@@ -19,21 +19,18 @@ public class Glossary {
         try {
             Scanner scanner = new Scanner (new File(filename));
             while (scanner.hasNextLine()) {
-                this.definitions++;
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
-                words.add(lineData[0]);
-                if(dataMap.containsKey(lineData[0])) {
-                    dataMap.get(lineData[0]).addDefinition(lineData[1], lineData[2]);
-                } else {
-                    dataMap.put(lineData[0], new Word(lineData[0], new Definition(lineData[1], lineData[2])));
-                }
-                partsOfSpeach.add(lineData[1]);
+                this.addItem(lineData[0], lineData[1], lineData[2]);
             }
             scanner.close();
         } catch (Exception e) {
             throw new FileNotFoundException();
         }
+    }
+
+    public boolean containsWord(String word) {
+        return dataMap.containsKey(word);
     }
 
     public String getMetaData(){
@@ -91,5 +88,28 @@ public class Glossary {
         dataMap.get(name).updateDefinition(i, def);
     }
 
+    public void deleteWordDefinition(String name, int i) {
+        Word word = dataMap.get(name);
+        word.deleteDefinition(i);
+        if(word.numberOfDefinitions == 0) {
+            dataMap.remove(name);
+            words.remove(name);
+        }
+    }
+
+    public void addDefinitionToWord(String name, String type, String definition) {
+        this.addItem(name, type, definition);
+    }
+
+    private void addItem(String name, String type, String definition) {
+        if(!dataMap.containsKey(name)) {
+            dataMap.put(name, new Word(name, new Definition(type, definition)));
+            words.add(name);
+        } else {
+            dataMap.get(name).addDefinition(type, definition);
+        }
+        partsOfSpeach.add(type);
+        definitions++;
+    }
 
 }
