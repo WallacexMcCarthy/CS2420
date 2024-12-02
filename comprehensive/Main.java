@@ -16,9 +16,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         if(args.length != 1) {
-            System.out.println("invalid");
+            System.out.println("Invalid Arguments");
         }
-
         Glossary glossary = new Glossary(args[0]);
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         System.out.print("""
@@ -159,16 +158,17 @@ public class Main {
                     System.out.print("Type a definition: ");
                     String definition = scanner.next();
                     glossary.addDefinitionToWord(word, partOfSpeech, definition);
-                    System.out.println("\n" + "Definition Added");
+                    System.out.println("\n Definition Added \n");
                     break;
                 case 10:
-                    glossary.saveToDirectory(args[0]);
+                    System.out.print("Type a filename with path: ");
+                    String filePath = scanner.next();
+                    glossary.saveToDirectory(filePath);
                     System.out.println(" \n Glossary Saved \n ");
                     break;
                 case 11:
-                    System.exit(1);
                     scanner.close();
-                    break;
+                    return;
             }
 
             System.out.println("""

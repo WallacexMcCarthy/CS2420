@@ -7,7 +7,6 @@ tree::adj::very very tree
 tree::noun::A directed graph in which any two vertices are connected by exactly one path.
 tree::noun::A tree with exactly one node designated as the root and every node as at most two children.
 tree::noun::An acyclic connected digraph.
-tree::verb::poo
 logic proposition::noun::A statement that is unambiguously true or false.
 generic::adj::A programming paradigm based on classes or static methods that are defined independent of data type.
 generic::noun::A parameterized type in Java, denoted with <>.

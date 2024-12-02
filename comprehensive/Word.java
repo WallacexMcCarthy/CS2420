@@ -28,9 +28,10 @@ public class Word implements Comparable<Word>{
         int counter = 1;
         for (Definition definition : definitions) {
             if (counter == i) {
-                removeFromDefinitions(definition);
+                definitions.remove(definition);
                 break;
             }
+            counter++;
         }
         numberOfDefinitions--;
     }

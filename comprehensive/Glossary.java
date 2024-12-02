@@ -3,9 +3,15 @@ package comprehensive;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
+/**
+ * this class represents a glossary that can be updated changed as needed
+ * it is created through a .txt file. the format of the file is assumed to be correct for how it is read
+ * uses a hashmap for some operations and a treeset for others
+ * @version 12/2/2024
+ * @author Isaac Buehner and Wallace McCarthy
+ */
 public class Glossary {
 
     private TreeSet<String> words;
@@ -13,13 +19,18 @@ public class Glossary {
     private int definitions;
     private HashSet<String> partsOfSpeach;
 
+    /**
+     * constructor for a glossary using a filename as the path to a file
+     * @param filename the file to be read
+     * @throws FileNotFoundException if the file is not found
+     */
     public Glossary (String filename) throws FileNotFoundException {
         words = new TreeSet<>();
         this.dataMap = new HashMap<>();
         this.definitions = 0;
         this.partsOfSpeach = new HashSet<>();
         try {
-            Scanner scanner = new Scanner (new File(filename));
+            Scanner scanner = new Scanner(new File(filename));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
@@ -31,10 +42,19 @@ public class Glossary {
         }
     }
 
+    /**
+     * checks to see if a word is contained in the glossary
+     * @param word the word being checked for
+     * @return boolean for whether it exists in the glossary
+     */
     public boolean containsWord(String word) {
         return dataMap.containsKey(word);
     }
 
+    /**
+     * similar to a toString method, this method returns a string with various information about the glossary
+     * @return a string containing information about the glossary
+     */
     public String getMetaData(){
         String out = "";
         out += "words: " + dataMap.size() + "\n";
@@ -45,10 +65,22 @@ public class Glossary {
         out += "last word: " + words.last() + "\n";
         return out;
     }
+
+    /**
+     * gets a set of words in a range defined by the inputs inclusive
+     * @param word1 the starting word
+     * @param word2 the ending word
+     * @return a set of strings
+     */
     public Set<String> getWordsInRange(String word1, String word2){
         return words.subSet(words.ceiling(word1), true, words.floor(word2), true);
     }
 
+    /**
+     * gets a word's toString representation from the glossary if it exists in the glossary
+     * @param word the word to get
+     * @return a string containing the word's information
+     */
     public String getWord(String word){
         if (!dataMap.containsKey(word)) {
             return word + " not found in glossary";
@@ -56,17 +88,31 @@ public class Glossary {
         return dataMap.get(word).toString();
     }
 
+    /**
+     * gets a word's definitions in order lexicographically
+     * @param word the word to get from
+     * @return a string with all the word's definitions
+     */
     public String getWordsDefinitions(String word){
         if (!dataMap.containsKey(word)) {
             return word + " not found in glossary";
         }
         return "Definitions for " + word + ": \n" + dataMap.get(word).getDefinitions();
     }
+
+    /**
+     * gets the number of definitions a word contains
+     * @param word the word to get from
+     * @return the number of definitions the word has
+     */
     public int getWordsNumberOfDefinitions(String word){
        return dataMap.get(word).numberOfDefinitions;
     }
 
-
+    /**
+     * gets the first word's string representation lexicographically in the glossary
+     * @return the first word in the treeset
+     */
     public String getFirstWord(){
         try{
             return dataMap.get(words.first()).toString();
@@ -74,6 +120,10 @@ public class Glossary {
         }
         return null;
     }
+    /**
+     * gets the last word's string representation lexicographically in the glossary
+     * @return the last word in the treeset
+     */
     public String getLastWord(){
         try{
             return dataMap.get(words.last()).toString();
@@ -82,14 +132,30 @@ public class Glossary {
         return null;
     }
 
+    /**
+     * gets a word's parts of speech as a string
+     * @param word the word tostring representation get from
+     * @return the word's parts of speech
+     */
     public String getPartsOfSpeech(String word){
         return dataMap.get(words.floor(word)).getPartsOfSpeech();
     }
 
+    /**
+     * updates one of a word's definition
+     * @param name the word to update
+     * @param i the definition to update
+     * @param def the new definition
+     */
     public void updateWordDefinition(String name, int i, String def) {
         dataMap.get(name).updateDefinition(i, def);
     }
 
+    /**
+     * deletes a definition from a word
+     * @param name the word to delete from
+     * @param i the definition to delete
+     */
     public void deleteWordDefinition(String name, int i) {
         Word word = dataMap.get(name);
         word.deleteDefinition(i);
@@ -99,6 +165,11 @@ public class Glossary {
         }
     }
 
+    /**
+     * saves the glossaries current state into a .txt file
+     * saves in the format that allows the glossary to be reused
+     * @param fileName the file to save to
+     */
     public void saveToDirectory(String fileName){
         try(FileWriter fileWriter = new FileWriter(fileName)){
             StringBuilder data = new StringBuilder();
@@ -117,16 +188,29 @@ public class Glossary {
         }
     }
 
-    public void addDefinitionToWord(String name, String type, String definition) {
-        this.addItem(name, type, definition);
+    /**
+     * adds a new definition to a word
+     * @param word the word to add to
+     * @param type the part of speech for the new definition
+     * @param definition the new definition
+     */
+    public void addDefinitionToWord(String word, String type, String definition) {
+        this.addItem(word, type, definition);
     }
 
-    private void addItem(String name, String type, String definition) {
-        if(!dataMap.containsKey(name)) {
-            dataMap.put(name, new Word(name, new Definition(type, definition)));
-            words.add(name);
+    /**
+     * private helper method that adds a definition to a word if it exists in the glossary
+     * if the word does not exist already, it is added with the definition
+     * @param word the word to add to
+     * @param type the part of speech for the definition
+     * @param definition the new definition
+     */
+    private void addItem(String word, String type, String definition) {
+        if(!dataMap.containsKey(word)) {
+            dataMap.put(word, new Word(word, new Definition(type, definition)));
+            words.add(word);
         } else {
-            dataMap.get(name).addDefinition(type, definition);
+            dataMap.get(word).addDefinition(type, definition);
         }
         partsOfSpeach.add(type);
         definitions++;
