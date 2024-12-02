@@ -44,7 +44,7 @@ public class Glossary {
         return out;
     }
     public Set<String> getWordsInRange(String word1, String word2){
-        return words.subSet(words.ceiling(word1), words.floor(word2));
+        return words.subSet(words.ceiling(word1), true, words.floor(word2), true);
     }
 
     public String getWord(String word){

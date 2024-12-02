@@ -4,6 +4,13 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
+/**
+ * this class is the main application for the glossary class
+ * args[0] must be a .txt file containing word definitions in the format:
+ * word::partOfSpeech::definition
+ * the application is to be used through the command line
+ */
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         if(args.length != 1) {
@@ -35,9 +42,11 @@ public class Main {
             String[] validPartsOfSpeech = {"noun", "verb", "adj", "adv", "pron", "prep", "conj", "interj"};
 
             switch(number) {
+                //get metadata
                 case 1:
                     System.out.println(glossary.getMetaData());
                     break;
+                // get words in range
                 case 2:
                     System.out.print("Starting Word:  ");
                     String word1 = scanner.next();
@@ -48,17 +57,17 @@ public class Main {
                         System.out.println( "\t" + s);
                     }
                     break;
-                    //TODO
-                    // working sometimes but weird sometimes
-                    // a-s works but a-z throws exception
+                // get word
                 case 3:
                     System.out.println("Select a word: ");
                     word = scanner.next();
                     System.out.println( "\n" + glossary.getWord(word) + "\n");
                     break;
+                // get first word
                 case 4:
                     System.out.println( "\n" + glossary.getFirstWord() + "\n");
                     break;
+                // get last word
                 case 5:
                     System.out.println("\n" + glossary.getLastWord() + "\n");
                     break;
@@ -127,10 +136,10 @@ public class Main {
                     word = scanner.next();
 
                     System.out.println("Valid parts of speech: " + Arrays.toString(validPartsOfSpeech));
-                    System.out.print("Type a valid part of speech");
+                    System.out.print("Type a valid part of speech: ");
                     String partOfSpeech = scanner.next();
                     while(!isValidPartOfSpeech(validPartsOfSpeech, partOfSpeech)) {
-                        System.out.println(" \n invalid selection \n");
+                        System.out.println(" \n Invalid Selection \n");
                         System.out.print("Type a valid part of speech: ");
                         partOfSpeech = scanner.next();
                     }
