@@ -113,7 +113,7 @@ public class Main {
                     break;
                 //delete definition
                 case 8:
-                    System.out.println("Select a word: ");
+                    System.out.print("Select a word: ");
                     word = scanner.next();
 
                     //get valid word
@@ -142,7 +142,7 @@ public class Main {
                     break;
                 //add definition
                 case 9:
-                    System.out.println("Type a word: ");
+                    System.out.print("Type a word: ");
                     word = scanner.next();
 
                     System.out.println("Valid parts of speech: " + Arrays.toString(validPartsOfSpeech));
@@ -163,6 +163,7 @@ public class Main {
                     break;
                 case 10:
                     glossary.saveToDirectory(args[0]);
+                    System.out.println(" \n Glossary Saved \n ");
                     break;
                 case 11:
                     System.exit(1);
