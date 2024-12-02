@@ -102,8 +102,14 @@ public class Glossary {
     public void saveToDirectory(String fileName){
         try(FileWriter fileWriter = new FileWriter(fileName)){
             StringBuilder data = new StringBuilder();
-            for(String word : words){
-                data.append(word).append("\n");
+            int count = 0;
+            for(Word word : dataMap.values()){
+                if (count > 0){
+                    data.append("\n" + word.toString());
+                }else{
+                    data.append(word.toString());
+                }
+                count ++;
             }
             fileWriter.write(data.toString());
         }catch(Exception e){
