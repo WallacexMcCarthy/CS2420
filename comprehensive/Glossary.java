@@ -22,9 +22,8 @@ public class Glossary {
     /**
      * constructor for a glossary using a filename as the path to a file
      * @param filename the file to be read
-     * @throws FileNotFoundException if the file is not found
      */
-    public Glossary (String filename) throws FileNotFoundException {
+    public Glossary (String filename) {
         words = new TreeSet<>();
         this.dataMap = new HashMap<>();
         this.definitions = 0;
@@ -38,7 +37,7 @@ public class Glossary {
             }
             scanner.close();
         } catch (Exception e) {
-            throw new FileNotFoundException();
+            System.out.println("File not found");
         }
     }
 

@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author Isaac Buehner and Wallace McCarthy
  */
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         if(args.length != 1) {
             System.out.println("Invalid Arguments");
         }
