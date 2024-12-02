@@ -1,7 +1,8 @@
 package comprehensive;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
@@ -14,23 +15,22 @@ import java.util.*;
  */
 public class Glossary {
 
-    private TreeSet<String> words;
-    private HashMap<String, Word> dataMap;
+    private final TreeSet<String> words;
+    private final HashMap<String, Word> dataMap;
     private int definitions;
-    private HashSet<String> partsOfSpeach;
+    private final HashSet<String> partsOfSpeech;
 
     /**
      * constructor for a glossary using a filename as the path to a file
      * @param filename the file to be read
-     * @throws FileNotFoundException if the file is not found
      */
-    public Glossary (String filename) throws FileNotFoundException {
+    public Glossary (String filename) {
         words = new TreeSet<>();
         this.dataMap = new HashMap<>();
         this.definitions = 0;
-        this.partsOfSpeach = new HashSet<>();
+        this.partsOfSpeech = new HashSet<>();
         try {
-            Scanner scanner = new Scanner(new File(filename));
+            Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
@@ -38,7 +38,7 @@ public class Glossary {
             }
             scanner.close();
         } catch (Exception e) {
-            throw new FileNotFoundException();
+            System.out.println("File not found");
         }
     }
 
@@ -60,7 +60,7 @@ public class Glossary {
         out += "words: " + dataMap.size() + "\n";
         out += "definitions: " + definitions + "\n";
         out += "definitions per word: " + (float)definitions / dataMap.size() + "\n";
-        out += "parts of speech: " + partsOfSpeach.size() + "\n";
+        out += "parts of speech: " + partsOfSpeech.size() + "\n";
         out += "first word: " + words.first() + "\n";
         out += "last word: " + words.last() + "\n";
         return out;
@@ -73,6 +73,9 @@ public class Glossary {
      * @return a set of strings
      */
     public Set<String> getWordsInRange(String word1, String word2){
+        if(word1.compareTo(word2) > 0) {
+            return Collections.singleton("");
+        }
         return words.subSet(words.ceiling(word1), true, words.floor(word2), true);
     }
 
@@ -134,11 +137,11 @@ public class Glossary {
 
     /**
      * gets a word's parts of speech as a string
-     * @param word the word tostring representation get from
+     * @param word the word toString representation get from
      * @return the word's parts of speech
      */
     public String getPartsOfSpeech(String word){
-        return dataMap.get(words.floor(word)).getPartsOfSpeech();
+        return dataMap.get(word).getPartsOfSpeech();
     }
 
     /**
@@ -171,14 +174,14 @@ public class Glossary {
      * @param fileName the file to save to
      */
     public void saveToDirectory(String fileName){
-        try(FileWriter fileWriter = new FileWriter(fileName)){
+        try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter(fileName))){
             StringBuilder data = new StringBuilder();
             int count = 0;
             for(Word word : dataMap.values()){
                 if (count > 0){
-                    data.append("\n" + word.toStringRegix());
+                    data.append("\n").append(word.toStringWithRegex());
                 }else{
-                    data.append(word.toStringRegix());
+                    data.append(word.toStringWithRegex());
                 }
                 count ++;
             }
@@ -212,7 +215,7 @@ public class Glossary {
         } else {
             dataMap.get(word).addDefinition(type, definition);
         }
-        partsOfSpeach.add(type);
+        partsOfSpeech.add(type);
         definitions++;
     }
 

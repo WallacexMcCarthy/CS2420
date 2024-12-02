@@ -1,19 +1,21 @@
 package comprehensive;
 
 import java.util.HashSet;
-import java.util.TreeSet;
 
+/**
+ * this class is a word that contains definitions in a sorted order
+ */
 public class Word implements Comparable<Word>{
-    private TreeSet<Definition> definitions;
+    private final SortedIndexableSet<Definition> definitions;
     public int numberOfDefinitions;
-    private String name;
-    private HashSet<String> partsOfSpeech;
+    private final String name;
+    private final HashSet<String> partsOfSpeech;
 
     public Word(String name, Definition definition) {
         this.name = name;
         partsOfSpeech = new HashSet<>();
-        partsOfSpeech.add(definition.getWordType());
-        definitions = new TreeSet<>();
+        definitions = new SortedIndexableSet<>();
+        partsOfSpeech.add(definition.getPartOfSpeech());
         definitions.add(definition);
         numberOfDefinitions++;
     }
@@ -25,36 +27,21 @@ public class Word implements Comparable<Word>{
     }
 
     public void deleteDefinition(int i) {
-        int counter = 1;
-        for (Definition definition : definitions) {
-            if (counter == i) {
-                definitions.remove(definition);
-                break;
-            }
-            counter++;
-        }
+        definitions.remove(definitions.getByIndex(i-1));
         numberOfDefinitions--;
     }
 
     public void updateDefinition(int i, String newDef) {
-        int counter = 1;
-        for (Definition definition : definitions) {
-            if (counter == i) {
-                definition.setDescription(newDef);
-            }
-            counter++;
-        }
+        definitions.getByIndex(i-1).setDescription(newDef);
     }
 
     public String getDefinitions() {
         String result = "";
-        int counter = 1;
-        for (Definition definition : definitions) {
-            result += counter + ". " + definition;
-            if (counter != definitions.size()) {
+        for (int i = 0; i < definitions.size(); i++) {
+            result += i+1 + ". " + definitions.getByIndex(i);
+            if (i+1 != definitions.size()) {
                 result += "\n";
             }
-            counter++;
         }
         return result;
     }
@@ -72,16 +59,17 @@ public class Word implements Comparable<Word>{
         result += this.getDefinitions();
         return result;
     }
-    public String toStringRegix(){
+
+    public String toStringWithRegex() {
         String out = "";
         int count = 0;
-        for (Definition definition : definitions) {
+        for (int i = 0; i < definitions.size(); i++) {
             if (count > 0){
                 out += "\n";
             }
             out += this.name;
             out += "::";
-            out += definition.toStringRegix();
+            out += definitions.getByIndex(i).toStringWithRegex();
             count ++;
         }
         return out;
@@ -124,7 +112,4 @@ public class Word implements Comparable<Word>{
         return this.name.compareTo(o.name);
     }
 
-    private void removeFromDefinitions(Definition definition) {
-        definitions.remove(definition);
-    }
 }
