@@ -15,6 +15,9 @@ public class Definition implements Comparable<Definition>{
     public String toString() {
         return wordType + "." + "\t" + description;
     }
+    public String toStringRegix(){
+        return wordType + "::" + description;
+    }
     public void setDescription(String description) {
         this.description = description;
     }

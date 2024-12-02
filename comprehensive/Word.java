@@ -73,6 +73,20 @@ public class Word implements Comparable<Word>{
         result += this.getDefinitions();
         return result;
     }
+    public String toStringRegix(){
+        String out = "";
+        int count = 0;
+        for (Definition definition : definitions) {
+            if (count > 0){
+                out += "\n";
+            }
+            out += this.name;
+            out += "::";
+            out += definition.toStringRegix();
+            count ++;
+        }
+        return out;
+    }
 
     @Override
     public int compareTo(Word o) {
