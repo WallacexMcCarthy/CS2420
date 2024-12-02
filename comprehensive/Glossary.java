@@ -2,6 +2,8 @@ package comprehensive;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Glossary {
@@ -94,6 +96,18 @@ public class Glossary {
         if(word.numberOfDefinitions == 0) {
             dataMap.remove(name);
             words.remove(name);
+        }
+    }
+
+    public void saveToDirectory(String fileName){
+        try(FileWriter fileWriter = new FileWriter(fileName)){
+            StringBuilder data = new StringBuilder();
+            for(String word : words){
+                data.append(word).append("\n");
+            }
+            fileWriter.write(data.toString());
+        }catch(Exception e){
+            System.out.println(("Bad FileName"));
         }
     }
 
