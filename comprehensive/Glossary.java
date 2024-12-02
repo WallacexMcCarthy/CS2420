@@ -105,9 +105,9 @@ public class Glossary {
             int count = 0;
             for(Word word : dataMap.values()){
                 if (count > 0){
-                    data.append("\n" + word.toString());
+                    data.append("\n" + word.toStringRegix());
                 }else{
-                    data.append(word.toString());
+                    data.append(word.toStringRegix());
                 }
                 count ++;
             }
