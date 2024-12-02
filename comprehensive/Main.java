@@ -10,6 +10,8 @@ import java.util.Scanner;
  * args[0] must be a .txt file containing word definitions in the format:
  * word::partOfSpeech::definition
  * the application is to be used through the command line
+ * @version 12/2/2024
+ * @author Isaac Buehner and Wallace McCarthy
  */
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
@@ -71,15 +73,18 @@ public class Main {
                 case 5:
                     System.out.println("\n" + glossary.getLastWord() + "\n");
                     break;
+                // get parts of speech
                 case 6:
                     System.out.print("Select a word: ");
                     word = scanner.next();
                     System.out.println("\n" + glossary.getPartsOfSpeech(word) + "\n");
                     break;
+                // update definition
                 case 7:
                     System.out.print("Select a word: ");
                     word = scanner.next();
 
+                    //get valid word
                     while(!glossary.containsWord(word)) {
                         System.out.println("\n Word not in glossary \n");
                         System.out.print("Select a word: ");
@@ -87,8 +92,8 @@ public class Main {
                     }
                     numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
 
+                    //choose option
                     do {
-
                         System.out.println(glossary.getWordsDefinitions(word));
                         System.out.println(numberOfDefinitions+1 + ". Back to main menu \n");
                         System.out.print("Select a definition: ");
@@ -100,15 +105,18 @@ public class Main {
                         break;
                     }
 
+                    //type new definition
                     System.out.print("Type new definition: ");
                     String newDef = scanner.next();
                     glossary.updateWordDefinition(word, definitionNumber, newDef);
                     System.out.println("\n Definition Updated \n");
                     break;
+                //delete definition
                 case 8:
                     System.out.println("Select a word: ");
                     word = scanner.next();
 
+                    //get valid word
                     while(!glossary.containsWord(word)) {
                         System.out.println(" \n Word not in glossary \n");
                         System.out.print("Select a word: ");
@@ -116,6 +124,7 @@ public class Main {
                     }
                     numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
 
+                    //choose definition
                     do {
                         System.out.println(glossary.getWordsDefinitions(word));
                         System.out.println(numberOfDefinitions+1 + ". Back to main menu \n");
@@ -131,6 +140,7 @@ public class Main {
                     glossary.deleteWordDefinition(word, definitionNumber);
                     System.out.println("Definition Deleted \n");
                     break;
+                //add definition
                 case 9:
                     System.out.println("Type a word: ");
                     word = scanner.next();
@@ -138,18 +148,21 @@ public class Main {
                     System.out.println("Valid parts of speech: " + Arrays.toString(validPartsOfSpeech));
                     System.out.print("Type a valid part of speech: ");
                     String partOfSpeech = scanner.next();
+
+                    // get valid part of speech
                     while(!isValidPartOfSpeech(validPartsOfSpeech, partOfSpeech)) {
                         System.out.println(" \n Invalid Selection \n");
                         System.out.print("Type a valid part of speech: ");
                         partOfSpeech = scanner.next();
                     }
+
                     System.out.print("Type a definition: ");
                     String definition = scanner.next();
                     glossary.addDefinitionToWord(word, partOfSpeech, definition);
                     System.out.println("\n" + "Definition Added");
                     break;
                 case 10:
-                    //TODO
+                    glossary.saveToDirectory(args[0]);
                     break;
                 case 11:
                     System.exit(1);
@@ -175,6 +188,12 @@ public class Main {
         }
     }
 
+    /**
+     * private helper method to determine if a positive int user input is valid
+     * @param s the scanner being used
+     * @param bound the limit for a user input exclusive
+     * @return 0 if the input is invalid and the number if it is valid
+     */
     private static int validEntry(Scanner s, int bound) {
         if(s.hasNextInt()) {
             int number = s.nextInt();
@@ -191,6 +210,12 @@ public class Main {
         return 0;
     }
 
+    /**
+     * private helper method for checking if an input string is a valid part of speech
+     * @param parts a list of valid parts of speech
+     * @param part the part being checked
+     * @return a boolean for whether the part is valid
+     */
     private static boolean isValidPartOfSpeech(String[] parts, String part) {
         for (String word : parts) {
             if(part.equals(word)) {
