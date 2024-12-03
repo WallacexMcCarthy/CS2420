@@ -84,12 +84,12 @@ public class Main {
                     word = scanner.next();
 
                     //get valid word
-                    while(!glossary.containsWord(word)) {
-                        System.out.println("\n Word not in glossary \n");
-                        System.out.print("Select a word: ");
-                        word = scanner.next();
-                    }
-                    numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
+//                    while(!glossary.containsWord(word)) {
+//                        System.out.println("\n Word not in glossary \n");
+//                        System.out.print("Select a word: ");
+//                        word = scanner.next();
+//                    }
+                    numberOfDefinitions = glossary.getWordsNumberOfDefinitions(scanner.next());
 
                     //choose option
                     do {
@@ -196,19 +196,26 @@ public class Main {
      * @return 0 if the input is invalid and the number if it is valid
      */
     private static int validEntry(Scanner s, int bound) {
-        if(s.hasNextInt()) {
-            int number = s.nextInt();
-            if (bound < number || number < 1) {
-                System.out.println();
-                System.out.println("Invalid input \n");
-                return 0;
-            }
-            return number;
+        int number = Character.getNumericValue(s.next().charAt(0));
+        if (bound < number || number < 1) {
+            System.out.println();
+            System.out.println("Invalid input \n");
+            return 0;
         }
-        System.out.println();
-        System.out.println("Invalid input \n");
-        s.next();
-        return 0;
+        return number;
+//        if(s.hasNextInt()) {
+//            int number = s.nextInt();
+//            if (bound < number || number < 1) {
+//                System.out.println();
+//                System.out.println("Invalid input \n");
+//                return 0;
+//            }
+//            return number;
+//        }
+//        System.out.println();
+//        System.out.println("Invalid input \n");
+//        s.next();
+//        return 0;
     }
 
     /**
