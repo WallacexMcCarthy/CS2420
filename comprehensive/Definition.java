@@ -32,7 +32,7 @@ public class Definition implements Comparable<Definition>{
      * @return a string containing this definitions information
      */
     public String toString() {
-        return partOfSpeech + "." + "\t" + description;
+        return partOfSpeech + ", " + description;
     }
 
     /**

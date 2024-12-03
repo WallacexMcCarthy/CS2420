@@ -8,7 +8,7 @@ public class GlossaryExperiment extends TimingExperiment {
     private static int problemSizeMin = 10000;
     private static int problemSizeCount = 20;
     private static int problemSizeStep = 10000;
-    private static int experimentIterationCount = 1;
+    private static int experimentIterationCount = 20;
 
     protected Glossary empty;
     protected Random rng;
@@ -41,7 +41,7 @@ public class GlossaryExperiment extends TimingExperiment {
             System.out.println("bad");
         }
         // comment this line out for constructor test
-        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
+//        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
     }
 
     /**
@@ -54,9 +54,9 @@ public class GlossaryExperiment extends TimingExperiment {
 //        empty.updateWordDefinition("" + rng.nextInt(0, 10000), 1, "poo");
 //        empty.deleteWordDefinition("" + rng.nextInt(0, 10000), 1);
 //        empty.addDefinitionToWord("" + rng.nextInt(0, 10000), "noun", "poo");
-        empty.getWordsInRange("0", "" + rng.nextInt(0, 200000));
+//        empty.getWordsInRange("0", "" + rng.nextInt(0, 200000));
 //        empty.getWord("" + rng.nextInt(0, 20000));
-//        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
+        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
     }
 
     public static void main(String[] args) {

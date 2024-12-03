@@ -10,7 +10,7 @@ import java.util.TreeSet;
  * @version 12/2/2024
  * @author Isaac Buehner and Wallace McCarthy
  */
-public class SortedIndexableSet<T extends Comparable<T>> {
+public class SortedIndexableSet<T extends Comparable<T>>  {
     private final TreeSet<T> tree;
     private final ArrayList<T> array;
 

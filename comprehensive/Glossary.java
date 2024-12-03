@@ -27,7 +27,7 @@ public class Glossary {
         this.definitions = 0;
         this.partsOfSpeech = new HashSet<>();
         try {
-            Scanner scanner = new Scanner(new BufferedReader(new FileReader(new File(filename))));
+            Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
@@ -56,8 +56,17 @@ public class Glossary {
         String out = "";
         out += "words: " + dataMap.size() + "\n";
         out += "definitions: " + definitions + "\n";
-        out += "definitions per word: " + (float)definitions / dataMap.size() + "\n";
+        if (dataMap.isEmpty()) {
+            out += "definitions per word: 0.00";
+        } else {
+            out += "definitions per word: " + String.format("%.2f", (float)definitions / dataMap.size()) + "\n";
+        }
         out += "parts of speech: " + partsOfSpeech.size() + "\n";
+        if (dataMap.isEmpty()) {
+            out += "first word: \n";
+            out += "last word: \n";
+            return out;
+        }
         out += "first word: " + words.first() + "\n";
         out += "last word: " + words.last() + "\n";
         return out;
@@ -71,6 +80,9 @@ public class Glossary {
      */
     public Set<String> getWordsInRange(String word1, String word2){
         if(word1.compareTo(word2) > 0) {
+            return Collections.singleton("");
+        }
+        if (word2.compareTo(words.first()) < 0 || word1.compareTo(words.last()) > 0) {
             return Collections.singleton("");
         }
         return words.subSet(words.ceiling(word1), true, words.floor(word2), true);
@@ -89,15 +101,15 @@ public class Glossary {
     }
 
     /**
-     * gets a word's definitions in order lexicographically
+     * gets a word's definitions in order lexicographically and a number indicating each definition's sorted position
      * @param word the word to get from
      * @return a string with all the word's definitions
      */
-    public String getWordsDefinitions(String word){
+    public String getWordsNumberedDefinitions(String word){
         if (!dataMap.containsKey(word)) {
             return word + " not found in glossary";
         }
-        return "Definitions for " + word + ": \n" + dataMap.get(word).getDefinitions();
+        return "Definitions for " + word + ": \n" + dataMap.get(word).getNumberedDefinitions();
     }
 
     /**
@@ -118,7 +130,7 @@ public class Glossary {
             return dataMap.get(words.first()).toString();
         } catch (Exception e) {
         }
-        return null;
+        return "";
     }
     /**
      * gets the last word's string representation lexicographically in the glossary
@@ -129,7 +141,7 @@ public class Glossary {
             return dataMap.get(words.last()).toString();
         } catch (Exception e) {
         }
-        return null;
+        return "";
     }
 
     /**
@@ -209,9 +221,9 @@ public class Glossary {
      * @param definition the new definition
      */
     private void addItem(String word, String type, String definition) {
-        if(!dataMap.containsKey(word)) {
-            dataMap.put(word, new Word(word, new Definition(type, definition)));
+        if(!containsWord(word)) {
             words.add(word);
+            dataMap.put(word, new Word(word, new Definition(type, definition)));
         } else {
             dataMap.get(word).addDefinition(type, definition);
         }

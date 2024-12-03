@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-
 /**
  * this class is the main application for the glossary class
  * args[0] must be a .txt file containing word definitions in the format:
@@ -69,16 +68,17 @@ public class Main {
                     break;
                 // get first word
                 case 4:
-                    System.out.println(glossary.getFirstWord() + "\n");
+                    System.out.println("\n" + glossary.getFirstWord() + "\n");
                     break;
                 // get last word
                 case 5:
-                    System.out.println(glossary.getLastWord() + "\n");
+                    System.out.println("\n" + glossary.getLastWord() + "\n");
                     break;
                 // get parts of speech
                 case 6:
                     word = getValidWord(scanner, glossary);
-                    System.out.println("\n" + glossary.getPartsOfSpeech(word));
+                    System.out.println("\n" + word);
+                    System.out.println(glossary.getPartsOfSpeech(word));
                     break;
                 // update definition
                 case 7:
@@ -122,7 +122,6 @@ public class Main {
 
                     // get valid part of speech
                     while(!validPartsOfSpeech.contains(partOfSpeech)) {
-                        System.out.println(" \n Invalid Selection \n");
                         System.out.print("Type a valid part of speech: ");
                         partOfSpeech = scanner.next();
                     }
@@ -160,13 +159,13 @@ public class Main {
             int number = s.nextInt();
             if (bound < number || number < 1) {
                 System.out.println();
-                System.out.println("Invalid input \n");
+                System.out.println("Invalid selection \n");
                 return 0;
             }
             return number;
         }
         System.out.println();
-        System.out.println("Invalid input \n");
+        System.out.println("Invalid selection \n");
         s.next();
         return 0;
     }
@@ -184,7 +183,7 @@ public class Main {
             System.out.print("Select a word: ");
             word = scanner.next();
             if (!glossary.containsWord(word)) {
-                System.out.println("\nWord not in glossary\n");
+                System.out.println("\nInvalid selection\n");
             }
         } while (!glossary.containsWord(word));
         return word;
@@ -202,7 +201,7 @@ public class Main {
         int numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
         int definitionNumber;
         do {
-            System.out.println(glossary.getWordsDefinitions(word));
+            System.out.println(glossary.getWordsNumberedDefinitions(word));
             System.out.println(numberOfDefinitions + 1 + ". Back to main menu\n");
             System.out.print("Select a definition: ");
             definitionNumber = validEntry(scanner, numberOfDefinitions + 1);

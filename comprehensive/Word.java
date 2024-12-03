@@ -1,9 +1,9 @@
 package comprehensive;
 
-import java.util.HashSet;
-
 /**
- * this class is a word that contains definitions in a sorted order
+ * this class is a word object that contains a name and 1 or more definitions in a sorted order
+ * @version 12/2/2024
+ * @author Isaac Buehner and Wallace McCarthy
  */
 public class Word implements Comparable<Word>{
     private final SortedIndexableSet<Definition> definitions;
@@ -11,6 +11,11 @@ public class Word implements Comparable<Word>{
     private final String name;
     private final SortedIndexableSet<String> partsOfSpeech;
 
+    /**
+     * constructor for a word
+     * @param name the word
+     * @param definition the word's definition
+     */
     public Word(String name, Definition definition) {
         this.name = name;
         partsOfSpeech = new SortedIndexableSet<>();
@@ -20,22 +25,55 @@ public class Word implements Comparable<Word>{
         numberOfDefinitions++;
     }
 
+    /**
+     * adds a definition to the word
+     * @param type part of speech of the definition
+     * @param def the description
+     */
     public void addDefinition(String type, String def) {
         definitions.add(new Definition(type, def));
         partsOfSpeech.add(type);
         numberOfDefinitions++;
     }
 
+    /**
+     * removes a definition from the word
+     * @param i the index of the definition to be removed
+     */
     public void deleteDefinition(int i) {
         definitions.remove(definitions.getByIndex(i-1));
         numberOfDefinitions--;
     }
 
+    /**
+     * updates one of the word's definitions
+     * @param i the index of the definition to be updated
+     * @param newDef the new description
+     */
     public void updateDefinition(int i, String newDef) {
         definitions.getByIndex(i-1).setDescription(newDef);
     }
 
+    /**
+     * gets a string with all of this word's definitions in sorted order
+     * @return a string with all of this word's definitions
+     */
     public String getDefinitions() {
+        String result = "";
+        for (int i = 0; i < definitions.size(); i++) {
+            result += "\t" + definitions.getByIndex(i);
+            if (i+1 != definitions.size()) {
+                result += "\n";
+            }
+        }
+        return result;
+    }
+
+    /**
+     * gets a string with all of this word's definitions and a number indicating each definition's sorted position
+     * @return a string with all of this word's definitions
+     */
+    public String getNumberedDefinitions() {
         String result = "";
         for (int i = 0; i < definitions.size(); i++) {
             result += i+1 + ". " + definitions.getByIndex(i);
@@ -46,20 +84,32 @@ public class Word implements Comparable<Word>{
         return result;
     }
 
+    /**
+     * gets a string containing all the parts of speech used by this word's definitions
+     * @return a string containing this word's parts of speech
+     */
     public String getPartsOfSpeech() {
         String result = "";
         for (int i = 0; i < partsOfSpeech.size(); i++) {
-            result += partsOfSpeech.getByIndex(i) + "\n";
+            result +=  "\t" + partsOfSpeech.getByIndex(i) + "\n";
         }
         return result;
     }
 
+    /**
+     * creates a simple string representation of this word and its definitions
+     * @return a string containing this word's information
+     */
     public String toString() {
         String result = name + "\n";
         result += this.getDefinitions();
         return result;
     }
 
+    /**
+     * creates a string that is in the format needed for a Glossary object to read and add
+     * @return an alternate string representation
+     */
     public String toStringWithRegex() {
         String out = "";
         int count = 0;
@@ -76,36 +126,9 @@ public class Word implements Comparable<Word>{
     }
 
     /**
-     * Compares this object with the specified object for order.  Returns a
-     * negative integer, zero, or a positive integer as this object is less
-     * than, equal to, or greater than the specified object.
-     *
-     * <p>The implementor must ensure {@link Integer#signum
-     * signum}{@code (x.compareTo(y)) == -signum(y.compareTo(x))} for
-     * all {@code x} and {@code y}.  (This implies that {@code
-     * x.compareTo(y)} must throw an exception if and only if {@code
-     * y.compareTo(x)} throws an exception.)
-     *
-     * <p>The implementor must also ensure that the relation is transitive:
-     * {@code (x.compareTo(y) > 0 && y.compareTo(z) > 0)} implies
-     * {@code x.compareTo(z) > 0}.
-     *
-     * <p>Finally, the implementor must ensure that {@code
-     * x.compareTo(y)==0} implies that {@code signum(x.compareTo(z))
-     * == signum(y.compareTo(z))}, for all {@code z}.
-     *
+     * returns the lexicographical difference between this word's name and the other's name
      * @param o the object to be compared.
-     * @return a negative integer, zero, or a positive integer as this object
-     * is less than, equal to, or greater than the specified object.
-     * @throws NullPointerException if the specified object is null
-     * @throws ClassCastException   if the specified object's type prevents it
-     *                              from being compared to this object.
-     * @apiNote It is strongly recommended, but <i>not</i> strictly required that
-     * {@code (x.compareTo(y)==0) == (x.equals(y))}.  Generally speaking, any
-     * class that implements the {@code Comparable} interface and violates
-     * this condition should clearly indicate this fact.  The recommended
-     * language is "Note: this class has a natural ordering that is
-     * inconsistent with equals."
+     * @return an int for the lexicographical difference
      */
     @Override
     public int compareTo(Word o) {
