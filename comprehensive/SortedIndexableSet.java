@@ -28,7 +28,9 @@ public class SortedIndexableSet<T extends Comparable<T>> {
      */
     public void add(T item) {
         tree.add(item);
-        array.add(findInsertionIndex(item), item);
+        if(!array.contains(item)){
+            array.add(findInsertionIndex(item), item);
+        }
     }
 
     /**
@@ -57,7 +59,7 @@ public class SortedIndexableSet<T extends Comparable<T>> {
      * @return the size of the structure
      */
     public int size() {
-        return tree.size();
+        return array.size();
     }
 
     /**

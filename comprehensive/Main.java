@@ -33,7 +33,7 @@ public class Main {
                 10.  Save dictionary
                 11.  Quit
                \s
-                Select an option: \s""";
+                Select an option:\s""";
         Glossary glossary = new Glossary(args[0]);
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         System.out.print(mainMenu);
@@ -51,34 +51,34 @@ public class Main {
                     break;
                 // get words in range
                 case 2:
-                    System.out.print("Starting Word:  ");
+                    System.out.print("Starting Word: ");
                     String word1 = scanner.next();
-                    System.out.print("Ending Word:  ");
+                    System.out.print("Ending Word: ");
                     String word2 = scanner.next();
                     System.out.println(" \n The words in between " + word1 + " and " + word2 + " are:");
                     for (String s : glossary.getWordsInRange(word1, word2)) {
                         System.out.println( "\t" + s);
                     }
+                    System.out.println();
                     break;
                 // get word
                 case 3:
-                    System.out.println("Select a word: ");
+                    System.out.print("Select a word: ");
                     word = scanner.next();
                     System.out.println( "\n" + glossary.getWord(word) + "\n");
                     break;
                 // get first word
                 case 4:
-                    System.out.println( "\n" + glossary.getFirstWord() + "\n");
+                    System.out.println(glossary.getFirstWord() + "\n");
                     break;
                 // get last word
                 case 5:
-                    System.out.println("\n" + glossary.getLastWord() + "\n");
+                    System.out.println(glossary.getLastWord() + "\n");
                     break;
                 // get parts of speech
                 case 6:
-                    System.out.print("Select a word: ");
-                    word = scanner.next();
-                    System.out.println("\n" + glossary.getPartsOfSpeech(word) + "\n");
+                    word = getValidWord(scanner, glossary);
+                    System.out.println("\n" + glossary.getPartsOfSpeech(word));
                     break;
                 // update definition
                 case 7:
@@ -105,9 +105,11 @@ public class Main {
                     if (definitionNumber == numberOfDefinitions + 1) {
                         break;
                     }
-
-                    glossary.deleteWordDefinition(word, definitionNumber);
-                    System.out.println("Definition Deleted \n");
+                    System.out.println("Definition removed \n");
+                    if(glossary.deleteWordDefinition(word, definitionNumber)){
+                        System.out.println(word + " removed");
+                        System.out.println();
+                    }
                     break;
                 //add definition
                 case 9:
@@ -143,7 +145,7 @@ public class Main {
                     return;
             }
 
-            System.out.println(mainMenu);
+            System.out.print(mainMenu);
         }
     }
 
@@ -154,13 +156,19 @@ public class Main {
      * @return 0 if the input is invalid and the number if it is valid
      */
     private static int validEntry(Scanner s, int bound) {
-        int number = Character.getNumericValue(s.next().charAt(0));
-        if (bound < number || number < 1) {
-            System.out.println();
-            System.out.println("Invalid input \n");
-            return 0;
+        if(s.hasNextInt()) {
+            int number = s.nextInt();
+            if (bound < number || number < 1) {
+                System.out.println();
+                System.out.println("Invalid input \n");
+                return 0;
+            }
+            return number;
         }
-        return number;
+        System.out.println();
+        System.out.println("Invalid input \n");
+        s.next();
+        return 0;
     }
 
     /**

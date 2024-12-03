@@ -9,11 +9,11 @@ public class Word implements Comparable<Word>{
     private final SortedIndexableSet<Definition> definitions;
     public int numberOfDefinitions;
     private final String name;
-    private final HashSet<String> partsOfSpeech;
+    private final SortedIndexableSet<String> partsOfSpeech;
 
     public Word(String name, Definition definition) {
         this.name = name;
-        partsOfSpeech = new HashSet<>();
+        partsOfSpeech = new SortedIndexableSet<>();
         definitions = new SortedIndexableSet<>();
         partsOfSpeech.add(definition.getPartOfSpeech());
         definitions.add(definition);
@@ -48,8 +48,8 @@ public class Word implements Comparable<Word>{
 
     public String getPartsOfSpeech() {
         String result = "";
-        for (String s : partsOfSpeech) {
-            result += s + "\n";
+        for (int i = 0; i < partsOfSpeech.size(); i++) {
+            result += partsOfSpeech.getByIndex(i) + "\n";
         }
         return result;
     }

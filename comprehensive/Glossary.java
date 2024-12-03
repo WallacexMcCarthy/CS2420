@@ -1,9 +1,6 @@
 package comprehensive;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -30,7 +27,7 @@ public class Glossary {
         this.definitions = 0;
         this.partsOfSpeech = new HashSet<>();
         try {
-            Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)));
+            Scanner scanner = new Scanner(new BufferedReader(new FileReader(new File(filename))));
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] lineData = line.split("::");
@@ -85,10 +82,10 @@ public class Glossary {
      * @return a string containing the word's information
      */
     public String getWord(String word){
-        if (!dataMap.containsKey(words.floor(word))) {
+        if (!dataMap.containsKey(word)) {
             return word + " not found in glossary";
         }
-        return dataMap.get(words.floor(word)).toString();
+        return dataMap.get(word).toString();
     }
 
     /**
@@ -97,10 +94,10 @@ public class Glossary {
      * @return a string with all the word's definitions
      */
     public String getWordsDefinitions(String word){
-        if (!dataMap.containsKey(words.floor(word))) {
+        if (!dataMap.containsKey(word)) {
             return word + " not found in glossary";
         }
-        return "Definitions for " + word + ": \n" + dataMap.get(words.floor(word)).getDefinitions();
+        return "Definitions for " + word + ": \n" + dataMap.get(word).getDefinitions();
     }
 
     /**
@@ -109,7 +106,7 @@ public class Glossary {
      * @return the number of definitions the word has
      */
     public int getWordsNumberOfDefinitions(String word){
-       return dataMap.get(words.floor(word)).numberOfDefinitions;
+       return dataMap.get(word).numberOfDefinitions;
     }
 
     /**
@@ -151,7 +148,7 @@ public class Glossary {
      * @param def the new definition
      */
     public void updateWordDefinition(String name, int i, String def) {
-        dataMap.get(words.floor(name)).updateDefinition(i, def);
+        dataMap.get(name).updateDefinition(i, def);
     }
 
     /**
@@ -159,13 +156,16 @@ public class Glossary {
      * @param name the word to delete from
      * @param i the definition to delete
      */
-    public void deleteWordDefinition(String name, int i) {
+    public boolean deleteWordDefinition(String name, int i) {
         Word word = dataMap.get(name);
         word.deleteDefinition(i);
         if(word.numberOfDefinitions == 0) {
+
             dataMap.remove(name);
             words.remove(name);
+            return true;
         }
+        return false;
     }
 
     /**
