@@ -85,10 +85,10 @@ public class Glossary {
      * @return a string containing the word's information
      */
     public String getWord(String word){
-        if (!dataMap.containsKey(word)) {
+        if (!dataMap.containsKey(words.floor(word))) {
             return word + " not found in glossary";
         }
-        return dataMap.get(word).toString();
+        return dataMap.get(words.floor(word)).toString();
     }
 
     /**
@@ -97,10 +97,10 @@ public class Glossary {
      * @return a string with all the word's definitions
      */
     public String getWordsDefinitions(String word){
-        if (!dataMap.containsKey(word)) {
+        if (!dataMap.containsKey(words.floor(word))) {
             return word + " not found in glossary";
         }
-        return "Definitions for " + word + ": \n" + dataMap.get(word).getDefinitions();
+        return "Definitions for " + word + ": \n" + dataMap.get(words.floor(word)).getDefinitions();
     }
 
     /**
@@ -109,7 +109,7 @@ public class Glossary {
      * @return the number of definitions the word has
      */
     public int getWordsNumberOfDefinitions(String word){
-       return dataMap.get(word).numberOfDefinitions;
+       return dataMap.get(words.floor(word)).numberOfDefinitions;
     }
 
     /**
@@ -151,7 +151,7 @@ public class Glossary {
      * @param def the new definition
      */
     public void updateWordDefinition(String name, int i, String def) {
-        dataMap.get(name).updateDefinition(i, def);
+        dataMap.get(words.floor(name)).updateDefinition(i, def);
     }
 
     /**
