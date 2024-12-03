@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * this class represents a glossary that can be updated changed as needed
  * it is created through a .txt file. the format of the file is assumed to be correct for how it is read
- * uses a hashmap for some operations and a treeset for others
+ * uses a hashmap for some operations and a TreeSet for others
  * @version 12/2/2024
  * @author Isaac Buehner and Wallace McCarthy
  */
