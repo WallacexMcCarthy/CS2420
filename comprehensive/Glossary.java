@@ -59,7 +59,8 @@ public class Glossary {
         if (dataMap.isEmpty()) {
             out += "definitions per word: 0.00";
         } else {
-            out += "definitions per word: " + String.format("%.2f", (float)definitions / dataMap.size()) + "\n";
+            out += "definitions per word: " +
+                    String.format("%.2f", Math.floor((float)definitions / dataMap.size() * 100) / 100) + "\n";
         }
         out += "parts of speech: " + partsOfSpeech.size() + "\n";
         if (dataMap.isEmpty()) {
@@ -203,6 +204,10 @@ public class Glossary {
         }
     }
 
+    /**
+     * gets a set of all the words in the glossary without order
+     * @return a set containing all words in the glossary
+     */
     public Set<String> getAllWords(){
         return dataMap.keySet();
     }

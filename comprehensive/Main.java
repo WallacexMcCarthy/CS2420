@@ -34,8 +34,6 @@ public class Main {
                \s
                 Select an option:\s""";
         Glossary glossary = new Glossary(args[0]);
-//        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
-//        System.out.print(mainMenu);
         while(true) {
             int number = validEntry(getConsoleInput(mainMenu), 11);
             String word;
@@ -189,7 +187,12 @@ public class Main {
         return definitionNumber;
     }
 
-    public static String getConsoleInput(String prompt) {
+    /**
+     * private helper method to streamline getting a user input
+     * @param prompt the prompt for a user to type after
+     * @return the users input
+     */
+    private static String getConsoleInput(String prompt) {
         System.out.print(prompt);
         return new Scanner(System.in).nextLine();
     }
