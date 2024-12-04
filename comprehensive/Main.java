@@ -143,13 +143,13 @@ public class Main {
      * @return 0 if the input is invalid and the number if it is valid
      */
     private static int validEntry(String s, int bound) {
-        for (int i = 1; i <= bound; i++) {
-            if(s.equals(i+"")){
-                return i;
+        try {
+            int input = Integer.parseInt(s);
+            if (input > 0 && input <= bound) {
+                return input;
             }
-        }
-        System.out.println();
-        System.out.println("Invalid selection \n");
+        } catch (NumberFormatException ignored) {}
+        System.out.println("Invalid selection\n");
         return 0;
     }
 
@@ -161,12 +161,13 @@ public class Main {
      */
     private static String getValidWord(Glossary glossary) {
         String word;
+        Set<String> validWords = glossary.getAllWords();
         do {
             word = getConsoleInput("Select a word: ");
-            if (!glossary.containsWord(word)) {
+            if (!validWords.contains(word)) {
                 System.out.println("\nInvalid selection\n");
             }
-        } while (!glossary.containsWord(word));
+        } while (!validWords.contains(word));
         return word;
     }
 
