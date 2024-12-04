@@ -203,6 +203,10 @@ public class Glossary {
         }
     }
 
+    public Set<String> getAllWords(){
+        return dataMap.keySet();
+    }
+
     /**
      * adds a new definition to a word
      * @param word the word to add to
