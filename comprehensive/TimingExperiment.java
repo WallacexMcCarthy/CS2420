@@ -72,7 +72,7 @@ public abstract class TimingExperiment {
     protected long computeElapsedTime(int problemSize) {
         setupExperiment(problemSize);
         long startTime = System.nanoTime();
-        runComputation();
+        runComputation(problemSize);
         long endTime = System.nanoTime();
         return endTime - startTime;
     }
@@ -87,6 +87,6 @@ public abstract class TimingExperiment {
     /**
      * Abstract method to run the computation to be timed.
      */
-    protected abstract void runComputation();
+    protected abstract void runComputation(int problemSize);
 }
 

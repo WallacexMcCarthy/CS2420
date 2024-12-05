@@ -90,7 +90,7 @@ public class Main {
 
                     //type new definition
                     String newDef = getConsoleInput("Type new definition: ");
-                    glossary.updateWordDefinition(word, definitionNumber, newDef);
+                    glossary.updateDefinition(word, definitionNumber, newDef);
                     System.out.println("\n Definition Updated \n");
                     break;
                 //delete definition
@@ -103,7 +103,7 @@ public class Main {
                         break;
                     }
                     System.out.println("Definition removed \n");
-                    if(glossary.deleteWordDefinition(word, definitionNumber)){
+                    if(glossary.deleteDefinition(word, definitionNumber)){
                         System.out.println(word + " removed");
                         System.out.println();
                     }
@@ -121,7 +121,7 @@ public class Main {
                     }
 
                     String definition = getConsoleInput("Type a definition: ");
-                    glossary.addDefinitionToWord(word, partOfSpeech, definition);
+                    glossary.addDefinition(word, partOfSpeech, definition);
                     System.out.println("\n Definition Added \n");
                     break;
                 // save to file

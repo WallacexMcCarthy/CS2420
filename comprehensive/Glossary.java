@@ -59,8 +59,8 @@ public class Glossary {
         if (dataMap.isEmpty()) {
             out += "definitions per word: 0.00";
         } else {
-            out += "definitions per word: " +
-                    String.format("%.2f", Math.floor((float)definitions / dataMap.size() * 100) / 100) + "\n";
+            out += "definitions per word: " + String.format("%.2f", (float)definitions / dataMap.size()) + "\n";
+//                    String.format("%.2f", Math.floor((float)definitions / dataMap.size() * 100) / 100) + "\n";
         }
         out += "parts of speech: " + partsOfSpeech.size() + "\n";
         if (dataMap.isEmpty()) {
@@ -99,6 +99,14 @@ public class Glossary {
             return word + " not found in glossary";
         }
         return dataMap.get(word).toString();
+    }
+
+    /**
+     * gets a set of all the words in the glossary without order
+     * @return a set containing all words in the glossary
+     */
+    public Set<String> getAllWords(){
+        return dataMap.keySet();
     }
 
     /**
@@ -160,7 +168,7 @@ public class Glossary {
      * @param i the definition to update
      * @param def the new definition
      */
-    public void updateWordDefinition(String name, int i, String def) {
+    public void updateDefinition(String name, int i, String def) {
         dataMap.get(name).updateDefinition(i, def);
     }
 
@@ -169,16 +177,25 @@ public class Glossary {
      * @param name the word to delete from
      * @param i the definition to delete
      */
-    public boolean deleteWordDefinition(String name, int i) {
+    public boolean deleteDefinition(String name, int i) {
         Word word = dataMap.get(name);
         word.deleteDefinition(i);
         if(word.numberOfDefinitions == 0) {
-
             dataMap.remove(name);
             words.remove(name);
             return true;
         }
         return false;
+    }
+
+    /**
+     * adds a new definition to a word
+     * @param word the word to add to
+     * @param type the part of speech for the new definition
+     * @param definition the new definition
+     */
+    public void addDefinition(String word, String type, String definition) {
+        this.addItem(word, type, definition);
     }
 
     /**
@@ -202,24 +219,6 @@ public class Glossary {
         }catch(Exception e){
             System.out.println(("Bad FileName"));
         }
-    }
-
-    /**
-     * gets a set of all the words in the glossary without order
-     * @return a set containing all words in the glossary
-     */
-    public Set<String> getAllWords(){
-        return dataMap.keySet();
-    }
-
-    /**
-     * adds a new definition to a word
-     * @param word the word to add to
-     * @param type the part of speech for the new definition
-     * @param definition the new definition
-     */
-    public void addDefinitionToWord(String word, String type, String definition) {
-        this.addItem(word, type, definition);
     }
 
     /**

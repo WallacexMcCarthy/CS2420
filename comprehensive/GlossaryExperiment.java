@@ -40,23 +40,26 @@ public class GlossaryExperiment extends TimingExperiment {
         } catch (Exception e) {
             System.out.println("bad");
         }
-        // comment this line out for constructor test
-//        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
+        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
+
     }
 
     /**
      * Abstract method to run the computation to be timed.
      */
     @Override
-    protected void runComputation() {
+    protected void runComputation(int problemSize) {
+        for (int i = 0; i < problemSize; i++) {
 //        empty.getFirstWord();
 //        empty.getLastWord();
-//        empty.updateWordDefinition("" + rng.nextInt(0, 10000), 1, "poo");
-//        empty.deleteWordDefinition("" + rng.nextInt(0, 10000), 1);
-//        empty.addDefinitionToWord("" + rng.nextInt(0, 10000), "noun", "poo");
-//        empty.getWordsInRange("0", "" + rng.nextInt(0, 200000));
+//        empty.updateDefinition("" + rng.nextInt(0, 10000), 1, "poo");
+        empty.deleteDefinition("" + i, 1);
+//        empty.addDefinition("" + rng.nextInt(0, 10000), "noun", "poo");
+//        empty.getWordsInRange("" + rng.nextInt(0, 200000), "" + rng.nextInt(0, 200000));
 //        empty.getWord("" + rng.nextInt(0, 20000));
-        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
+        }
+        // dont initialize the glossary at the beginning for constructor test
+//        empty = new Glossary("/Users/isaacdbeans/desktop/school/github/cs2420/comprehensive/timing.txt");
     }
 
     public static void main(String[] args) {

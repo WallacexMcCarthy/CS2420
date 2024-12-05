@@ -11,14 +11,12 @@ import java.util.TreeSet;
  * @author Isaac Buehner and Wallace McCarthy
  */
 public class SortedIndexableSet<T extends Comparable<T>>  {
-    private final TreeSet<T> tree;
     private final ArrayList<T> array;
 
     /**
      * default constructor for a SortedIndexableSet object
      */
     public SortedIndexableSet() {
-        this.tree = new TreeSet<>();
         this.array = new ArrayList<>();
     }
 
@@ -27,7 +25,6 @@ public class SortedIndexableSet<T extends Comparable<T>>  {
      * @param item the item to add
      */
     public void add(T item) {
-        tree.add(item);
         if(!array.contains(item)){
             array.add(findInsertionIndex(item), item);
         }
@@ -38,7 +35,6 @@ public class SortedIndexableSet<T extends Comparable<T>>  {
      * @param item the item to remove
      */
     public void remove(T item) {
-        tree.remove(item);
         array.remove(item);
     }
 
