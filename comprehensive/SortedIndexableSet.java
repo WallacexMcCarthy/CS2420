@@ -5,7 +5,8 @@ import java.util.TreeSet;
 
 /**
  * this class is a data structure that acts as a sorted set that is indexable
- * it uses a TreeSet to maintain order and set properties and an ArrayList to allow for indexing
+ * it uses an ArrayList to allow for indexing
+ * it uses binary search driven insertion to maintain ordered structure
  * @param <T> the generic type for the class
  * @version 12/2/2024
  * @author Isaac Buehner and Wallace McCarthy

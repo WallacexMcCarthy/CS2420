@@ -60,7 +60,6 @@ public class Glossary {
             out += "definitions per word: 0.00";
         } else {
             out += "definitions per word: " + String.format("%.3f", (float)definitions / dataMap.size()) + "\n";
-//                    String.format("%.2f", Math.floor((float)definitions / dataMap.size() * 100) / 100) + "\n";
         }
         out += "parts of speech: " + partsOfSpeech.size() + "\n";
         if (dataMap.isEmpty()) {

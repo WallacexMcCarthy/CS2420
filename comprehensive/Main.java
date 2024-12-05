@@ -75,12 +75,20 @@ public class Main {
                 // get parts of speech
                 case 6:
                     word = getValidWord(glossary);
+                    if(word == null) {
+                        System.out.println(" \n Word not found \n");
+                        break;
+                    }
                     System.out.println("\n" + word);
                     System.out.println(glossary.getPartsOfSpeech(word));
                     break;
                 // update definition
                 case 7:
                     word = getValidWord(glossary);
+                    if(word == null) {
+                        System.out.println(" \n Word not found \n");
+                        break;
+                    }
                     numberOfDefinitions = glossary.getWordsNumberOfDefinitions(word);
                     definitionNumber = getValidDefinition(glossary, word);
 
@@ -154,18 +162,17 @@ public class Main {
     /**
      * private helper method to get a valid word from a user
      * a valid word is one that is contained in the glossary given
+     *
      * @param glossary the glossary being checked
      * @return a valid word
      */
     private static String getValidWord(Glossary glossary) {
         String word;
         Set<String> validWords = glossary.getAllWords();
-        do {
-            word = getConsoleInput("Select a word: ");
-            if (!validWords.contains(word)) {
-                System.out.println("\nInvalid selection\n");
-            }
-        } while (!validWords.contains(word));
+        word = getConsoleInput("Select a word: ");
+        if(!validWords.contains(word)) {
+            return null;
+        }
         return word;
     }
 
