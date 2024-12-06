@@ -7,7 +7,7 @@ package comprehensive;
  */
 public class Word implements Comparable<Word>{
     private final SortedIndexableSet<Definition> definitions;
-    public int numberOfDefinitions;
+    private int numberOfDefinitions;
     private final String name;
     private final SortedIndexableSet<String> partsOfSpeech;
 
@@ -67,6 +67,14 @@ public class Word implements Comparable<Word>{
             }
         }
         return result;
+    }
+
+    /**
+     * gets the number of definitions attached to this word
+     * @return this word's number of definitions
+     */
+    public int getNumberOfDefinitions() {
+        return numberOfDefinitions;
     }
 
     /**

@@ -126,7 +126,10 @@ public class Glossary {
      * @return the number of definitions the word has
      */
     public int getWordsNumberOfDefinitions(String word){
-       return dataMap.get(word).numberOfDefinitions;
+        if (!dataMap.containsKey(word)) {
+            return 0;
+        }
+       return dataMap.get(word).getNumberOfDefinitions();
     }
 
     /**
@@ -180,7 +183,7 @@ public class Glossary {
         Word word = dataMap.get(name);
         word.deleteDefinition(i);
         definitions--;
-        if(word.numberOfDefinitions == 0) {
+        if(word.getNumberOfDefinitions() == 0) {
             dataMap.remove(name);
             words.remove(name);
             return true;

@@ -53,9 +53,9 @@ public class GlossaryExperiment extends TimingExperiment {
 //        empty.getFirstWord();
 //        empty.getLastWord();
 //        empty.updateDefinition("" + rng.nextInt(0, 10000), 1, "poo");
-        empty.deleteDefinition("" + i, 1);
+//        empty.deleteDefinition("" + i, 1);
 //        empty.addDefinition("" + rng.nextInt(0, 10000), "noun", "poo");
-//        empty.getWordsInRange("" + rng.nextInt(0, 200000), "" + rng.nextInt(0, 200000));
+        empty.getWordsInRange("0", "" + rng.nextInt(1, 200000));
 //        empty.getWord("" + rng.nextInt(0, 20000));
         }
         // dont initialize the glossary at the beginning for constructor test
